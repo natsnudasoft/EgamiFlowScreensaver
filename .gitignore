@@ -1,0 +1,9 @@
+/packages
+/.vs
+*.csproj.user
+bin
+obj
+/tools/coverage
+/tools/coverage.xml
+/tools/artifact
+/src/EgamiFlowScreensaver/Properties/NativeRes.res

@@ -1,0 +1,5 @@
+assembly-versioning-scheme: MajorMinor
+mode: ContinuousDelivery
+branches: {}
+ignore:
+  sha: []

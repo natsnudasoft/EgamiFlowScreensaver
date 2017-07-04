@@ -1,0 +1,90 @@
+-
+  branches:
+    only:
+      - master
+  environment:
+    COVERALLS_REPO_TOKEN:
+      secure: Xy9K/RzLTTlFzQrYUY0oAUfKUNufDfeVKPk47OxL/6jK7Mx6gB/RFl5tiHcXT4fr
+    STRONG_NAME_SECRET:
+      secure: 4W8bFbUP7bJsxCqGF6+xfy7kCUjQscJcrGmjegVxxBs=
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  install:
+    - choco install gitversion.portable -y
+    - nuget install secure-file -ExcludeVersion
+    - nuget install Tools.InnoSetup -ExcludeVersion
+    - nuget install Brutal.Dev.StrongNameSigner -ExcludeVersion
+    - ps: tools\install-mono-game.ps1
+    - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
+  before_build:
+    - nuget restore
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - ps: tools\sign-mono-game.ps1
+  build:
+    project: EgamiFlowScreensaver.sln
+    verbosity: minimal
+    publish_nuget: true
+    publish_nuget_symbols: true
+    include_nuget_references: true
+  after_build:
+    - call tools\prepare-artifacts.bat buildserver
+  test:
+    assemblies: test\unit\EgamiFlowScreensaver.Test\bin\Release\Natsnudasoft.EgamiFlowScreensaver.Test.dll
+  after_test:
+    - call tools\run-test-report.bat buildserver
+  cache:
+    - packages -> **\packages.config
+    - C:\ProgramData\chocolatey\bin -> appveyor.yml
+    - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  artifacts:
+    - path: EgamiFlowScreensaver_Release_Any_CPU.zip
+      name: EgamiFlowScreensaver_Release_Any_CPU
+  deploy:
+    - provider: GitHub
+      tag: $(APPVEYOR_REPO_TAG_NAME)
+      release: 'EgamiFlowScreensaver $(APPVEYOR_REPO_TAG_NAME)'
+      description: ''
+      auth_token:
+        secure: Btb4eq03u8e4+k4WUyv4mWf0kfmzuxSCRo6u1nfOCtxlr4hrdpB5af5tVpt5q+1q
+      artifact: EgamiFlowScreensaver_Release_Any_CPU
+      draft: false
+      prerelease: false
+      on:
+        appveyor_repo_tag: true
+-
+  environment:
+    COVERALLS_REPO_TOKEN:
+      secure: Xy9K/RzLTTlFzQrYUY0oAUfKUNufDfeVKPk47OxL/6jK7Mx6gB/RFl5tiHcXT4fr
+    STRONG_NAME_SECRET:
+      secure: 4W8bFbUP7bJsxCqGF6+xfy7kCUjQscJcrGmjegVxxBs=
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  install:
+    - choco install gitversion.portable -y
+    - nuget install secure-file -ExcludeVersion
+    - nuget install Tools.InnoSetup -ExcludeVersion
+    - nuget install Brutal.Dev.StrongNameSigner -ExcludeVersion
+    - ps: tools\install-mono-game.ps1
+    - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
+  before_build:
+    - nuget restore
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - ps: tools\sign-mono-game.ps1
+  build:
+    project: EgamiFlowScreensaver.sln
+    verbosity: minimal
+  after_build:
+    - call tools\prepare-artifacts.bat buildserver
+  test:
+    assemblies: test\unit\EgamiFlowScreensaver.Test\bin\Release\Natsnudasoft.EgamiFlowScreensaver.Test.dll
+  after_test:
+    - call tools\run-test-report.bat buildserver
+  cache:
+    - packages -> **\packages.config
+    - C:\ProgramData\chocolatey\bin -> appveyor.yml
+    - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  artifacts:
+    - path: EgamiFlowScreensaver_Release_Any_CPU.zip
+      name: EgamiFlowScreensaver_Release_Any_CPU

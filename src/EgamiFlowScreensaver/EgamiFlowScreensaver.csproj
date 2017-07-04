@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Natsnudasoft.EgamiFlowScreensaver</RootNamespace>
+    <AssemblyName>Natsnudasoft.EgamiFlowScreensaver</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <WindowsKitsRoot>$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot10', null, RegistryView.Registry32, RegistryView.Default))</WindowsKitsRoot>
+    <WindowsKitsRoot Condition="'$(WindowsKitsRoot)' == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot81', null, RegistryView.Registry32, RegistryView.Default))</WindowsKitsRoot>
+    <MtPath Condition="Exists('$(WindowsKitsRoot)bin\10.0.15063.0\x64\mt.exe')">"$(WindowsKitsRoot)bin\10.0.15063.0\x64\mt.exe"</MtPath>
+    <MtPath Condition="'$(MtPath)' == '' AND Exists('$(WindowsKitsRoot)bin\x64\mt.exe')">"$(WindowsKitsRoot)bin\x64\mt.exe"</MtPath>
+    <RcPath Condition="Exists('$(WindowsKitsRoot)bin\10.0.15063.0\x64\rc.exe')">"$(WindowsKitsRoot)bin\10.0.15063.0\x64\rc.exe"</RcPath>
+    <RcPath Condition="'$(RcPath)' == '' AND Exists('$(WindowsKitsRoot)bin\x64\rc.exe')">"$(WindowsKitsRoot)bin\x64\rc.exe"</RcPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\$(MonoGamePlatform)\Debug\Natsnudasoft.EgamiFlowScreensaver.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>EgamiFlowScreensaver.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\$(MonoGamePlatform)\Release\Natsnudasoft.EgamiFlowScreensaver.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>EgamiFlowScreensaver.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(APPVEYOR)' == 'True' And '$(APPVEYOR_PULL_REQUEST_NUMBER)' == '' ">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\Natsnudasoft.snk</AssemblyOriginatorKeyFile>
+    <DefineConstants>$(DefineConstants);APPVEYOR</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>Properties\NativeRes.res</Win32Resource>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
+    <Compile Include="..\..\CommonSuppressions.cs">
+      <Link>CommonSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyContentManager.cs" />
+    <Compile Include="BackgroundDrawableManager.cs" />
+    <Compile Include="BackgroundMode.cs" />
+    <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="Config\ConfigurationFileService.cs" />
+    <Compile Include="Config\ConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ConfigurationForm.Designer.cs">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ConfigurationFormViewModel.cs" />
+    <Compile Include="Config\ConfigurationImageItem.cs" />
+    <Compile Include="Config\IConfigurationFileService.cs" />
+    <Compile Include="Config\ScreensaverConfiguration.cs" />
+    <Compile Include="DesktopBackgroundDrawable.cs" />
+    <Compile Include="IBackgroundDrawableManager.cs" />
+    <Compile Include="ImageBackgroundDrawbale.cs" />
+    <Compile Include="ITextureConverterService.cs" />
+    <Compile Include="ObservableBase.cs" />
+    <Compile Include="Config\ScreensaverSettingsAdapterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameCompositionRoot.cs" />
+    <Compile Include="INativeMethods.cs" />
+    <Compile Include="IScreenCaptureService.cs" />
+    <Compile Include="IScreensaverService.cs" />
+    <Compile Include="NativeConstants.cs" />
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="NativeMethods.Structures.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RadioGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RandomExtensions.cs" />
+    <Compile Include="RectangleExtensions.cs" />
+    <Compile Include="ScreenCaptureService.cs" />
+    <Compile Include="ScreensaverArea.cs" />
+    <Compile Include="ScreensaverGame.cs" />
+    <Compile Include="ScreensaverImageEmitter.cs" />
+    <Compile Include="ScreensaverImageEmitterCounter.cs" />
+    <Compile Include="ScreensaverImageItem.cs" />
+    <Compile Include="ScreensaverImageManager.cs" />
+    <Compile Include="ScreensaverService.cs" />
+    <Compile Include="ServiceProviderExtension.cs" />
+    <Compile Include="SolidColorBackgroundDrawable.cs" />
+    <Compile Include="TextureConverterService.cs" />
+    <Compile Include="WindowLongFlags.cs" />
+    <EmbeddedResource Include="..\EgamiFlowScreensaver.Content\bin\$(MonoGamePlatform)\$(Configuration)\Content\adie.xnb">
+      <Link>Content\adie.xnb</Link>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <AdditionalFiles Include="..\..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Natsnudasoft.NatsnudaLibrary, Version=0.5.0.0, Culture=neutral, PublicKeyToken=b0f282eb5a9064bb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NatsnudaLibrary.0.5.1\lib\net46\Natsnudasoft.NatsnudaLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\protobuf-net.2.2.1\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+    <AdditionalFiles Include="..\..\Menees.Analyzers.Settings.xml">
+      <Link>Menees.Analyzers.Settings.xml</Link>
+    </AdditionalFiles>
+    <Content Include="Properties\NativeRes.rc2" />
+    <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
+    <None Include="packages.config" />
+    <None Include="FodyWeavers.xml" />
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\ConfigurationForm.resx">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\codecracker.CSharp.1.0.3\analyzers\dotnet\cs\CodeCracker.Common.dll" />
+    <Analyzer Include="..\..\packages\codecracker.CSharp.1.0.3\analyzers\dotnet\cs\CodeCracker.CSharp.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Esent.Interop.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Menees.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Framework.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Tasks.Core.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Utilities.Core.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.AppContext.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Console.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Diagnostics.FileVersionInfo.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Diagnostics.StackTrace.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.Compression.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.FileSystem.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.FileSystem.Primitives.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Algorithms.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Encoding.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Primitives.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.X509Certificates.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Text.Encoding.CodePages.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Threading.Tasks.Dataflow.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Threading.Thread.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.ValueTuple.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.ReaderWriter.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XmlDocument.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XPath.dll" />
+    <Analyzer Include="..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XPath.XDocument.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <Import Project="..\..\packages\Fody.2.1.0\build\netstandard1.0\Fody.targets" Condition="Exists('..\..\packages\Fody.2.1.0\build\netstandard1.0\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Fody.2.1.0\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.2.1.0\build\netstandard1.0\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
+  <Target Name="GenerateNativeRes" BeforeTargets="PrepareForBuild" Inputs="&quot;$(MSBuildProjectDirectory)\Properties\NativeRes.rc2&quot;" Outputs="&quot;$(MSBuildProjectDirectory)\Properties\NativeRes.res&quot;">
+    <Message Text="Generating Native Resource file from .rc2" Importance="high" />
+    <Exec Command="$(RcPath) /nologo /r &quot;$(MSBuildProjectDirectory)\Properties\NativeRes.rc2&quot;" />
+  </Target>
+  <Target Name="EmbedManifest" AfterTargets="Build">
+    <Message Text="Embedding manifest file in .exe." Importance="high" />
+    <Exec Command="$(MtPath) -manifest &quot;$(OutputPath)app.manifest&quot; -outputresource:&quot;$(OutputPath)Natsnudasoft.EgamiFlowScreensaver.exe;1&quot; &gt; NUL" />
+  </Target>
+</Project>

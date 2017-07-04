@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for EgamiFlowScreensaver.Test" Description="Code analysis rules for EgamiFlowScreensaver.Test." ToolsVersion="15.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="CodeCracker.CSharp" RuleNamespace="CodeCracker.CSharp">
+    <Rule Id="CC0013" Action="None" />
+    <Rule Id="CC0014" Action="None" />
+    <Rule Id="CC0070" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="Menees.Analyzers" RuleNamespace="Menees.Analyzers">
+    <Rule Id="MEN007" Action="None" />
+    <Rule Id="MEN008" Action="None" />
+    <Rule Id="MEN010" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1006" Action="None" />
+    <Rule Id="CA1011" Action="None" />
+    <Rule Id="CA1020" Action="None" />
+    <Rule Id="CA1062" Action="None" />
+    <Rule Id="CA1303" Action="None" />
+    <Rule Id="CA1506" Action="None" />
+    <Rule Id="CA1704" Action="None" />
+    <Rule Id="CA1707" Action="None" />
+    <Rule Id="CA1811" Action="None" />
+    <Rule Id="CA1822" Action="None" />
+    <Rule Id="CA2202" Action="None" />
+    <Rule Id="CA2243" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS1591" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0003" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1652" Action="None" />
+  </Rules>
+</RuleSet>

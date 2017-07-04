@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgamiFlowScreensaver", "src\EgamiFlowScreensaver\EgamiFlowScreensaver.csproj", "{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F876CD0B-A2C5-416F-9EAA-B873C17C484F} = {F876CD0B-A2C5-416F-9EAA-B873C17C484F}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Analysis", "Code Analysis", "{A82F78B9-56A9-4543-A77D-9BD4FFB0FA0E}"
+	ProjectSection(SolutionItems) = preProject
+		CustomDictionary.xml = CustomDictionary.xml
+		src\EgamiFlowScreensaver\EgamiFlowScreensaver.ruleset = src\EgamiFlowScreensaver\EgamiFlowScreensaver.ruleset
+		test\unit\EgamiFlowScreensaver.Test\EgamiFlowScreensaver.Test.ruleset = test\unit\EgamiFlowScreensaver.Test\EgamiFlowScreensaver.Test.ruleset
+		Menees.Analyzers.Settings.xml = Menees.Analyzers.Settings.xml
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{C8A4C06A-C9C0-4760-9075-BA25B2A329A7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licensing", "Licensing", "{38FAEFAC-09A3-4484-826D-061FEA4C9FE4}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Test", "Unit Test", "{6E30F35E-AFA9-4906-ADFD-A6058554545B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versioning", "Versioning", "{B3FA4813-E953-458F-8B6B-C5C39A7309C5}"
+	ProjectSection(SolutionItems) = preProject
+		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
+		CommonSuppressions.cs = CommonSuppressions.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgamiFlowScreensaver.Test", "test\unit\EgamiFlowScreensaver.Test\EgamiFlowScreensaver.Test.csproj", "{601E3FAA-2A4B-476F-A148-2AB63F5B2002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EgamiFlowScreensaver.Content", "src\EgamiFlowScreensaver.Content\EgamiFlowScreensaver.Content.csproj", "{F876CD0B-A2C5-416F-9EAA-B873C17C484F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{7FA80B8B-ADFA-4A54-A44B-3EABB12717DE}"
+	ProjectSection(SolutionItems) = preProject
+		EgamiFlowScreensaver.iss = EgamiFlowScreensaver.iss
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A105EF7E-FBB2-4247-96F1-5A1A636ACA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601E3FAA-2A4B-476F-A148-2AB63F5B2002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601E3FAA-2A4B-476F-A148-2AB63F5B2002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601E3FAA-2A4B-476F-A148-2AB63F5B2002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601E3FAA-2A4B-476F-A148-2AB63F5B2002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F876CD0B-A2C5-416F-9EAA-B873C17C484F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F876CD0B-A2C5-416F-9EAA-B873C17C484F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F876CD0B-A2C5-416F-9EAA-B873C17C484F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F876CD0B-A2C5-416F-9EAA-B873C17C484F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{601E3FAA-2A4B-476F-A148-2AB63F5B2002} = {6E30F35E-AFA9-4906-ADFD-A6058554545B}
+	EndGlobalSection
+EndGlobal
