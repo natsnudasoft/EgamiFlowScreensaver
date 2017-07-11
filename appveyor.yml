@@ -21,6 +21,7 @@
     - nuget restore
     - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
     - ps: tools\sign-mono-game.ps1
+    - ps: tools\replace-version-numbers.ps1
   build:
     project: EgamiFlowScreensaver.sln
     verbosity: minimal
@@ -72,6 +73,7 @@
     - nuget restore
     - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
     - ps: tools\sign-mono-game.ps1
+    - ps: tools\replace-version-numbers.ps1
   build:
     project: EgamiFlowScreensaver.sln
     verbosity: minimal
