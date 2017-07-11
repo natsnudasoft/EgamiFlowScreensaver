@@ -168,7 +168,9 @@
     <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
-    <Content Include="Icon.ico" />
+    <None Include="..\..\resources\Icon.ico">
+      <Link>Icon.ico</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Config\ConfigurationForm.resx">
