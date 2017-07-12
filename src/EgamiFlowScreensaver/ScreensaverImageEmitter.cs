@@ -100,36 +100,44 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="gameTime">A snapshot of the current game time.</param>
         public void Update(GameTime gameTime)
         {
-            if (this.IsRunning && this.screensaverTextures.Count > 0)
+            if (this.IsRunning)
             {
-                var emitCount = this.counter.UpdateEmit(gameTime);
-                var bottomLeftPrimary = new Point(
-                    this.screensaverArea.PrimaryGameBounds.Left,
-                    this.screensaverArea.PrimaryGameBounds.Bottom);
-                for (int i = 0; i < emitCount; ++i)
+                if (this.currentEmitCount >= this.maxEmitCount)
                 {
-                    var textureIndex = this.random.Next(0, this.screensaverTextures.Count);
-                    var texture = this.screensaverTextures[textureIndex];
-                    var minLeft = bottomLeftPrimary.X - texture.Width - PositionDistribution;
-                    var maxLeft = bottomLeftPrimary.X - texture.Width + PositionDistribution;
-                    var minBottom = bottomLeftPrimary.Y - PositionDistribution;
-                    var maxBottom = bottomLeftPrimary.Y + PositionDistribution;
-                    var position = new Vector2(
-                        this.random.NextFloat(minLeft, maxLeft),
-                        this.random.NextFloat(minBottom, maxBottom));
-                    var speed = new Vector2(
-                        this.random.NextFloat(MinSpeed, MaxSpeed),
-                        -this.random.NextFloat(MinSpeed, MaxSpeed));
-                    var screensaverImageItem = new ScreensaverImageItem
+                    this.Stop();
+                }
+                else if (this.screensaverTextures.Count > 0)
+                {
+                    var emitCount = this.counter.UpdateEmit(gameTime);
+                    var bottomLeftPrimary = new Point(
+                        this.screensaverArea.PrimaryGameBounds.Left,
+                        this.screensaverArea.PrimaryGameBounds.Bottom);
+                    for (int i = 0; i < emitCount; ++i)
                     {
-                        Position = position,
-                        Speed = speed,
-                        Texture = texture
-                    };
-                    this.screensaverImageManager.AddScreensaverImage(screensaverImageItem);
-                    if (++this.currentEmitCount >= this.maxEmitCount)
-                    {
-                        this.Stop();
+                        var textureIndex = this.random.Next(0, this.screensaverTextures.Count);
+                        var texture = this.screensaverTextures[textureIndex];
+                        var minLeft = bottomLeftPrimary.X - texture.Width - PositionDistribution;
+                        var maxLeft = bottomLeftPrimary.X - texture.Width + PositionDistribution;
+                        var minBottom = bottomLeftPrimary.Y - PositionDistribution;
+                        var maxBottom = bottomLeftPrimary.Y + PositionDistribution;
+                        var position = new Vector2(
+                            this.random.NextFloat(minLeft, maxLeft),
+                            this.random.NextFloat(minBottom, maxBottom));
+                        var speed = new Vector2(
+                            this.random.NextFloat(MinSpeed, MaxSpeed),
+                            -this.random.NextFloat(MinSpeed, MaxSpeed));
+                        var screensaverImageItem = new ScreensaverImageItem
+                        {
+                            Position = position,
+                            Speed = speed,
+                            Texture = texture
+                        };
+                        this.screensaverImageManager.AddScreensaverImage(screensaverImageItem);
+                        if (++this.currentEmitCount >= this.maxEmitCount)
+                        {
+                            this.Stop();
+                            break;
+                        }
                     }
                 }
             }

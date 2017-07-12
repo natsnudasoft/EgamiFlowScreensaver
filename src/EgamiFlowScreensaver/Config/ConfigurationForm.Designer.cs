@@ -22,8 +22,8 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label imageEmitRateLabel;
             System.Windows.Forms.Panel panel2;
-            this.maxImageEmitCountNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.imageEmitRateNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.imageEmitRateNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imagePreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.removeImageButton = new System.Windows.Forms.Button();
             this.addImageButton = new System.Windows.Forms.Button();
@@ -81,11 +81,6 @@
             // 
             // maxImageEmitCountNumericUpDown
             // 
-            this.maxImageEmitCountNumericUpDown.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            65536});
             resources.ApplyResources(this.maxImageEmitCountNumericUpDown, "maxImageEmitCountNumericUpDown");
             this.maxImageEmitCountNumericUpDown.Maximum = new decimal(new int[] {
             32767,
@@ -268,8 +263,8 @@
         private System.Windows.Forms.PictureBox imagePreviewPictureBox;
         private RadioGroupBox backgroundRadioGroupBox;
         private System.Windows.Forms.RadioButton desktopRadioButtn;
-        private System.Windows.Forms.NumericUpDown imageEmitRateNumericUpDown;
+        private NumericUpDownWheel imageEmitRateNumericUpDown;
         private System.Windows.Forms.ToolTip configurationToolTip;
-        private System.Windows.Forms.NumericUpDown maxImageEmitCountNumericUpDown;
+        private NumericUpDownWheel maxImageEmitCountNumericUpDown;
     }
 }
