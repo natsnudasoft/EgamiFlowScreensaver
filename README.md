@@ -17,15 +17,15 @@ A Windows screensaver allowing custom images to float around the desktop.
 ## Installation
 
 Download *EgamiFlowScreensaver_Release_Any_CPU.zip* from the latest release found [here](https://github.com/natsnudasoft/EgamiFlowScreensaver/releases/latest).
-Unzip the contents of this, navigate to the *EgamiFlowScreensaver* folder and run
+Extract the contents of the zip file, and navigate to the *EgamiFlowScreensaver* folder and run
 *Egami Flow Screensaver.exe* to install the screensaver. You should now be able to select the
-screensaver from the windows screensaver settings window.
+screensaver from the Windows screensaver settings window.
 
 [<img src="./resources/ScreensaverSettings.png" alt="Egami Flow Screensaver Screenshot" />](./resources/ScreensaverSettings.png?raw=true)
 
 ## Configuration
 
-You can configure the screensaver by clicking the *Settings...* button on the windows screensaver
+You can configure the screensaver by clicking the *Settings...* button on the Windows screensaver
 settings window. The configuration window looks like the image below.
 
 [<img src="./resources/EgamiFlowScreensaverConfiguration.png" alt="Egami Flow Screensaver Screenshot" />](./resources/EgamiFlowScreensaverConfiguration.png?raw=true)
@@ -33,20 +33,20 @@ settings window. The configuration window looks like the image below.
 On this page you can manage the images that will be randomly selected to float around the screen by
 the screensaver while it is running, as well as configure a few other settings as follows:
 
-#### Images Settings
-##### Image Emit Rate
+### Images Settings
+#### Image Emit Rate
 The number of new images that will be created by the screensaver per second.
 
-##### Max Image Emit Count
+#### Max Image Emit Count
 The maximum number of images that will be created by the screensaver; when this number of images
 are floating around the screen, the screensaver will stop creating new images.
 
-#### Background Settings
-##### Desktop
+### Background Settings
+#### Desktop
 The screensaver will take a screenshot of the current desktop and use that as the background.
 
-##### Solid Color
+#### Solid Color
 The screensaver will display a chosen colour as the background.
 
-##### Image
+#### Image
 The screensaver will display a chosen image as the background.
