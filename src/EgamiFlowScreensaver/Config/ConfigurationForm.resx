@@ -190,7 +190,7 @@
     <value>maxImageEmitCountNumericUpDown</value>
   </data>
   <data name="&gt;&gt;maxImageEmitCountNumericUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel, Natsnudasoft.EgamiFlowScreensaver, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;maxImageEmitCountNumericUpDown.Parent" xml:space="preserve">
     <value>imagesGroupBox</value>
@@ -253,7 +253,7 @@
     <value>imageEmitRateNumericUpDown</value>
   </data>
   <data name="&gt;&gt;imageEmitRateNumericUpDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel, Natsnudasoft.EgamiFlowScreensaver, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;imageEmitRateNumericUpDown.Parent" xml:space="preserve">
     <value>imagesGroupBox</value>

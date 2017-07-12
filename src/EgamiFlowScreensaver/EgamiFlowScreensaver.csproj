@@ -84,6 +84,9 @@
     <Compile Include="IBackgroundDrawableManager.cs" />
     <Compile Include="ImageBackgroundDrawbale.cs" />
     <Compile Include="ITextureConverterService.cs" />
+    <Compile Include="NumericUpDownWheel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ObservableBase.cs" />
     <Compile Include="Config\ScreensaverSettingsAdapterForm.cs">
       <SubType>Form</SubType>
