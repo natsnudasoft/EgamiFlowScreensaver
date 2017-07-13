@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using System.Runtime.InteropServices;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.NatsnudaLibrary;
@@ -37,6 +38,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="graphicsDeviceService">The graphics device service to use to help create
         /// instances of <see cref="Texture2D"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="graphicsDeviceService"/> is
+        /// <see langword="null"/>.</exception>
         public TextureConverterService(IGraphicsDeviceService graphicsDeviceService)
         {
             ParameterValidation.IsNotNull(graphicsDeviceService, nameof(graphicsDeviceService));
@@ -45,6 +48,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="Exception">The operation failed for an unknown reason.</exception>
         public Texture2D FromBitmap(SystemBitmap bitmap)
         {
             var texture = new Texture2D(

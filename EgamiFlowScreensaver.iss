@@ -28,6 +28,7 @@ Source: "src\EgamiFlowScreensaver\bin\Windows\Release\Natsnudasoft.EgamiFlowScre
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{userappdata}\EgamiFlowScreensaver\images"
+Type: filesandordirs; Name: "{userappdata}\EgamiFlowScreensaver\logs"
 Type: files; Name: "{userappdata}\EgamiFlowScreensaver\background.*"
 Type: files; Name: "{userappdata}\EgamiFlowScreensaver\settings.cfg"
 Type: dirifempty; Name: "{userappdata}\EgamiFlowScreensaver"

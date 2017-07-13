@@ -39,6 +39,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// settings window.</param>
         /// <param name="screensaverSettingsChildHandle">The screensaver settings child handle.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="nativeMethods"/>, or
+        /// <paramref name="configForm"/> is <see langword="null"/>.</exception>
         public ScreensaverSettingsAdapterForm(
             INativeMethods nativeMethods,
             ConfigurationForm configForm,

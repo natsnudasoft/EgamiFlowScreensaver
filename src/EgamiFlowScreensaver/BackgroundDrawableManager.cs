@@ -37,6 +37,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="serviceProvider">The service provider for the currently running
         /// <see cref="Game"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="serviceProvider"/> is
+        /// <see langword="null"/>.</exception>
         public BackgroundDrawableManager(IServiceProvider serviceProvider)
         {
             ParameterValidation.IsNotNull(serviceProvider, nameof(serviceProvider));

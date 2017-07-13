@@ -40,6 +40,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </param>
         /// <param name="textureConverterService">The texture converter service.</param>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="backgroundImageFilePath"/>,
+        /// <paramref name="textureConverterService"/>, or <paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="backgroundImageFilePath"/> is
+        /// empty.</exception>
         public ImageBackgroundDrawbale(
             string backgroundImageFilePath,
             ITextureConverterService textureConverterService,

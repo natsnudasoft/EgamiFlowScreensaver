@@ -37,6 +37,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="screenCaptureService">The screen capture service.</param>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screenCaptureService"/>, or
+        /// <paramref name="screensaverArea"/> is <see langword="null"/>.</exception>
         public DesktopBackgroundDrawable(
             IScreenCaptureService screenCaptureService,
             ScreensaverArea screensaverArea)

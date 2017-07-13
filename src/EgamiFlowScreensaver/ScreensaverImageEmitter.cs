@@ -50,6 +50,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// randomly choose from when emitting an image.</param>
         /// <param name="maxEmitCount">The maximum number of images that can be emitted. When this
         /// value is reached, this <see cref="ScreensaverImageEmitter"/> will stop.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="counter"/>,
+        /// <paramref name="screensaverArea"/>, <paramref name="screensaverImageManager"/>, or
+        /// <paramref name="screensaverTextures"/> is <see langword="null"/>.</exception>
         public ScreensaverImageEmitter(
             ScreensaverImageEmitterCounter counter,
             ScreensaverArea screensaverArea,

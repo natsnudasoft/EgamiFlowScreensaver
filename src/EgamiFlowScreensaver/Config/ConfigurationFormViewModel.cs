@@ -22,7 +22,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System.IO;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
+    using NLog;
     using Properties;
+    using ProtoBuf;
+    using static System.FormattableString;
 
     /// <summary>
     /// Provides a class for managing the state of the backing values for the current state of
@@ -32,6 +35,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="IDisposable" />
     public sealed class ConfigurationFormViewModel : ObservableBase, IDisposable
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IConfigurationFileService configurationFileService;
         private readonly BindingList<ConfigurationImageItem> images;
         private int selectedImageIndex = -1;
@@ -45,6 +50,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         /// <param name="configurationFileService">The configuration file service to use to
         /// perform operations in the configuration directory.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/> is
+        /// <see langword="null"/>.</exception>
         public ConfigurationFormViewModel(IConfigurationFileService configurationFileService)
         {
             ParameterValidation.IsNotNull(
@@ -153,11 +160,29 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 openFileDialog.DefaultExt = ".png";
                 if (openFileDialog.ShowDialog(owner) == DialogResult.OK)
                 {
-                    var imageItem = this.configurationFileService.CopyScreensaverImage(
-                        openFileDialog.FileName,
-                        this.Images.Count);
-                    var addedIndex = this.Images.Add(imageItem);
-                    this.SelectedImageIndex = addedIndex;
+                    try
+                    {
+                        var imageItem = this.configurationFileService.CopyScreensaverImage(
+                            openFileDialog.FileName,
+                            this.Images.Count);
+                        var addedIndex = this.Images.Add(imageItem);
+                        this.SelectedImageIndex = addedIndex;
+                    }
+                    catch (IOException ex)
+                    {
+                        ShowIOExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        ShowUnauthorizedAccessExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        ShowTimeoutExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
                 }
             }
         }
@@ -165,14 +190,34 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// <summary>
         /// Removes the currently selected image item from the image item collection.
         /// </summary>
-        public void RemoveSelectedImage()
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void RemoveSelectedImage(IWin32Window owner)
         {
             if (this.SelectedImageIndex >= 0 && this.SelectedImageIndex < this.Images.Count)
             {
                 var selectedImage = this.images[this.SelectedImageIndex];
-                this.Images.RemoveAt(this.SelectedImageIndex);
-                this.SelectedImagePreview?.Dispose();
-                this.configurationFileService.RemoveScreensaverImage(selectedImage.ImageFilePath);
+                try
+                {
+                    this.configurationFileService.RemoveScreensaverImage(
+                        selectedImage.ImageFilePath);
+                    this.Images.RemoveAt(this.SelectedImageIndex);
+                    this.SelectedImagePreview?.Dispose();
+                }
+                catch (IOException ex)
+                {
+                    ShowIOExceptionMessage(owner);
+                    Logger.Error(ex, string.Empty);
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    ShowUnauthorizedAccessExceptionMessage(owner);
+                    Logger.Error(ex, string.Empty);
+                }
+                catch (TimeoutException ex)
+                {
+                    ShowTimeoutExceptionMessage(owner);
+                    Logger.Error(ex, string.Empty);
+                }
             }
         }
 
@@ -207,8 +252,26 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 openFileDialog.DefaultExt = ".png";
                 if (openFileDialog.ShowDialog(owner) == DialogResult.OK)
                 {
-                    this.BackgroundImage =
-                        this.configurationFileService.CopyBackgroundImage(openFileDialog.FileName);
+                    try
+                    {
+                        this.BackgroundImage = this.configurationFileService.CopyBackgroundImage(
+                            openFileDialog.FileName);
+                    }
+                    catch (IOException ex)
+                    {
+                        ShowIOExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        ShowUnauthorizedAccessExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        ShowTimeoutExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
                 }
             }
         }
@@ -216,25 +279,58 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// <summary>
         /// Reads the configuration from disk and synchronises the properties with this view model.
         /// </summary>
-        public void ReadSettingsFromDisk()
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        /// <returns><see langword="true"/> if the settings were successfully read from disk;
+        /// otherwise <see langword="false"/>.</returns>
+        public bool ReadSettingsFromDisk(IWin32Window owner)
         {
-            var screensaverConfiguration = this.configurationFileService.Open();
-            this.BackgroundMode = screensaverConfiguration.BackgroundMode;
-            this.BackgroundColor = screensaverConfiguration.BackgroundColor;
-            this.BackgroundImage = screensaverConfiguration.BackgroundImage;
-            this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
-            this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
-            this.Images.Clear();
-            foreach (var configurationImageItem in screensaverConfiguration.Images)
+            try
             {
-                this.Images.Add(configurationImageItem);
+                var screensaverConfiguration = this.configurationFileService.Open();
+                this.BackgroundMode = screensaverConfiguration.BackgroundMode;
+                this.BackgroundColor = screensaverConfiguration.BackgroundColor;
+                this.BackgroundImage = screensaverConfiguration.BackgroundImage;
+                this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
+                this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
+                this.Images.Clear();
+                foreach (var configurationImageItem in screensaverConfiguration.Images)
+                {
+                    this.Images.Add(configurationImageItem);
+                }
+
+                return true;
             }
+            catch (IOException ex)
+            {
+                ShowIOExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ShowUnauthorizedAccessExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+            catch (TimeoutException ex)
+            {
+                ShowTimeoutExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+            catch (ProtoException ex)
+            {
+                ShowProtoExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Commits the relevant properties of this view model to the configuration file on disk.
         /// </summary>
-        public void CommitSettingsToDisk()
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        /// <returns><see langword="true"/> if the settings were successfully written to disk;
+        /// otherwise <see langword="false"/>.</returns>
+        public bool CommitSettingsToDisk(IWin32Window owner)
         {
             var screensaverConfiguration = new ScreensaverConfiguration
             {
@@ -249,7 +345,28 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 screensaverConfiguration.Images.Add(configurationImageItem);
             }
 
-            this.configurationFileService.Save(screensaverConfiguration);
+            try
+            {
+                this.configurationFileService.Save(screensaverConfiguration);
+                return true;
+            }
+            catch (IOException ex)
+            {
+                ShowIOExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                ShowUnauthorizedAccessExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+            catch (TimeoutException ex)
+            {
+                ShowTimeoutExceptionMessage(owner);
+                Logger.Error(ex, string.Empty);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -286,6 +403,46 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             GC.SuppressFinalize(this);
         }
 
+        private static void ShowIOExceptionMessage(IWin32Window owner)
+        {
+            MessageBox.Show(
+                owner,
+                Resources.ConfigurationIOExceptionMessage,
+                Resources.ConfigurationIOExceptionCaption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        private static void ShowUnauthorizedAccessExceptionMessage(IWin32Window owner)
+        {
+            MessageBox.Show(
+                owner,
+                Resources.ConfigurationUnauthorisedAccessExceptionMessage,
+                Resources.ConfigurationUnauthorisedAccessExceptionCaption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        private static void ShowTimeoutExceptionMessage(IWin32Window owner)
+        {
+            MessageBox.Show(
+                owner,
+                Resources.ConfigurationTimeoutExceptionMessage,
+                Resources.ConfigurationTimeoutExceptionCaption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
+        private static void ShowProtoExceptionMessage(IWin32Window owner)
+        {
+            MessageBox.Show(
+                owner,
+                Resources.ConfigurationProtoExceptionMessage,
+                Resources.ConfigurationProtoExceptionCaption,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)
@@ -304,8 +461,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 {
                     this.SelectedImagePreview = Image.FromFile(filePath);
                 }
-                catch (FileNotFoundException)
+                catch (FileNotFoundException ex)
                 {
+                    Logger.Warn(ex, Invariant($"Could not load preview image from '{filePath}'."));
                     this.SelectedImagePreview = null;
                 }
             }

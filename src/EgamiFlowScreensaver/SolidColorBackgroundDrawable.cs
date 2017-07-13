@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using SystemColor = System.Drawing.Color;
@@ -34,6 +35,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="backgroundColor">The colour to use for the background.</param>
         /// <param name="screensaverArea">The screensaver area.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
         public SolidColorBackgroundDrawable(
             SystemColor backgroundColor,
             ScreensaverArea screensaverArea)
