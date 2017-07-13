@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
+    using System;
     using Natsnudasoft.NatsnudaLibrary;
     using ProtoBuf;
 
@@ -30,6 +31,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         /// <param name="imageFilePath">The path to the image file.</param>
         /// <param name="originalFileName">The original name of the image file.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="imageFilePath"/>, or
+        /// <paramref name="originalFileName"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="imageFilePath"/>, or
+        /// <paramref name="originalFileName"/> is empty.</exception>
         public ConfigurationImageItem(string imageFilePath, string originalFileName)
         {
             ParameterValidation.IsNotNull(imageFilePath, nameof(imageFilePath));

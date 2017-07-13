@@ -16,7 +16,9 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using Microsoft.Xna.Framework.Graphics;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides an abstract base for an item that will be drawn as the background to a
@@ -28,8 +30,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// Initializes a new instance of the <see cref="BackgroundDrawable"/> class.
         /// </summary>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
         protected BackgroundDrawable(ScreensaverArea screensaverArea)
         {
+            ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
+
             this.ScreensaverArea = screensaverArea;
         }
 

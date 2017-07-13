@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
+    using System;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
 
@@ -34,6 +35,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// <param name="isIndependantWindow">Whether or not the <see cref="ConfigurationForm"/> is
         /// being opened as an independent window or as part of the screensaver settings window.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="viewModel"/> is
+        /// empty.</exception>
         public ConfigurationForm(ConfigurationFormViewModel viewModel, bool isIndependantWindow)
         {
             ParameterValidation.IsNotNull(viewModel, nameof(viewModel));
@@ -77,7 +80,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(ConfigurationFormViewModel.IsImageSelected));
             this.removeImageButton.Click += (sender, e) =>
             {
-                this.viewModel.RemoveSelectedImage();
+                this.viewModel.RemoveSelectedImage(this);
             };
 
             this.chooseColorButton.DataBindings.Add(
@@ -120,11 +123,22 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
             this.okButton.Click += (sender, e) =>
             {
-                if (this.viewModel.Validate(this))
+                if (this.viewModel.Validate(this) &&
+                    this.viewModel.CommitSettingsToDisk(this))
                 {
                     this.DialogResult = DialogResult.OK;
                 }
             };
+        }
+
+        /// <inheritdoc/>
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            if (!this.viewModel.ReadSettingsFromDisk(this))
+            {
+                this.DialogResult = DialogResult.Abort;
+            }
         }
 
         /// <inheritdoc/>

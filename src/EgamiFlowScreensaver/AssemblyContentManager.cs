@@ -38,6 +38,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="contentAssembly">The assembly to retrieve embedded content from.</param>
         /// <param name="serviceProvider">The service provider for the currently running
         /// <see cref="Game"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="contentAssembly"/> is
+        /// <see langword="null"/>.</exception>
         public AssemblyContentManager(Assembly contentAssembly, IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
@@ -54,6 +56,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <see cref="Game"/>.</param>
         /// <param name="rootDirectory">The root directory to search for content within the
         /// specified assembly.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="contentAssembly"/> is
+        /// <see langword="null"/>.</exception>
         public AssemblyContentManager(
             Assembly contentAssembly,
             IServiceProvider serviceProvider,
@@ -66,6 +70,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="assetName"/> is
+        /// <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="assetName"/> is
+        /// empty.</exception>
+        /// <exception cref="ContentLoadException">The embedded content file could not be found, or
+        /// the embedded content file could not be loaded.</exception>
         protected override Stream OpenStream(string assetName)
         {
             ParameterValidation.IsNotNull(assetName, nameof(assetName));

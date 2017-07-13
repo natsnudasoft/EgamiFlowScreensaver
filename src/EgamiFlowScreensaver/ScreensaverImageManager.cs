@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -33,6 +34,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// Initializes a new instance of the <see cref="ScreensaverImageManager"/> class.
         /// </summary>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
         public ScreensaverImageManager(ScreensaverArea screensaverArea)
         {
             ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
@@ -97,6 +100,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <see cref="ScreensaverImageManager"/>.
         /// </summary>
         /// <param name="screensaverImageItem">The screensaver image item to add.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverImageItem"/> is
+        /// <see langword="null"/>.</exception>
         public void AddScreensaverImage(ScreensaverImageItem screensaverImageItem)
         {
             ParameterValidation.IsNotNull(screensaverImageItem, nameof(screensaverImageItem));

@@ -115,6 +115,96 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configuration Directory Error.
+        /// </summary>
+        internal static string ConfigurationIOExceptionCaption {
+            get {
+                return ResourceManager.GetString("ConfigurationIOExceptionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred when attempting to read from or write to the configuration directory..
+        /// </summary>
+        internal static string ConfigurationIOExceptionMessage {
+            get {
+                return ResourceManager.GetString("ConfigurationIOExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration File Error.
+        /// </summary>
+        internal static string ConfigurationProtoExceptionCaption {
+            get {
+                return ResourceManager.GetString("ConfigurationProtoExceptionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while reading or writing to the configuration file..
+        /// </summary>
+        internal static string ConfigurationProtoExceptionMessage {
+            get {
+                return ResourceManager.GetString("ConfigurationProtoExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration Timeout.
+        /// </summary>
+        internal static string ConfigurationTimeoutExceptionCaption {
+            get {
+                return ResourceManager.GetString("ConfigurationTimeoutExceptionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timed out while waiting for access to the configuration directory..
+        /// </summary>
+        internal static string ConfigurationTimeoutExceptionMessage {
+            get {
+                return ResourceManager.GetString("ConfigurationTimeoutExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration Unathourised Access.
+        /// </summary>
+        internal static string ConfigurationUnauthorisedAccessExceptionCaption {
+            get {
+                return ResourceManager.GetString("ConfigurationUnauthorisedAccessExceptionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current user does not have access to the configuration directory..
+        /// </summary>
+        internal static string ConfigurationUnauthorisedAccessExceptionMessage {
+            get {
+                return ResourceManager.GetString("ConfigurationUnauthorisedAccessExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled Exception.
+        /// </summary>
+        internal static string UnhandledExceptionCaption {
+            get {
+                return ResourceManager.GetString("UnhandledExceptionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled exception occurred, please see the log file for more details..
+        /// </summary>
+        internal static string UnhandledExceptionMessage {
+            get {
+                return ResourceManager.GetString("UnhandledExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Egami Flow Screensaver.
         /// </summary>
         internal static string WindowTitle {

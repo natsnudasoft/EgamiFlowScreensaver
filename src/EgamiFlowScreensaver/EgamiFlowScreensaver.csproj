@@ -66,9 +66,11 @@
       <Link>CommonSuppressions.cs</Link>
     </Compile>
     <Compile Include="AssemblyContentManager.cs" />
+    <Compile Include="AssemblyNLogConfiguration.cs" />
     <Compile Include="BackgroundDrawableManager.cs" />
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="Config\ConfigurationDirLayoutRenderer.cs" />
     <Compile Include="Config\ConfigurationFileService.cs" />
     <Compile Include="Config\ConfigurationForm.cs">
       <SubType>Form</SubType>
@@ -146,6 +148,9 @@
     <Reference Include="Natsnudasoft.NatsnudaLibrary, Version=0.5.0.0, Culture=neutral, PublicKeyToken=b0f282eb5a9064bb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NatsnudaLibrary.0.5.1\lib\net46\Natsnudasoft.NatsnudaLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="protobuf-net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\packages\protobuf-net.2.2.1\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
@@ -169,6 +174,10 @@
     </AdditionalFiles>
     <Content Include="Properties\NativeRes.rc2" />
     <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
+    <EmbeddedResource Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="FodyWeavers.xml" />
     <None Include="..\..\resources\Icon.ico">

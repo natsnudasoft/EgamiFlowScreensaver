@@ -34,6 +34,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="nativeMethods">The native methods service to be used by this service.
         /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="nativeMethods"/> is
+        /// <see langword="null"/>.</exception>
         public ScreensaverService(INativeMethods nativeMethods)
         {
             ParameterValidation.IsNotNull(nativeMethods, nameof(nativeMethods));

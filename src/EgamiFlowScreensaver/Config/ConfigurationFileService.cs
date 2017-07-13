@@ -20,6 +20,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System.IO;
     using System.Reflection;
     using System.Runtime.InteropServices;
+    using System.Security;
     using System.Security.AccessControl;
     using System.Security.Principal;
     using System.Threading;
@@ -63,6 +64,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         public string ConfigImagesPath { get; }
 
         /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="ProtoException">There was an error de-serializing the configuration
+        /// file.</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
         public ScreensaverConfiguration Open()
         {
             ScreensaverConfiguration screensaverConfiguration = null;
@@ -88,6 +99,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="ProtoException">There was an error serializing the configuration
+        /// file.</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
         public void Save(ScreensaverConfiguration screensaverConfiguration)
         {
             Action saveAction = () =>
@@ -104,7 +125,19 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             PerformMutuallyExclusiveConfigFileAction(saveAction);
         }
 
+#pragma warning disable SA1625 // Element documentation must not be copied and pasted
         /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="SecurityException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
+#pragma warning restore SA1625 // Element documentation must not be copied and pasted
         public ConfigurationImageItem CopyBackgroundImage(string backgroundImageFilePath)
         {
             Func<ConfigurationImageItem> copyBackgroundImageAction = () =>
@@ -124,6 +157,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
         public ConfigurationImageItem CopyScreensaverImage(
             string screensaverImageFilePath,
             int screensaverImageIndex)
@@ -145,6 +186,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
         public void RemoveScreensaverImage(string screensaverImageFilePath)
         {
             Action removeScreensaverImageAction = () =>

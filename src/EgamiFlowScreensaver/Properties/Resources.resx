@@ -142,4 +142,34 @@
   <data name="ChooseABackgroundImageText" xml:space="preserve">
     <value>You must choose a background image when image background mode is selected.</value>
   </data>
+  <data name="UnhandledExceptionCaption" xml:space="preserve">
+    <value>Unhandled Exception</value>
+  </data>
+  <data name="UnhandledExceptionMessage" xml:space="preserve">
+    <value>An unhandled exception occurred, please see the log file for more details.</value>
+  </data>
+  <data name="ConfigurationIOExceptionCaption" xml:space="preserve">
+    <value>Configuration Directory Error</value>
+  </data>
+  <data name="ConfigurationIOExceptionMessage" xml:space="preserve">
+    <value>An error occurred when attempting to read from or write to the configuration directory.</value>
+  </data>
+  <data name="ConfigurationTimeoutExceptionCaption" xml:space="preserve">
+    <value>Configuration Timeout</value>
+  </data>
+  <data name="ConfigurationTimeoutExceptionMessage" xml:space="preserve">
+    <value>Timed out while waiting for access to the configuration directory.</value>
+  </data>
+  <data name="ConfigurationUnauthorisedAccessExceptionCaption" xml:space="preserve">
+    <value>Configuration Unathourised Access</value>
+  </data>
+  <data name="ConfigurationUnauthorisedAccessExceptionMessage" xml:space="preserve">
+    <value>The current user does not have access to the configuration directory.</value>
+  </data>
+  <data name="ConfigurationProtoExceptionCaption" xml:space="preserve">
+    <value>Configuration File Error</value>
+  </data>
+  <data name="ConfigurationProtoExceptionMessage" xml:space="preserve">
+    <value>An error occurred while reading or writing to the configuration file.</value>
+  </data>
 </root>

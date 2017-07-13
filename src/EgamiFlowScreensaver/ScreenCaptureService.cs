@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.NatsnudaLibrary;
     using CopyPixelOperation = System.Drawing.CopyPixelOperation;
@@ -38,6 +39,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="textureConverterService">The texture converter service to use to for
         /// converting captured images to a <see cref="Texture2D"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="textureConverterService"/> is
+        /// <see langword="null"/>.</exception>
         public ScreenCaptureService(ITextureConverterService textureConverterService)
         {
             ParameterValidation.IsNotNull(textureConverterService, nameof(textureConverterService));
@@ -46,6 +49,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="Exception">The captured image could not be converted to a
+        /// <see cref="Texture2D"/>.</exception>
         public Texture2D CaptureScreenshotTexture(
             SystemPoint captureLocation,
             SystemSize captureSize)
