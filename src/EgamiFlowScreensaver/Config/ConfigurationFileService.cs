@@ -17,13 +17,14 @@
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Runtime.InteropServices;
-    using System.Security;
     using System.Security.AccessControl;
     using System.Security.Principal;
     using System.Threading;
+    using NLog;
     using Properties;
     using ProtoBuf;
     using static System.FormattableString;
@@ -34,6 +35,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="IConfigurationFileService" />
     public sealed class ConfigurationFileService : IConfigurationFileService
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private static readonly TimeSpan ConfigFileTimeout = TimeSpan.FromSeconds(3);
         private static readonly Lazy<Mutex> LazyConfigFileMutex =
             new Lazy<Mutex>(CreateConfigFileMutex);
@@ -125,35 +127,33 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             PerformMutuallyExclusiveConfigFileAction(saveAction);
         }
 
-#pragma warning disable SA1625 // Element documentation must not be copied and pasted
         /// <inheritdoc/>
         /// <exception cref="IOException">The path to a configuration file is not known, or an error
         /// occurred while opening a configuration file.</exception>
         /// <exception cref="UnauthorizedAccessException">The caller does not have the required
         /// permissions to access a configuration file.</exception>
-        /// <exception cref="SecurityException">The caller does not have the required
-        /// permissions to access a configuration file.</exception>
         /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
         /// it is on an unmapped drive).</exception>
         /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
         /// file.</exception>
-#pragma warning restore SA1625 // Element documentation must not be copied and pasted
-        public ConfigurationImageItem CopyBackgroundImage(string backgroundImageFilePath)
+        public ConfigurationImageItem CommitCachedBackgroundImage(
+            ConfigurationImageItem backgroundImageItem)
         {
-            Func<ConfigurationImageItem> copyBackgroundImageAction = () =>
+            Func<ConfigurationImageItem> commitBackgroundImageAction = () =>
             {
                 Directory.CreateDirectory(this.ConfigPath);
-                this.DeleteOldBackgrounds();
+                this.DeleteOldBackgroundImagesInternal();
                 var newBackgroundImageFileName =
                     Resources.ConfigurationBackgroundImageFileName +
-                    Path.GetExtension(backgroundImageFilePath);
+                    Path.GetExtension(backgroundImageItem.OriginalFileName);
                 var newBackgroundImageFilePath =
                     Path.Combine(this.ConfigPath, newBackgroundImageFileName);
-                File.Copy(backgroundImageFilePath, newBackgroundImageFilePath, true);
-                var originalFileName = Path.GetFileName(backgroundImageFilePath);
-                return new ConfigurationImageItem(newBackgroundImageFilePath, originalFileName);
+                File.Copy(backgroundImageItem.ImageFilePath, newBackgroundImageFilePath, true);
+                return new ConfigurationImageItem(
+                    newBackgroundImageFilePath,
+                    backgroundImageItem.OriginalFileName);
             };
-            return PerformMutuallyExclusiveConfigFileAction(copyBackgroundImageAction);
+            return PerformMutuallyExclusiveConfigFileAction(commitBackgroundImageAction);
         }
 
         /// <inheritdoc/>
@@ -165,46 +165,43 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// it is on an unmapped drive).</exception>
         /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
         /// file.</exception>
-        public ConfigurationImageItem CopyScreensaverImage(
-            string screensaverImageFilePath,
-            int screensaverImageIndex)
+        public void DeleteOldBackgroundImages()
         {
-            Func<ConfigurationImageItem> copyScreensaverImageAction = () =>
+            Action clearOldBackgroundImagesAction = () =>
+            {
+                Directory.CreateDirectory(this.ConfigPath);
+                this.DeleteOldBackgroundImagesInternal();
+            };
+            PerformMutuallyExclusiveConfigFileAction(clearOldBackgroundImagesAction);
+        }
+
+        /// <inheritdoc/>
+        /// <exception cref="IOException">The path to a configuration file is not known, or an error
+        /// occurred while opening a configuration file.</exception>
+        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
+        /// permissions to access a configuration file.</exception>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
+        /// it is on an unmapped drive).</exception>
+        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
+        /// file.</exception>
+        public IList<ConfigurationImageItem> CommitCachedScreensaverImages(
+            IReadOnlyList<ConfigurationImageItem> screensaverImageItems)
+        {
+            Func<IList<ConfigurationImageItem>> commitScreensaverImageAction = () =>
             {
                 Directory.CreateDirectory(this.ConfigImagesPath);
-                var newImageFileName =
-                    $"{screensaverImageIndex:D3}" +
-                    Path.GetExtension(screensaverImageFilePath);
-                var newscreensaverImagePath = Path.Combine(
-                    this.ConfigImagesPath,
-                    newImageFileName);
-                File.Copy(screensaverImageFilePath, newscreensaverImagePath, true);
-                var originalFileName = Path.GetFileName(screensaverImageFilePath);
-                return new ConfigurationImageItem(newscreensaverImagePath, originalFileName);
-            };
-            return PerformMutuallyExclusiveConfigFileAction(copyScreensaverImageAction);
-        }
-
-        /// <inheritdoc/>
-        /// <exception cref="IOException">The path to a configuration file is not known, or an error
-        /// occurred while opening a configuration file.</exception>
-        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
-        /// permissions to access a configuration file.</exception>
-        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
-        /// it is on an unmapped drive).</exception>
-        /// <exception cref="TimeoutException">Timed out waiting for access to a configuration
-        /// file.</exception>
-        public void RemoveScreensaverImage(string screensaverImageFilePath)
-        {
-            Action removeScreensaverImageAction = () =>
-            {
-                if (Path.GetDirectoryName(screensaverImageFilePath).Equals(
-                this.ConfigImagesPath, StringComparison.OrdinalIgnoreCase))
+                this.DeleteOldScreensaverImages();
+                var committedScreensaverImageItems =
+                    new ConfigurationImageItem[screensaverImageItems.Count];
+                for (int i = 0; i < screensaverImageItems.Count; ++i)
                 {
-                    File.Delete(screensaverImageFilePath);
+                    committedScreensaverImageItems[i] =
+                        this.CommitCachedScreensaverImage(screensaverImageItems[i], i);
                 }
+
+                return committedScreensaverImageItems;
             };
-            PerformMutuallyExclusiveConfigFileAction(removeScreensaverImageAction);
+            return PerformMutuallyExclusiveConfigFileAction(commitScreensaverImageAction);
         }
 
         private static void PerformMutuallyExclusiveConfigFileAction(Action action)
@@ -268,14 +265,38 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             return new Mutex(false, mutexId, out _, securitySettings);
         }
 
-        private void DeleteOldBackgrounds()
+        private ConfigurationImageItem CommitCachedScreensaverImage(
+            ConfigurationImageItem screensaverImageItem,
+            int screensaverImageIndex)
+        {
+            var newImageFileName =
+                $"{screensaverImageIndex:D3}" +
+                Path.GetExtension(screensaverImageItem.OriginalFileName);
+            var newScreensaverImagePath = Path.Combine(this.ConfigImagesPath, newImageFileName);
+            File.Copy(screensaverImageItem.ImageFilePath, newScreensaverImagePath, true);
+            return new ConfigurationImageItem(
+                newScreensaverImagePath,
+                screensaverImageItem.OriginalFileName);
+        }
+
+        private void DeleteOldBackgroundImagesInternal()
         {
             var configDirectoryInfo = new DirectoryInfo(this.ConfigPath);
-            var backgroundFiles = configDirectoryInfo.EnumerateFiles(
+            var backgroundImageFiles = configDirectoryInfo.EnumerateFiles(
                 Resources.ConfigurationBackgroundImageFileName + ".*");
-            foreach (var backgroundFile in backgroundFiles)
+            foreach (var backgroundImageFile in backgroundImageFiles)
             {
-                backgroundFile.Delete();
+                backgroundImageFile.Delete();
+            }
+        }
+
+        private void DeleteOldScreensaverImages()
+        {
+            var configDirectoryInfo = new DirectoryInfo(this.ConfigImagesPath);
+            var screensaverImageFiles = configDirectoryInfo.EnumerateFiles();
+            foreach (var screensaverImageFile in screensaverImageFiles)
+            {
+                screensaverImageFile.Delete();
             }
         }
     }

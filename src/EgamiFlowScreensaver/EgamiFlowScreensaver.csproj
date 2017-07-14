@@ -71,6 +71,7 @@
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
     <Compile Include="Config\ConfigurationDirLayoutRenderer.cs" />
+    <Compile Include="Config\ConfigurationFilesTempCache.cs" />
     <Compile Include="Config\ConfigurationFileService.cs" />
     <Compile Include="Config\ConfigurationForm.cs">
       <SubType>Form</SubType>
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="Config\ConfigurationFormViewModel.cs" />
     <Compile Include="Config\ConfigurationImageItem.cs" />
+    <Compile Include="Config\IConfigurationFilesTempCache.cs" />
     <Compile Include="Config\IConfigurationFileService.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />

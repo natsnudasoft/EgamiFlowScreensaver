@@ -17,9 +17,11 @@
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.IO;
+    using System.Security;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
     using NLog;
@@ -38,6 +40,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IConfigurationFileService configurationFileService;
+        private readonly IConfigurationFilesTempCache configurationFilesTempCache;
         private readonly BindingList<ConfigurationImageItem> images;
         private int selectedImageIndex = -1;
         private Image selectedImagePreview;
@@ -50,15 +53,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         /// <param name="configurationFileService">The configuration file service to use to
         /// perform operations in the configuration directory.</param>
+        /// <param name="configurationFilesTempCache">The configuration files cache to use to
+        /// cache configuration files before they are committed.</param>
         /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/> is
         /// <see langword="null"/>.</exception>
-        public ConfigurationFormViewModel(IConfigurationFileService configurationFileService)
+        public ConfigurationFormViewModel(
+            IConfigurationFileService configurationFileService,
+            IConfigurationFilesTempCache configurationFilesTempCache)
         {
             ParameterValidation.IsNotNull(
                 configurationFileService,
                 nameof(configurationFileService));
+            ParameterValidation.IsNotNull(
+                configurationFilesTempCache,
+                nameof(configurationFilesTempCache));
 
             this.configurationFileService = configurationFileService;
+            this.configurationFilesTempCache = configurationFilesTempCache;
             this.images = new BindingList<ConfigurationImageItem>
             {
                 AllowNew = false,
@@ -162,15 +173,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 {
                     try
                     {
-                        var imageItem = this.configurationFileService.CopyScreensaverImage(
+                        var imageItem = this.configurationFilesTempCache.AddScreensaverImage(
                             openFileDialog.FileName,
-                            this.Images.Count);
+                            Path.GetFileName(openFileDialog.FileName));
                         var addedIndex = this.Images.Add(imageItem);
                         this.SelectedImageIndex = addedIndex;
                     }
                     catch (IOException ex)
                     {
                         ShowIOExceptionMessage(owner);
+                        Logger.Error(ex, string.Empty);
+                    }
+                    catch (SecurityException ex)
+                    {
+                        ShowUnauthorizedAccessExceptionMessage(owner);
                         Logger.Error(ex, string.Empty);
                     }
                     catch (UnauthorizedAccessException ex)
@@ -198,10 +214,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 var selectedImage = this.images[this.SelectedImageIndex];
                 try
                 {
-                    this.configurationFileService.RemoveScreensaverImage(
-                        selectedImage.ImageFilePath);
-                    this.Images.RemoveAt(this.SelectedImageIndex);
                     this.SelectedImagePreview?.Dispose();
+                    this.configurationFilesTempCache
+                        .RemoveScreensaverImage(selectedImage.ImageFilePath);
+                    this.Images.RemoveAt(this.SelectedImageIndex);
                 }
                 catch (IOException ex)
                 {
@@ -254,8 +270,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 {
                     try
                     {
-                        this.BackgroundImage = this.configurationFileService.CopyBackgroundImage(
-                            openFileDialog.FileName);
+                        this.BackgroundImage = this.configurationFilesTempCache.SetBackgroundImage(
+                            openFileDialog.FileName,
+                            Path.GetFileName(openFileDialog.FileName));
                     }
                     catch (IOException ex)
                     {
@@ -287,15 +304,32 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             try
             {
                 var screensaverConfiguration = this.configurationFileService.Open();
+                ConfigurationImageItem backgroundImage = null;
+                if (screensaverConfiguration.BackgroundImage != null)
+                {
+                    backgroundImage = this.configurationFilesTempCache.SetBackgroundImage(
+                        screensaverConfiguration.BackgroundImage.ImageFilePath,
+                        screensaverConfiguration.BackgroundImage.OriginalFileName);
+                }
+
+                var screensaverImages = new List<ConfigurationImageItem>();
+                foreach (var configurationImageItem in screensaverConfiguration.Images)
+                {
+                    var screensaverImage = this.configurationFilesTempCache.AddScreensaverImage(
+                        configurationImageItem.ImageFilePath,
+                        configurationImageItem.OriginalFileName);
+                    screensaverImages.Add(screensaverImage);
+                }
+
                 this.BackgroundMode = screensaverConfiguration.BackgroundMode;
                 this.BackgroundColor = screensaverConfiguration.BackgroundColor;
-                this.BackgroundImage = screensaverConfiguration.BackgroundImage;
+                this.BackgroundImage = backgroundImage;
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
                 this.Images.Clear();
-                foreach (var configurationImageItem in screensaverConfiguration.Images)
+                foreach (var screensaverImage in screensaverImages)
                 {
-                    this.Images.Add(configurationImageItem);
+                    this.Images.Add(screensaverImage);
                 }
 
                 return true;
@@ -332,15 +366,36 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// otherwise <see langword="false"/>.</returns>
         public bool CommitSettingsToDisk(IWin32Window owner)
         {
+            var backgroundColor = default(Color);
+            ConfigurationImageItem backgroundImage = null;
+            switch (this.BackgroundMode)
+            {
+                case BackgroundMode.Image:
+                    backgroundImage = this.configurationFileService
+                        .CommitCachedBackgroundImage(this.BackgroundImage);
+                    break;
+
+                case BackgroundMode.SolidColor:
+                    backgroundColor = this.BackgroundColor;
+                    this.configurationFileService.DeleteOldBackgroundImages();
+                    break;
+
+                default:
+                    this.configurationFileService.DeleteOldBackgroundImages();
+                    break;
+            }
+
             var screensaverConfiguration = new ScreensaverConfiguration
             {
                 BackgroundMode = this.BackgroundMode,
-                BackgroundColor = this.BackgroundColor,
-                BackgroundImage = this.BackgroundImage,
+                BackgroundColor = backgroundColor,
+                BackgroundImage = backgroundImage,
                 ImageEmitRate = this.ImageEmitRate,
                 MaxImageEmitCount = this.MaxImageEmitCount
             };
-            foreach (var configurationImageItem in this.images)
+            var committedImages = this.configurationFileService
+                .CommitCachedScreensaverImages(this.images);
+            foreach (var configurationImageItem in committedImages)
             {
                 screensaverConfiguration.Images.Add(configurationImageItem);
             }
@@ -449,6 +504,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             {
                 this.selectedImagePreview?.Dispose();
             }
+
+            this.configurationFilesTempCache.Clear();
         }
 
         private void UpdateImagePreview()
@@ -464,6 +521,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 catch (FileNotFoundException ex)
                 {
                     Logger.Warn(ex, Invariant($"Could not load preview image from '{filePath}'."));
+                    this.SelectedImagePreview = null;
+                }
+                catch (OutOfMemoryException ex)
+                {
+                    Logger.Warn(ex, Invariant($"Unsupported preview image from '{filePath}'."));
                     this.SelectedImagePreview = null;
                 }
             }
