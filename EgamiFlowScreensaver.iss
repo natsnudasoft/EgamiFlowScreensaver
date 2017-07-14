@@ -19,6 +19,7 @@ CreateAppDir=no
 OutputBaseFilename="Egami Flow Screensaver"
 Compression=lzma
 SolidCompression=yes
+SetupIconFile=resources\Icon.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
