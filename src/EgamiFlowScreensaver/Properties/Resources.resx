@@ -172,4 +172,10 @@
   <data name="ConfigurationProtoExceptionMessage" xml:space="preserve">
     <value>An error occurred while reading or writing to the configuration file.</value>
   </data>
+  <data name="ConfigurationReadSettingsErrorCaption" xml:space="preserve">
+    <value>Configuration Load Problem</value>
+  </data>
+  <data name="ConfigurationReadSettingsErrorMessage" xml:space="preserve">
+    <value>There was a problem loading the existing configuration. Choosing to ignore this will create a new configuration and overwrite the existing one. How would you like to proceed?</value>
+  </data>
 </root>

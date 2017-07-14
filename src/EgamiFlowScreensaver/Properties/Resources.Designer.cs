@@ -151,6 +151,24 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configuration Load Problem.
+        /// </summary>
+        internal static string ConfigurationReadSettingsErrorCaption {
+            get {
+                return ResourceManager.GetString("ConfigurationReadSettingsErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem loading the existing configuration. Choosing to ignore this will create a new configuration and overwrite the existing one. How would you like to proceed?.
+        /// </summary>
+        internal static string ConfigurationReadSettingsErrorMessage {
+            get {
+                return ResourceManager.GetString("ConfigurationReadSettingsErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration Timeout.
         /// </summary>
         internal static string ConfigurationTimeoutExceptionCaption {

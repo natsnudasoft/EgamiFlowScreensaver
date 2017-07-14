@@ -19,6 +19,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
+    using Properties;
 
     /// <summary>
     /// The configuration form to manage the settings of a <see cref="ScreensaverGame"/>.
@@ -135,10 +136,36 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            if (!this.viewModel.ReadSettingsFromDisk(this))
+            bool retry;
+            do
             {
-                this.DialogResult = DialogResult.Abort;
+                retry = false;
+                if (!this.viewModel.ReadSettingsFromDisk(this))
+                {
+                    var readSettingsErrorDialogResult = MessageBox.Show(
+                        this,
+                        Resources.ConfigurationReadSettingsErrorMessage,
+                        Resources.ConfigurationReadSettingsErrorCaption,
+                        MessageBoxButtons.AbortRetryIgnore,
+                        MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button3);
+                    switch (readSettingsErrorDialogResult)
+                    {
+                        case DialogResult.Abort:
+                            retry = false;
+                            this.DialogResult = DialogResult.Abort;
+                            break;
+                        case DialogResult.Retry:
+                            retry = true;
+                            break;
+                        case DialogResult.Ignore:
+                        default:
+                            retry = false;
+                            break;
+                    }
+                }
             }
+            while (retry);
         }
 
         /// <inheritdoc/>

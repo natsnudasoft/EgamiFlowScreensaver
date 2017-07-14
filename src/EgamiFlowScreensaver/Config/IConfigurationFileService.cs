@@ -16,6 +16,8 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Provides an interface describing operations that can be performed in relation to the
     /// configuration folder.
@@ -52,30 +54,29 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         void Save(ScreensaverConfiguration screensaverConfiguration);
 
         /// <summary>
-        /// Copies the image file at the specified path to the configuration folder.
+        /// Commits the specified background image in a cache to the configuration directory.
         /// </summary>
-        /// <param name="backgroundImageFilePath">The path to the background image to copy.</param>
-        /// <returns>A <see cref="ConfigurationImageItem"/> describing the image item that was
-        /// copied.</returns>
-        ConfigurationImageItem CopyBackgroundImage(string backgroundImageFilePath);
+        /// <param name="backgroundImageItem">The background image item describing the path to the
+        /// cached background image that is being committed.</param>
+        /// <returns>A <see cref="ConfigurationImageItem"/> describing the path to the background
+        /// image that was committed to the configuration directory.</returns>
+        ConfigurationImageItem CommitCachedBackgroundImage(
+            ConfigurationImageItem backgroundImageItem);
 
         /// <summary>
-        /// Copies the image file at the specified path to the configuration images folder.
+        /// Commits the specified screensaver images in a cache to the configuration directory.
         /// </summary>
-        /// <param name="screensaverImageFilePath">The path to the image to copy.</param>
-        /// <param name="screensaverImageIndex">The index of the screensaver image in a screensaver
-        /// image item collection.</param>
-        /// <returns>A <see cref="ConfigurationImageItem"/> describing the image item that was
-        /// copied.</returns>
-        ConfigurationImageItem CopyScreensaverImage(
-            string screensaverImageFilePath,
-            int screensaverImageIndex);
+        /// <param name="screensaverImageItems">A collection of screensaver image items describing
+        /// the paths to the cached screensaver images that are being committed.</param>
+        /// <returns>A collection of instances of <see cref="ConfigurationImageItem"/> describing
+        /// the paths to the screensaver images that were committed to the configuration directory.
+        /// </returns>
+        IList<ConfigurationImageItem> CommitCachedScreensaverImages(
+            IReadOnlyList<ConfigurationImageItem> screensaverImageItems);
 
         /// <summary>
-        /// Removes the image file at the specified path in the configuration images folder from
-        /// disk.
+        /// Deletes any old background images in the configuration folder.
         /// </summary>
-        /// <param name="screensaverImageFilePath">The path to the image to remove.</param>
-        void RemoveScreensaverImage(string screensaverImageFilePath);
+        void DeleteOldBackgroundImages();
     }
 }
