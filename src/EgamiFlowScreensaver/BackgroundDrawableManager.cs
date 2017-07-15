@@ -63,9 +63,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 case BackgroundMode.Image:
                     var textureConverterService =
                         this.serviceProvider.GetService<ITextureConverterService>();
+                    var imageScaleService = this.serviceProvider.GetService<IImageScaleService>();
                     this.backgroundDrawable = new ImageBackgroundDrawbale(
                         screensaverConfiguration.BackgroundImage.ImageFilePath,
                         textureConverterService,
+                        imageScaleService,
+                        screensaverConfiguration.BackgroundImageScaleMode,
                         screensaverArea);
                     break;
                 case BackgroundMode.SolidColor:

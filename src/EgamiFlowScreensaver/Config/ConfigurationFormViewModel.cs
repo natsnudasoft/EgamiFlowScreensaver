@@ -45,6 +45,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private int selectedImageIndex = -1;
         private Image selectedImagePreview;
         private BackgroundMode backgroundMode;
+        private ImageScaleMode backgroundImageScaleMode;
         private float imageEmitRate;
         private int maxImageEmitCount;
 
@@ -157,6 +158,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// defined by the current configuration.
         /// </summary>
         public ConfigurationImageItem BackgroundImage { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the background image scale mode describing how to scale the background as
+        /// described by the current configuration.
+        /// </summary>
+        public ImageScaleMode BackgroundImageScaleMode
+        {
+            get => this.backgroundImageScaleMode;
+            set => this.Set(ref this.backgroundImageScaleMode, value);
+        }
 
         /// <summary>
         /// Displays a dialog allowing a new image to be added to the image item collection.
@@ -305,11 +316,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             {
                 var screensaverConfiguration = this.configurationFileService.Open();
                 ConfigurationImageItem backgroundImage = null;
+                var backgroundImageScaleMode = default(ImageScaleMode);
                 if (screensaverConfiguration.BackgroundImage != null)
                 {
                     backgroundImage = this.configurationFilesTempCache.SetBackgroundImage(
                         screensaverConfiguration.BackgroundImage.ImageFilePath,
                         screensaverConfiguration.BackgroundImage.OriginalFileName);
+                    backgroundImageScaleMode = screensaverConfiguration.BackgroundImageScaleMode;
                 }
 
                 var screensaverImages = new List<ConfigurationImageItem>();
@@ -324,6 +337,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.BackgroundMode = screensaverConfiguration.BackgroundMode;
                 this.BackgroundColor = screensaverConfiguration.BackgroundColor;
                 this.BackgroundImage = backgroundImage;
+                this.BackgroundImageScaleMode = backgroundImageScaleMode;
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
                 this.Images.Clear();
@@ -368,11 +382,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             var backgroundColor = default(Color);
             ConfigurationImageItem backgroundImage = null;
+            var backgroundImageScaleMode = default(ImageScaleMode);
             switch (this.BackgroundMode)
             {
                 case BackgroundMode.Image:
                     backgroundImage = this.configurationFileService
                         .CommitCachedBackgroundImage(this.BackgroundImage);
+                    backgroundImageScaleMode = this.BackgroundImageScaleMode;
                     break;
 
                 case BackgroundMode.SolidColor:
@@ -390,6 +406,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 BackgroundMode = this.BackgroundMode,
                 BackgroundColor = backgroundColor,
                 BackgroundImage = backgroundImage,
+                BackgroundImageScaleMode = backgroundImageScaleMode,
                 ImageEmitRate = this.ImageEmitRate,
                 MaxImageEmitCount = this.MaxImageEmitCount
             };

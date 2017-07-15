@@ -17,6 +17,8 @@
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
     using Properties;
@@ -92,6 +94,24 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(Button.Enabled),
                 this.imageRadioButton,
                 nameof(RadioButton.Checked));
+
+            this.backgroundImageScaleModeComboBox.DataBindings.Add(
+                nameof(ComboBox.Enabled),
+                this.imageRadioButton,
+                nameof(RadioButton.Checked));
+            var imageScaleModeSource = Enum.GetValues(typeof(ImageScaleMode))
+                .Cast<ImageScaleMode>()
+                .Select(m => new { DisplayValue = GetImageScaleDisplayValue(m), Value = m })
+                .ToArray();
+            this.backgroundImageScaleModeComboBox.DataSource = imageScaleModeSource;
+            this.backgroundImageScaleModeComboBox.DisplayMember = "DisplayValue";
+            this.backgroundImageScaleModeComboBox.ValueMember = "Value";
+            this.backgroundImageScaleModeComboBox.DataBindings.Add(
+                nameof(ComboBox.SelectedValue),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.BackgroundImageScaleMode),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
 
             this.chooseColorButton.Click += (sender, e) =>
             {
@@ -177,6 +197,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             }
 
             base.Dispose(disposing);
+        }
+
+        private static string GetImageScaleDisplayValue(ImageScaleMode imageScaleMode)
+        {
+            var imageScaleMemberInfo =
+                typeof(ImageScaleMode).GetMember(imageScaleMode.ToString()).FirstOrDefault();
+            if (imageScaleMemberInfo != null)
+            {
+                var enumResourceDisplayNameAttribute =
+                    imageScaleMemberInfo.GetCustomAttribute<EnumResourceDisplayNameAttribute>();
+                if (enumResourceDisplayNameAttribute != null)
+                {
+                    return enumResourceDisplayNameAttribute.DisplayName;
+                }
+            }
+
+            return imageScaleMemberInfo.ToString();
         }
     }
 }

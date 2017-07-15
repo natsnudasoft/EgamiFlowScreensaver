@@ -52,6 +52,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             var backgroundDrawableManager = new BackgroundDrawableManager(gameServiceContainer);
             gameServiceContainer.AddService<IBackgroundDrawableManager>(backgroundDrawableManager);
+
+            var imageScaleService = new ImageScaleService();
+            gameServiceContainer.AddService<IImageScaleService>(imageScaleService);
         }
     }
 }
