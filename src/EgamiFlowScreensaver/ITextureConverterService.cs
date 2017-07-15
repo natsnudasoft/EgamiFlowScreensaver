@@ -30,5 +30,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="bitmap">The <see cref="SystemBitmap"/> to convert from.</param>
         /// <returns>The converted bitmap as a <see cref="Texture2D"/>.</returns>
         Texture2D FromBitmap(SystemBitmap bitmap);
+
+        /// <summary>
+        /// Creates a <see cref="TiledTexture2D"/> from the specified <see cref="SystemBitmap"/>.
+        /// Tiles the image if it is too large to fit into a single <see cref="Texture2D"/>.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SystemBitmap"/> to convert from.</param>
+        /// <returns>The converted bitmap as a <see cref="TiledTexture2D"/>.</returns>
+        TiledTexture2D FromLargeBitmap(SystemBitmap bitmap);
     }
 }

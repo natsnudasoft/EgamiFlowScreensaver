@@ -50,8 +50,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
         /// <inheritdoc/>
         /// <exception cref="Exception">The captured image could not be converted to a
-        /// <see cref="Texture2D"/>.</exception>
-        public Texture2D CaptureScreenshotTexture(
+        /// <see cref="TiledTexture2D"/>.</exception>
+        public TiledTexture2D CaptureScreenshotTexture(
             SystemPoint captureLocation,
             SystemSize captureSize)
         {
@@ -69,7 +69,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                         CopyPixelOperation.SourceCopy);
                 }
 
-                return this.textureConverterService.FromBitmap(bitmap);
+                return this.textureConverterService.FromLargeBitmap(bitmap);
             }
         }
     }

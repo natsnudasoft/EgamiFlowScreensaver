@@ -16,7 +16,6 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
-    using Microsoft.Xna.Framework.Graphics;
     using SystemPoint = System.Drawing.Point;
     using SystemSize = System.Drawing.Size;
 
@@ -26,13 +25,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public interface IScreenCaptureService
     {
         /// <summary>
-        /// Captures the desktop as an image and converts it to a <see cref="Texture2D"/>.
+        /// Captures the desktop as an image and converts it to a <see cref="TiledTexture2D"/>.
         /// </summary>
         /// <param name="captureLocation">The location on the desktop of the screenshot to capture.
         /// </param>
         /// <param name="captureSize">The size of the screenshot to capture.</param>
-        /// <returns>A <see cref="Texture2D"/> of the desktop image that was captured.</returns>
-        Texture2D CaptureScreenshotTexture(
+        /// <returns>A <see cref="TiledTexture2D"/> of the desktop image that was captured.
+        /// </returns>
+        TiledTexture2D CaptureScreenshotTexture(
             SystemPoint captureLocation,
             SystemSize captureSize);
     }

@@ -30,7 +30,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public sealed class DesktopBackgroundDrawable : BackgroundDrawable, IDisposable
     {
         private readonly IScreenCaptureService screenCaptureService;
-        private Texture2D desktopTexture;
+        private TiledTexture2D desktopTiledTexture;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DesktopBackgroundDrawable"/> class.
@@ -53,7 +53,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         public override void LoadContent(GraphicsDevice graphicsDevice)
         {
             var screensaverBounds = this.ScreensaverArea.ScreensaverBounds.ToSystemRectangle();
-            this.desktopTexture = this.screenCaptureService.CaptureScreenshotTexture(
+            this.desktopTiledTexture = this.screenCaptureService.CaptureScreenshotTexture(
                 screensaverBounds.Location,
                 screensaverBounds.Size);
         }
@@ -61,8 +61,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <inheritdoc/>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var screensaverGameBounds = this.ScreensaverArea.ScreensaverGameBounds;
-            spriteBatch.Draw(this.desktopTexture, screensaverGameBounds, Color.White);
+            foreach (var tiledTextureSegment in this.desktopTiledTexture.TiledTextureSegments)
+            {
+                spriteBatch.Draw(
+                    tiledTextureSegment.SegmentTexture,
+                    tiledTextureSegment.SegmentArea,
+                    Color.White);
+            }
         }
 
         /// <inheritdoc/>
@@ -76,7 +81,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             if (disposing)
             {
-                this.desktopTexture?.Dispose();
+                this.desktopTiledTexture?.Dispose();
             }
         }
     }
