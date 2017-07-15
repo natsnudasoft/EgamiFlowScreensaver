@@ -125,6 +125,8 @@
     <Compile Include="ServiceProviderExtension.cs" />
     <Compile Include="SolidColorBackgroundDrawable.cs" />
     <Compile Include="TextureConverterService.cs" />
+    <Compile Include="TiledTexture2D.cs" />
+    <Compile Include="TiledTexture2DSegment.cs" />
     <Compile Include="WindowLongFlags.cs" />
     <EmbeddedResource Include="..\EgamiFlowScreensaver.Content\bin\$(MonoGamePlatform)\$(Configuration)\Content\adie.xnb">
       <Link>Content\adie.xnb</Link>

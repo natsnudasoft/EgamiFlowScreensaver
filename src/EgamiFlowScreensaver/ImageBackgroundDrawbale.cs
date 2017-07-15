@@ -31,7 +31,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     {
         private readonly string backgroundImageFilePath;
         private readonly ITextureConverterService textureConverterService;
-        private Texture2D imageTexture;
+        private TiledTexture2D imageTiledTexture;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageBackgroundDrawbale"/> class.
@@ -66,15 +66,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             using (var bitmap = new System.Drawing.Bitmap(this.backgroundImageFilePath))
             {
-                this.imageTexture = this.textureConverterService.FromBitmap(bitmap);
+                this.imageTiledTexture = this.textureConverterService.FromLargeBitmap(bitmap);
             }
         }
 
         /// <inheritdoc/>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var screensaverGameBounds = this.ScreensaverArea.ScreensaverGameBounds;
-            spriteBatch.Draw(this.imageTexture, screensaverGameBounds, Color.White);
+            foreach (var tiledTextureSegment in this.imageTiledTexture.TiledTextureSegments)
+            {
+                spriteBatch.Draw(
+                    tiledTextureSegment.SegmentTexture,
+                    tiledTextureSegment.SegmentArea,
+                    Color.White);
+            }
         }
 
         /// <inheritdoc/>
@@ -88,7 +93,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             if (disposing)
             {
-                this.imageTexture?.Dispose();
+                this.imageTiledTexture?.Dispose();
             }
         }
     }
