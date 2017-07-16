@@ -205,6 +205,51 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Centre.
+        /// </summary>
+        internal static string ImageScaleModeCenter {
+            get {
+                return ResourceManager.GetString("ImageScaleModeCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill.
+        /// </summary>
+        internal static string ImageScaleModeFill {
+            get {
+                return ResourceManager.GetString("ImageScaleModeFill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fit.
+        /// </summary>
+        internal static string ImageScaleModeFit {
+            get {
+                return ResourceManager.GetString("ImageScaleModeFit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stretch.
+        /// </summary>
+        internal static string ImageScaleModeStretch {
+            get {
+                return ResourceManager.GetString("ImageScaleModeStretch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tile.
+        /// </summary>
+        internal static string ImageScaleModeTile {
+            get {
+                return ResourceManager.GetString("ImageScaleModeTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         internal static string UnhandledExceptionCaption {

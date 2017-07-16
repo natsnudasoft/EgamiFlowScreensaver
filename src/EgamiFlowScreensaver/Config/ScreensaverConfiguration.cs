@@ -49,6 +49,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         public BackgroundMode BackgroundMode { get; set; }
 
         /// <summary>
+        /// Gets or sets the background image scale mode describing how to scale the background
+        /// image in a <see cref="ScreensaverGame"/>.
+        /// </summary>
+        [ProtoMember(7, IsRequired = false)]
+        public ImageScaleMode BackgroundImageScaleMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the background colour that will be used in a <see cref="ScreensaverGame"/>
         /// if it is in <see cref="BackgroundMode.SolidColor"/> mode.
         /// </summary>

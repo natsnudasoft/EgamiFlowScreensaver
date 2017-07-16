@@ -39,6 +39,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// segments combined.</param>
         /// <param name="height">The height of the overall image; i.e. the height of all of the
         /// segments combined.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="tiledTextureSegments"/> is
+        /// <see langword="null"/>.</exception>
         public TiledTexture2D(
             IEnumerable<TiledTexture2DSegment> tiledTextureSegments,
             int width,

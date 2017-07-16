@@ -85,8 +85,12 @@
     <Compile Include="Config\IConfigurationFileService.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />
+    <Compile Include="EnumResourceDisplayNameAttribute.cs" />
     <Compile Include="IBackgroundDrawableManager.cs" />
+    <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawbale.cs" />
+    <Compile Include="ImageScaleMode.cs" />
+    <Compile Include="ImageScaleService.cs" />
     <Compile Include="ITextureConverterService.cs" />
     <Compile Include="NumericUpDownWheel.cs">
       <SubType>Component</SubType>

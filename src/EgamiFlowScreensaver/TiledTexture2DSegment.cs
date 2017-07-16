@@ -33,6 +33,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </param>
         /// <param name="segmentArea">The area of this segment in relation to the larger image the
         /// segment is part of.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="segmentTexture"/> is
+        /// <see langword="null"/>.</exception>
         public TiledTexture2DSegment(
             Texture2D segmentTexture,
             Rectangle segmentArea)

@@ -21,6 +21,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label imageEmitRateLabel;
+            System.Windows.Forms.Label label2;
             System.Windows.Forms.Panel panel2;
             this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imageEmitRateNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -29,6 +30,7 @@
             this.addImageButton = new System.Windows.Forms.Button();
             this.imagesListBox = new System.Windows.Forms.ListBox();
             this.backgroundRadioGroupBox = new Natsnudasoft.EgamiFlowScreensaver.RadioGroupBox();
+            this.backgroundImageScaleModeComboBox = new System.Windows.Forms.ComboBox();
             this.chooseImageButton = new System.Windows.Forms.Button();
             this.solidColorRadioButton = new System.Windows.Forms.RadioButton();
             this.chooseColorButton = new System.Windows.Forms.Button();
@@ -42,6 +44,7 @@
             imagesGroupBox = new System.Windows.Forms.GroupBox();
             label1 = new System.Windows.Forms.Label();
             imageEmitRateLabel = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
             panel2 = new System.Windows.Forms.Panel();
             panel1.SuspendLayout();
             imagesGroupBox.SuspendLayout();
@@ -141,6 +144,8 @@
             // backgroundRadioGroupBox
             // 
             resources.ApplyResources(this.backgroundRadioGroupBox, "backgroundRadioGroupBox");
+            this.backgroundRadioGroupBox.Controls.Add(label2);
+            this.backgroundRadioGroupBox.Controls.Add(this.backgroundImageScaleModeComboBox);
             this.backgroundRadioGroupBox.Controls.Add(this.chooseImageButton);
             this.backgroundRadioGroupBox.Controls.Add(this.solidColorRadioButton);
             this.backgroundRadioGroupBox.Controls.Add(this.chooseColorButton);
@@ -150,6 +155,19 @@
             this.backgroundRadioGroupBox.SelectedRadioIndex = 0;
             this.backgroundRadioGroupBox.SelectedRadioValue = Natsnudasoft.EgamiFlowScreensaver.BackgroundMode.SolidColor;
             this.backgroundRadioGroupBox.TabStop = false;
+            // 
+            // label2
+            // 
+            resources.ApplyResources(label2, "label2");
+            label2.Name = "label2";
+            this.configurationToolTip.SetToolTip(label2, resources.GetString("label2.ToolTip"));
+            // 
+            // backgroundImageScaleModeComboBox
+            // 
+            this.backgroundImageScaleModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.backgroundImageScaleModeComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.backgroundImageScaleModeComboBox, "backgroundImageScaleModeComboBox");
+            this.backgroundImageScaleModeComboBox.Name = "backgroundImageScaleModeComboBox";
             // 
             // chooseImageButton
             // 
@@ -266,5 +284,6 @@
         private NumericUpDownWheel imageEmitRateNumericUpDown;
         private System.Windows.Forms.ToolTip configurationToolTip;
         private NumericUpDownWheel maxImageEmitCountNumericUpDown;
+        private System.Windows.Forms.ComboBox backgroundImageScaleModeComboBox;
     }
 }
