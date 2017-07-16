@@ -50,3 +50,15 @@ The screensaver will display a chosen colour as the background.
 
 #### Image
 The screensaver will display a chosen image as the background.
+
+##### Image Position
+How the screensaver will position the chosen background image. Possible values are described
+in the following table:
+
+| Value   | Description                                                                                                                                                        |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Centre  | The image will remain centred at its original size.                                                                                                                |
+| Fill    | The image will scale up or down to the minimum possible size required to fill the entire background, maintaining the images original aspect ratio.                 |
+| Fit     | The image will scale up or down to the maximum possible size required to display the entire image on the background, maintaining the images original aspect ratio. |
+| Stretch | The image will scale to the same size as the background area, ignoring the images original aspect ratio.                                                           |
+| Tile    |  The image will be repeated across the screen at its original size.                                                                                                |
