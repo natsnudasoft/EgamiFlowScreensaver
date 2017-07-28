@@ -110,7 +110,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 this.screensaverArea,
                 this.screensaverImageManager,
                 this.screensaverTextures,
-                this.screensaverConfiguration.MaxImageEmitCount);
+                this.screensaverConfiguration.MaxImageEmitCount,
+                this.screensaverConfiguration.ImageEmitLocation);
             this.screensaverImageEmitter.Start();
             base.Initialize();
         }

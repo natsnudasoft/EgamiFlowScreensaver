@@ -205,6 +205,69 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bottom Left.
+        /// </summary>
+        internal static string ImageEmitLocationBottomLeft {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationBottomLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Right.
+        /// </summary>
+        internal static string ImageEmitLocationBottomRight {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationBottomRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Centre.
+        /// </summary>
+        internal static string ImageEmitLocationCenter {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random.
+        /// </summary>
+        internal static string ImageEmitLocationRandom {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationRandom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Corner.
+        /// </summary>
+        internal static string ImageEmitLocationRandomCorner {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationRandomCorner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Left.
+        /// </summary>
+        internal static string ImageEmitLocationTopLeft {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationTopLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Right.
+        /// </summary>
+        internal static string ImageEmitLocationTopRight {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationTopRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Centre.
         /// </summary>
         internal static string ImageScaleModeCenter {

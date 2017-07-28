@@ -193,4 +193,25 @@
   <data name="ImageScaleModeTile" xml:space="preserve">
     <value>Tile</value>
   </data>
+  <data name="ImageEmitLocationBottomLeft" xml:space="preserve">
+    <value>Bottom Left</value>
+  </data>
+  <data name="ImageEmitLocationBottomRight" xml:space="preserve">
+    <value>Bottom Right</value>
+  </data>
+  <data name="ImageEmitLocationCenter" xml:space="preserve">
+    <value>Centre</value>
+  </data>
+  <data name="ImageEmitLocationRandom" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="ImageEmitLocationTopLeft" xml:space="preserve">
+    <value>Top Left</value>
+  </data>
+  <data name="ImageEmitLocationTopRight" xml:space="preserve">
+    <value>Top Right</value>
+  </data>
+  <data name="ImageEmitLocationRandomCorner" xml:space="preserve">
+    <value>Random Corner</value>
+  </data>
 </root>

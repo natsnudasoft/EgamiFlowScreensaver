@@ -89,6 +89,7 @@
     <Compile Include="IBackgroundDrawableManager.cs" />
     <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawbale.cs" />
+    <Compile Include="ImageEmitLocation.cs" />
     <Compile Include="ImageScaleMode.cs" />
     <Compile Include="ImageScaleService.cs" />
     <Compile Include="ITextureConverterService.cs" />

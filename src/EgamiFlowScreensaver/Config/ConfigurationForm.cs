@@ -40,7 +40,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="viewModel"/> is
         /// empty.</exception>
+#pragma warning disable MEN003 // Method is too long
         public ConfigurationForm(ConfigurationFormViewModel viewModel, bool isIndependantWindow)
+#pragma warning restore MEN003 // Method is too long
         {
             ParameterValidation.IsNotNull(viewModel, nameof(viewModel));
 
@@ -101,7 +103,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(RadioButton.Checked));
             var imageScaleModeSource = Enum.GetValues(typeof(ImageScaleMode))
                 .Cast<ImageScaleMode>()
-                .Select(m => new { DisplayValue = GetImageScaleDisplayValue(m), Value = m })
+                .Select(m => new { DisplayValue = GetEnumDisplayName(m), Value = m })
                 .ToArray();
             this.backgroundImageScaleModeComboBox.DataSource = imageScaleModeSource;
             this.backgroundImageScaleModeComboBox.DisplayMember = "DisplayValue";
@@ -110,6 +112,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(ComboBox.SelectedValue),
                 this.viewModel,
                 nameof(ConfigurationFormViewModel.BackgroundImageScaleMode),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            var imageEmitLocationSource = Enum.GetValues(typeof(ImageEmitLocation))
+                .Cast<ImageEmitLocation>()
+                .Select(m => new { DisplayValue = GetEnumDisplayName(m), Value = m })
+                .ToArray();
+            this.imageEmitLocationComboBox.DataSource = imageEmitLocationSource;
+            this.imageEmitLocationComboBox.DisplayMember = "DisplayValue";
+            this.imageEmitLocationComboBox.ValueMember = "Value";
+            this.imageEmitLocationComboBox.DataBindings.Add(
+                nameof(ComboBox.SelectedValue),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.ImageEmitLocation),
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
 
@@ -199,21 +215,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             base.Dispose(disposing);
         }
 
-        private static string GetImageScaleDisplayValue(ImageScaleMode imageScaleMode)
+        private static string GetEnumDisplayName<T>(T enumValue)
         {
-            var imageScaleMemberInfo =
-                typeof(ImageScaleMode).GetMember(imageScaleMode.ToString()).FirstOrDefault();
-            if (imageScaleMemberInfo != null)
+            var enumValueMemberInfo = typeof(T).GetMember(enumValue.ToString()).FirstOrDefault();
+            if (enumValueMemberInfo != null)
             {
                 var enumResourceDisplayNameAttribute =
-                    imageScaleMemberInfo.GetCustomAttribute<EnumResourceDisplayNameAttribute>();
+                    enumValueMemberInfo.GetCustomAttribute<EnumResourceDisplayNameAttribute>();
                 if (enumResourceDisplayNameAttribute != null)
                 {
                     return enumResourceDisplayNameAttribute.DisplayName;
                 }
             }
 
-            return imageScaleMemberInfo.ToString();
+            return enumValueMemberInfo.ToString();
         }
     }
 }

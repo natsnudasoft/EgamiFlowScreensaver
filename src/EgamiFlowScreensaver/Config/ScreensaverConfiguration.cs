@@ -83,6 +83,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         [DefaultValue(50)]
         public int MaxImageEmitCount { get; set; } = 50;
 
+        /// <summary>
+        /// Gets or sets the location that images will be emitted in a
+        /// <see cref="ScreensaverGame"/>.
+        /// </summary>
+        [ProtoMember(8, IsRequired = false)]
+        [DefaultValue(ImageEmitLocation.RandomCorner)]
+        public ImageEmitLocation ImageEmitLocation { get; set; }
+
         [ProtoMember(3, DataFormat = DataFormat.FixedSize)]
         private int BackgroundColorSerialized
         {

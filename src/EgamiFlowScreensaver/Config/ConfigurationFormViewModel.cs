@@ -48,6 +48,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private ImageScaleMode backgroundImageScaleMode;
         private float imageEmitRate;
         private int maxImageEmitCount;
+        private ImageEmitLocation imageEmitLocation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationFormViewModel"/> class.
@@ -145,6 +146,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             get => this.maxImageEmitCount;
             set => this.Set(ref this.maxImageEmitCount, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the location that images will be emitted on the screen.
+        /// </summary>
+        public ImageEmitLocation ImageEmitLocation
+        {
+            get => this.imageEmitLocation;
+            set => this.Set(ref this.imageEmitLocation, value);
         }
 
         /// <summary>
@@ -340,6 +350,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.BackgroundImageScaleMode = backgroundImageScaleMode;
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
+                this.ImageEmitLocation = screensaverConfiguration.ImageEmitLocation;
                 this.Images.Clear();
                 foreach (var screensaverImage in screensaverImages)
                 {
@@ -408,7 +419,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 BackgroundImage = backgroundImage,
                 BackgroundImageScaleMode = backgroundImageScaleMode,
                 ImageEmitRate = this.ImageEmitRate,
-                MaxImageEmitCount = this.MaxImageEmitCount
+                MaxImageEmitCount = this.MaxImageEmitCount,
+                ImageEmitLocation = this.ImageEmitLocation
             };
             var committedImages = this.configurationFileService
                 .CommitCachedScreensaverImages(this.images);
