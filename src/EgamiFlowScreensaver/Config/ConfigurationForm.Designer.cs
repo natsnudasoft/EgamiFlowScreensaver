@@ -19,10 +19,12 @@
             System.Windows.Forms.Panel panel1;
             System.Windows.Forms.GroupBox imagesGroupBox;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
+            System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label imageEmitRateLabel;
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Panel panel2;
+            this.imageEmitLocationComboBox = new System.Windows.Forms.ComboBox();
             this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imageEmitRateNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imagePreviewPictureBox = new System.Windows.Forms.PictureBox();
@@ -42,6 +44,7 @@
             this.configurationToolTip = new System.Windows.Forms.ToolTip(this.components);
             panel1 = new System.Windows.Forms.Panel();
             imagesGroupBox = new System.Windows.Forms.GroupBox();
+            label3 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             imageEmitRateLabel = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -65,6 +68,8 @@
             // imagesGroupBox
             // 
             resources.ApplyResources(imagesGroupBox, "imagesGroupBox");
+            imagesGroupBox.Controls.Add(label3);
+            imagesGroupBox.Controls.Add(this.imageEmitLocationComboBox);
             imagesGroupBox.Controls.Add(label1);
             imagesGroupBox.Controls.Add(this.maxImageEmitCountNumericUpDown);
             imagesGroupBox.Controls.Add(imageEmitRateLabel);
@@ -75,6 +80,19 @@
             imagesGroupBox.Controls.Add(this.imagesListBox);
             imagesGroupBox.Name = "imagesGroupBox";
             imagesGroupBox.TabStop = false;
+            // 
+            // label3
+            // 
+            resources.ApplyResources(label3, "label3");
+            label3.Name = "label3";
+            this.configurationToolTip.SetToolTip(label3, resources.GetString("label3.ToolTip"));
+            // 
+            // imageEmitLocationComboBox
+            // 
+            this.imageEmitLocationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.imageEmitLocationComboBox.FormattingEnabled = true;
+            resources.ApplyResources(this.imageEmitLocationComboBox, "imageEmitLocationComboBox");
+            this.imageEmitLocationComboBox.Name = "imageEmitLocationComboBox";
             // 
             // label1
             // 
@@ -285,5 +303,6 @@
         private System.Windows.Forms.ToolTip configurationToolTip;
         private NumericUpDownWheel maxImageEmitCountNumericUpDown;
         private System.Windows.Forms.ComboBox backgroundImageScaleModeComboBox;
+        private System.Windows.Forms.ComboBox imageEmitLocationComboBox;
     }
 }
