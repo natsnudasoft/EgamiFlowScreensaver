@@ -29,7 +29,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     {
         private const float MinSpeed = 0.5f;
         private const float MaxSpeed = 8f;
-        private const int PositionDistribution = 20;
+        private const int PositionDistribution = 5;
         private const int TwoPositionDistribution = PositionDistribution * 2;
 
         private readonly ScreensaverArea screensaverArea;
