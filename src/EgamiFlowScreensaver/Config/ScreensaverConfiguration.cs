@@ -46,6 +46,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// Gets or sets the background mode that will be used in a <see cref="ScreensaverGame"/>.
         /// </summary>
         [ProtoMember(2)]
+        [DefaultValue(BackgroundMode.Desktop)]
         public BackgroundMode BackgroundMode { get; set; }
 
         /// <summary>
@@ -53,6 +54,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// image in a <see cref="ScreensaverGame"/>.
         /// </summary>
         [ProtoMember(7, IsRequired = false)]
+        [DefaultValue(ImageScaleMode.Center)]
         public ImageScaleMode BackgroundImageScaleMode { get; set; }
 
         /// <summary>
@@ -72,16 +74,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// Gets or sets the rate that images will be emitted in a <see cref="ScreensaverGame"/>.
         /// </summary>
         [ProtoMember(5)]
-        [DefaultValue(5f)]
-        public float ImageEmitRate { get; set; } = 5f;
+        [DefaultValue(30f)]
+        public float ImageEmitRate { get; set; } = 30f;
 
         /// <summary>
         /// Gets or sets the maximum number of images that will be emitted in a
         /// <see cref="ScreensaverGame"/>.
         /// </summary>
         [ProtoMember(6)]
-        [DefaultValue(50)]
-        public int MaxImageEmitCount { get; set; } = 50;
+        [DefaultValue(400)]
+        public int MaxImageEmitCount { get; set; } = 400;
 
         /// <summary>
         /// Gets or sets the location that images will be emitted in a
