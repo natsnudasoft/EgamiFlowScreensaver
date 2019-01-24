@@ -79,42 +79,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to background.
-        /// </summary>
-        internal static string ConfigurationBackgroundImageFileName {
-            get {
-                return ResourceManager.GetString("ConfigurationBackgroundImageFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to settings.cfg.
-        /// </summary>
-        internal static string ConfigurationFileName {
-            get {
-                return ResourceManager.GetString("ConfigurationFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to EgamiFlowScreensaver.
-        /// </summary>
-        internal static string ConfigurationFolderName {
-            get {
-                return ResourceManager.GetString("ConfigurationFolderName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to images.
-        /// </summary>
-        internal static string ConfigurationImagesFolderName {
-            get {
-                return ResourceManager.GetString("ConfigurationImagesFolderName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Configuration Directory Error.
         /// </summary>
         internal static string ConfigurationIOExceptionCaption {
@@ -187,7 +151,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration Unathourised Access.
+        ///   Looks up a localized string similar to Configuration Unauthorised Access.
         /// </summary>
         internal static string ConfigurationUnauthorisedAccessExceptionCaption {
             get {
@@ -264,6 +228,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         internal static string ImageEmitLocationTopRight {
             get {
                 return ResourceManager.GetString("ImageEmitLocationTopRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Files (*.bmp, *.jpg, *.jpeg, *.png) | *.bmp; *.jpg; *.jpeg; *.png|All Files|*.*.
+        /// </summary>
+        internal static string ImageFileFilterString {
+            get {
+                return ResourceManager.GetString("ImageFileFilterString", resourceCulture);
             }
         }
         

@@ -17,24 +17,17 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using Microsoft.Xna.Framework.Graphics;
-    using Natsnudasoft.EgamiFlowScreensaver.Config;
 
     /// <summary>
-    /// Provides an interface describing methods able to manage a <see cref="BackgroundDrawable"/>
-    /// based on a specified <see cref="ScreensaverConfiguration"/>.
+    /// Provides an interface describing methods able to manage a <see cref="BackgroundDrawable"/>.
     /// </summary>
     public interface IBackgroundDrawableManager
     {
         /// <summary>
-        /// Initializes this <see cref="BackgroundDrawableManager" /> based on the specified
-        /// <see cref="ScreensaverConfiguration"/>.
+        /// Initializes this <see cref="BackgroundDrawableManager" />.
         /// </summary>
-        /// <param name="screensaverConfiguration">The configuration options for the screensaver.
-        /// </param>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
-        void Initialize(
-            ScreensaverConfiguration screensaverConfiguration,
-            ScreensaverArea screensaverArea);
+        void Initialize(ScreensaverArea screensaverArea);
 
         /// <summary>
         /// Loads the content of the <see cref="BackgroundDrawable"/> that is managed by this

@@ -16,7 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
-    using Properties;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
 
     /// <summary>
     /// Represents values that describe how to scale and position an image on a drawing area.

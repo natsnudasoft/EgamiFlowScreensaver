@@ -32,7 +32,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="gameWindowHandle">A handle to the game window.</param>
         /// <param name="previewWindowHandle">A handle to the preview window on a screensaver
         /// settings screen.</param>
-        /// <returns>A <see cref="Rectangle"/> describing the bounds of the preview window that was
+        /// <returns>A <see cref="Rectangle"/> describing the bounds of the preview window that the
+        /// game window was attached to.
         /// </returns>
         Rectangle AttachGameWindowToPreviewWindow(
             IntPtr gameWindowHandle,

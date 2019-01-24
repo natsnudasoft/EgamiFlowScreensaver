@@ -74,12 +74,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="bitmap"/> is
+        /// <see langword="null"/>.</exception>
         /// <exception cref="Exception">The operation failed for an unknown reason.</exception>
         /// <exception cref="InvalidOperationException">The specified bitmap is too large. Use
         /// <see cref="FromLargeBitmap"/> instead.
         /// </exception>
         public Texture2D FromBitmap(SystemBitmap bitmap)
         {
+            ParameterValidation.IsNotNull(bitmap, nameof(bitmap));
+
             if (bitmap.Width > this.maxWidth || bitmap.Height > this.maxHeight)
             {
                 throw new InvalidOperationException("The specified bitmap is too large.");
@@ -89,9 +93,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="bitmap"/> is
+        /// <see langword="null"/>.</exception>
         /// <exception cref="Exception">The operation failed for an unknown reason.</exception>
         public TiledTexture2D FromLargeBitmap(SystemBitmap bitmap)
         {
+            ParameterValidation.IsNotNull(bitmap, nameof(bitmap));
+
             var x = 0;
             var y = 0;
             var width = bitmap.Width;
@@ -128,14 +136,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 area.Height,
                 false,
                 SurfaceFormat.Bgra32);
-            var data = bitmap.LockBits(
-                area,
-                ImageLockMode.ReadOnly,
-                PixelFormat.Format32bppPArgb);
-            var bytes = new byte[data.Height * data.Stride];
-            Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
-            texture.SetData(bytes);
-            bitmap.UnlockBits(data);
+            try
+            {
+                var data = bitmap.LockBits(
+                    area,
+                    ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppPArgb);
+                var bytes = new byte[data.Height * data.Stride];
+                Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
+                texture.SetData(bytes);
+                bitmap.UnlockBits(data);
+            }
+            catch
+            {
+                texture.Dispose();
+                throw;
+            }
+
             return texture;
         }
     }

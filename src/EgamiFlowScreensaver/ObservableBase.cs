@@ -44,20 +44,30 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="propertyName">The name of the property.</param>
         /// <returns><see langword="true"/> if the property was changed; <see langword="false"/>
         /// if the new value was equal to the old value of the backing field.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1045:DoNotPassTypesByReference",
+            MessageId = "0#",
+            Justification = "Convenience method.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Design",
+            "CA1026:DefaultParametersShouldNotBeUsed",
+            Justification = "Convenience method.")]
         protected bool Set<T>(
             ref T field,
             T newValue,
             [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(field, newValue))
+            var result = false;
+            if (!EqualityComparer<T>.Default.Equals(field, newValue))
             {
-                return false;
+                this.OnPropertyChanging(propertyName);
+                field = newValue;
+                this.OnPropertyChanged(propertyName);
+                result = true;
             }
 
-            this.OnPropertyChanging(propertyName);
-            field = newValue;
-            this.OnPropertyChanged(propertyName);
-            return true;
+            return result;
         }
 
         /// <summary>

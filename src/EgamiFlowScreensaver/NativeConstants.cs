@@ -28,12 +28,35 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <summary>
         /// The WS_CHILD constant. Imported from p/invoke.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1707:IdentifiersShouldNotContainUnderscores",
+            Justification = "Preserving original P/Invoke names.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1709:IdentifiersShouldBeCasedCorrectly",
+            MessageId = "CHILD",
+            Justification = "Preserving original P/Invoke names.")]
         [CLSCompliant(false)]
         public const uint WS_CHILD = 1073741824;
 
         /// <summary>
         /// The HWND_MESSAGE constant. Imported from p/invoke.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1707:IdentifiersShouldNotContainUnderscores",
+            Justification = "Preserving original P/Invoke names.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1709:IdentifiersShouldBeCasedCorrectly",
+            MessageId = "HWND",
+            Justification = "Preserving original P/Invoke names.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1709:IdentifiersShouldBeCasedCorrectly",
+            MessageId = "MESSAGE",
+            Justification = "Preserving original P/Invoke names.")]
         public static readonly IntPtr HWND_MESSAGE = new IntPtr(-3);
 #pragma warning restore SA1310 // Field names must not contain underscore
     }

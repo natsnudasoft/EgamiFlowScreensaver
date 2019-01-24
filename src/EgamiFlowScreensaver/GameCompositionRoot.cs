@@ -16,9 +16,11 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.EgamiFlowScreensaver.Config;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// The composition root of the <see cref="ScreensaverGame"/>.
@@ -31,8 +33,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="gameServiceContainer">The <see cref="GameServiceContainer"/> to add
         /// composed services to.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="gameServiceContainer"/> is
+        /// <see langword="null"/>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Reliability",
+            "CA2000:Dispose objects before losing scope",
+            Justification = "Object is passed to caller to dispose.")]
         public static void Compose(GameServiceContainer gameServiceContainer)
         {
+            ParameterValidation.IsNotNull(gameServiceContainer, nameof(gameServiceContainer));
+
             var graphicsDeviceService = gameServiceContainer.GetService<IGraphicsDeviceService>();
 
             var nativeMethods = new NativeMethods();
@@ -50,7 +60,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             var configurationFileService = new ConfigurationFileService();
             gameServiceContainer.AddService<IConfigurationFileService>(configurationFileService);
 
-            var backgroundDrawableManager = new BackgroundDrawableManager(gameServiceContainer);
+            var backgroundDrawableFactory =
+                new ScreensaverConfigurationBackgroundDrawableFactory(gameServiceContainer);
+            var backgroundDrawableManager =
+                new BackgroundDrawableManager(backgroundDrawableFactory);
             gameServiceContainer.AddService<IBackgroundDrawableManager>(backgroundDrawableManager);
 
             var imageScaleService = new ImageScaleService();

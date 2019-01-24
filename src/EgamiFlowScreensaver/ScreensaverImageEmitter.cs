@@ -122,11 +122,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     {
                         var textureIndex = this.random.Next(0, this.screensaverTextures.Count);
                         var texture = this.screensaverTextures[textureIndex];
-                        var imageEmitDetails = this.GetImageEmitDetails(texture);
+                        var (position, speed) = this.GetImageEmitDetails(texture);
                         var screensaverImageItem = new ScreensaverImageItem
                         {
-                            Position = imageEmitDetails.Position,
-                            Speed = imageEmitDetails.Speed,
+                            Position = position,
+                            Speed = speed,
                             Texture = texture
                         };
                         this.screensaverImageManager.AddScreensaverImage(screensaverImageItem);
@@ -140,9 +140,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             }
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetImageEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             (Vector2, Vector2) imageEmitDetails;
             switch (this.imageEmitLocation)
@@ -174,28 +172,19 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return imageEmitDetails;
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetRandomCornerEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
-            var cornerProbability = this.random.Next(0, 4);
-            switch (cornerProbability)
+            Func<(Vector2, Vector2)>[] emitDetailsFunctions =
             {
-                case 0:
-                    return this.GetBottomRightEmitDetails();
-                case 1:
-                    return this.GetTopRightEmitDetails(texture);
-                case 2:
-                    return this.GetTopLeftEmitDetails(texture);
-                case 3:
-                default:
-                    return this.GetBottomLeftEmitDetails(texture);
-            }
+                this.GetBottomRightEmitDetails,
+                () => this.GetTopRightEmitDetails(texture),
+                () => this.GetTopLeftEmitDetails(texture),
+                () => this.GetBottomLeftEmitDetails(texture)
+            };
+            return emitDetailsFunctions[this.random.Next(0, emitDetailsFunctions.Length)]();
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetRandomEmitDetails()
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var minX = this.screensaverArea.PrimaryGameBounds.Left;
             var maxX = this.screensaverArea.PrimaryGameBounds.Right;
@@ -211,9 +200,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return (position, speed);
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetCenterEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var originCenter = this.screensaverArea.PrimaryGameBounds.Center.ToVector2() -
                 (new Vector2(texture.Width, texture.Height) / 2f);
@@ -231,9 +218,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return (position, speed);
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetBottomRightEmitDetails()
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var bottomRightPrimary = new Point(
                 this.screensaverArea.PrimaryGameBounds.Right,
@@ -251,9 +236,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return (position, speed);
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetTopRightEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var topRightPrimary = new Point(
                 this.screensaverArea.PrimaryGameBounds.Right,
@@ -271,9 +254,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return (position, speed);
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetTopLeftEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var topLeftPrimary = new Point(
                 this.screensaverArea.PrimaryGameBounds.Left,
@@ -291,9 +272,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             return (position, speed);
         }
 
-#pragma warning disable SA1008 // Opening parenthesis must be spaced correctly
         private (Vector2 Position, Vector2 Speed) GetBottomLeftEmitDetails(Texture2D texture)
-#pragma warning restore SA1008 // Opening parenthesis must be spaced correctly
         {
             var bottomLeftPrimary = new Point(
                 this.screensaverArea.PrimaryGameBounds.Left,

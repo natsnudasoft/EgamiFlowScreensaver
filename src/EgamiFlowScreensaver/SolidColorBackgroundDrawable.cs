@@ -19,6 +19,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Natsnudasoft.NatsnudaLibrary;
     using SystemColor = System.Drawing.Color;
 
     /// <summary>
@@ -50,8 +51,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="graphicsDevice"/> is
+        /// <see langword="null"/>.</exception>
         public override void BeforeDraw(GraphicsDevice graphicsDevice)
         {
+            ParameterValidation.IsNotNull(graphicsDevice, nameof(graphicsDevice));
+
             graphicsDevice.Clear(this.backgroundColor);
         }
     }

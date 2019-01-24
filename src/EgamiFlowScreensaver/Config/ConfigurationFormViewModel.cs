@@ -23,9 +23,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System.IO;
     using System.Security;
     using System.Windows.Forms;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
     using NLog;
-    using Properties;
     using ProtoBuf;
     using static System.FormattableString;
 
@@ -187,8 +187,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = @"Image Files (*.bmp, *.jpg, *.jpeg, *.png) | *.bmp; *.jpg;
- *.jpeg; *.png|All Files|*.*";
+                openFileDialog.Filter = Resources.ImageFileFilterString;
                 openFileDialog.DefaultExt = ".png";
                 if (openFileDialog.ShowDialog(owner) == DialogResult.OK)
                 {
@@ -284,8 +283,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             using (var openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = @"Image Files (*.bmp, *.jpg, *.jpeg, *.png) | *.bmp; *.jpg;
- *.jpeg; *.png|All Files|*.*";
+                openFileDialog.Filter = Resources.ImageFileFilterString;
                 openFileDialog.DefaultExt = ".png";
                 if (openFileDialog.ShowDialog(owner) == DialogResult.OK)
                 {
@@ -322,17 +320,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// otherwise <see langword="false"/>.</returns>
         public bool ReadSettingsFromDisk(IWin32Window owner)
         {
+            var result = false;
             try
             {
                 var screensaverConfiguration = this.configurationFileService.Open();
                 ConfigurationImageItem backgroundImage = null;
-                var backgroundImageScaleMode = default(ImageScaleMode);
+                var newBackgroundImageScaleMode = default(ImageScaleMode);
                 if (screensaverConfiguration.BackgroundImage != null)
                 {
                     backgroundImage = this.configurationFilesTempCache.SetBackgroundImage(
                         screensaverConfiguration.BackgroundImage.ImageFilePath,
                         screensaverConfiguration.BackgroundImage.OriginalFileName);
-                    backgroundImageScaleMode = screensaverConfiguration.BackgroundImageScaleMode;
+                    newBackgroundImageScaleMode = screensaverConfiguration.BackgroundImageScaleMode;
                 }
 
                 var screensaverImages = new List<ConfigurationImageItem>();
@@ -347,7 +346,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.BackgroundMode = screensaverConfiguration.BackgroundMode;
                 this.BackgroundColor = screensaverConfiguration.BackgroundColor;
                 this.BackgroundImage = backgroundImage;
-                this.BackgroundImageScaleMode = backgroundImageScaleMode;
+                this.BackgroundImageScaleMode = newBackgroundImageScaleMode;
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
                 this.ImageEmitLocation = screensaverConfiguration.ImageEmitLocation;
@@ -357,7 +356,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                     this.Images.Add(screensaverImage);
                 }
 
-                return true;
+                result = true;
             }
             catch (IOException ex)
             {
@@ -380,7 +379,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 Logger.Error(ex, string.Empty);
             }
 
-            return false;
+            return result;
         }
 
         /// <summary>
@@ -391,15 +390,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// otherwise <see langword="false"/>.</returns>
         public bool CommitSettingsToDisk(IWin32Window owner)
         {
+            var result = false;
             var backgroundColor = default(Color);
             ConfigurationImageItem backgroundImage = null;
-            var backgroundImageScaleMode = default(ImageScaleMode);
+            var newBackgroundImageScaleMode = default(ImageScaleMode);
             switch (this.BackgroundMode)
             {
                 case BackgroundMode.Image:
                     backgroundImage = this.configurationFileService
                         .CommitCachedBackgroundImage(this.BackgroundImage);
-                    backgroundImageScaleMode = this.BackgroundImageScaleMode;
+                    newBackgroundImageScaleMode = this.BackgroundImageScaleMode;
                     break;
 
                 case BackgroundMode.SolidColor:
@@ -417,7 +417,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 BackgroundMode = this.BackgroundMode,
                 BackgroundColor = backgroundColor,
                 BackgroundImage = backgroundImage,
-                BackgroundImageScaleMode = backgroundImageScaleMode,
+                BackgroundImageScaleMode = newBackgroundImageScaleMode,
                 ImageEmitRate = this.ImageEmitRate,
                 MaxImageEmitCount = this.MaxImageEmitCount,
                 ImageEmitLocation = this.ImageEmitLocation
@@ -432,7 +432,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             try
             {
                 this.configurationFileService.Save(screensaverConfiguration);
-                return true;
+                result = true;
             }
             catch (IOException ex)
             {
@@ -450,7 +450,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 Logger.Error(ex, string.Empty);
             }
 
-            return false;
+            return result;
         }
 
         /// <summary>

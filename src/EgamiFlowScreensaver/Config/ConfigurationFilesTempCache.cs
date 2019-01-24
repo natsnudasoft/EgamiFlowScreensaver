@@ -86,12 +86,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
-        /// <exception cref="IOException">The path to the file is not known, or an error occurred
-        /// while opening the file.</exception>
-        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
-        /// permissions to access the file.</exception>
-        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
-        /// it is on an unmapped drive).</exception>
         public void RemoveScreensaverImage(string screensaverImageFilePath)
         {
             if (TryRemoveTempFilePath(screensaverImageFilePath))
@@ -105,12 +99,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
-        /// <exception cref="IOException">The path to the file is not known, or an error occurred
-        /// while opening the file.</exception>
-        /// <exception cref="UnauthorizedAccessException">The caller does not have the required
-        /// permissions to access the file.</exception>
-        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example,
-        /// it is on an unmapped drive).</exception>
         public void Clear()
         {
             this.tempPathsToDelete.RemoveWhere(TryRemoveTempFilePath);
@@ -137,7 +125,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                     File.Delete(tempFilePath);
                     result = true;
                 }
-                catch (Exception ex)
+                catch (DirectoryNotFoundException)
+                {
+                    result = true;
+                }
+                catch (IOException ex)
+                {
+                    Logger.Warn(ex, Invariant($"Could not delete temp path at '{tempFilePath}'."));
+                }
+                catch (UnauthorizedAccessException ex)
                 {
                     Logger.Warn(ex, Invariant($"Could not delete temp path at '{tempFilePath}'."));
                 }
