@@ -24,8 +24,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System.Security.AccessControl;
     using System.Security.Principal;
     using System.Threading;
-    using NLog;
-    using Properties;
     using ProtoBuf;
     using static System.FormattableString;
 
@@ -35,7 +33,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="IConfigurationFileService" />
     public sealed class ConfigurationFileService : IConfigurationFileService
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private const string ConfigurationBackgroundImageFileName = "background";
+        private const string ConfigurationFileName = "settings.cfg";
+#pragma warning disable CC0021 // Use nameof
+        private const string ConfigurationFolderName = "EgamiFlowScreensaver";
+#pragma warning restore CC0021 // Use nameof
+        private const string ConfigurationImagesFolderName = "images";
+
         private static readonly TimeSpan ConfigFileTimeout = TimeSpan.FromSeconds(3);
         private static readonly Lazy<Mutex> LazyConfigFileMutex =
             new Lazy<Mutex>(CreateConfigFileMutex);
@@ -47,13 +51,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             this.ConfigPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                Resources.ConfigurationFolderName);
+                ConfigurationFolderName);
             this.ConfigFilePath = Path.Combine(
                 this.ConfigPath,
-                Resources.ConfigurationFileName);
+                ConfigurationFileName);
             this.ConfigImagesPath = Path.Combine(
                 this.ConfigPath,
-                Resources.ConfigurationImagesFolderName);
+                ConfigurationImagesFolderName);
         }
 
         /// <inheritdoc/>
@@ -144,7 +148,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 Directory.CreateDirectory(this.ConfigPath);
                 this.DeleteOldBackgroundImagesInternal();
                 var newBackgroundImageFileName =
-                    Resources.ConfigurationBackgroundImageFileName +
+                    ConfigurationBackgroundImageFileName +
                     Path.GetExtension(backgroundImageItem.OriginalFileName);
                 var newBackgroundImageFilePath =
                     Path.Combine(this.ConfigPath, newBackgroundImageFileName);
@@ -218,6 +222,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
         private static T PerformMutuallyExclusiveConfigFileAction<T>(Func<T> action)
         {
+            var result = default(T);
             if (action != null)
             {
                 var configFileMutex = LazyConfigFileMutex.Value;
@@ -238,7 +243,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                         hasHandle = true;
                     }
 
-                    return action();
+                    result = action();
                 }
                 finally
                 {
@@ -249,7 +254,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 }
             }
 
-            return default(T);
+            return result;
         }
 
         private static Mutex CreateConfigFileMutex()
@@ -270,7 +275,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             int screensaverImageIndex)
         {
             var newImageFileName =
-                $"{screensaverImageIndex:D3}" +
+                Invariant($"{screensaverImageIndex:D3}") +
                 Path.GetExtension(screensaverImageItem.OriginalFileName);
             var newScreensaverImagePath = Path.Combine(this.ConfigImagesPath, newImageFileName);
             File.Copy(screensaverImageItem.ImageFilePath, newScreensaverImagePath, true);
@@ -283,7 +288,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             var configDirectoryInfo = new DirectoryInfo(this.ConfigPath);
             var backgroundImageFiles = configDirectoryInfo.EnumerateFiles(
-                Resources.ConfigurationBackgroundImageFileName + ".*");
+                ConfigurationBackgroundImageFileName + ".*");
             foreach (var backgroundImageFile in backgroundImageFiles)
             {
                 backgroundImageFile.Delete();

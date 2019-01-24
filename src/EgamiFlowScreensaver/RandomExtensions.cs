@@ -17,6 +17,7 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides extensions to the <see cref="Random"/> class.
@@ -29,8 +30,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="random">The pseudo random-number generator to use to generate the random
         /// value.</param>
         /// <returns>The <see cref="float"/> that was randomly generated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="random"/> is
+        /// <see langword="null"/>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1720:IdentifiersShouldNotContainTypeNames",
+            MessageId = "float",
+            Justification = "Correct description of function.")]
         public static float NextFloat(this Random random)
         {
+            ParameterValidation.IsNotNull(random, nameof(random));
+
             return (float)random.NextDouble();
         }
 
@@ -41,8 +51,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// value.</param>
         /// <param name="maxValue">The maximum value to randomly generate.</param>
         /// <returns> The <see cref="float" /> that was randomly generated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="random"/> is
+        /// <see langword="null"/>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1720:IdentifiersShouldNotContainTypeNames",
+            MessageId = "float",
+            Justification = "Correct description of function.")]
         public static float NextFloat(this Random random, float maxValue)
         {
+            ParameterValidation.IsNotNull(random, nameof(random));
+
             return random.NextFloat(0f, maxValue);
         }
 
@@ -55,8 +74,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="minValue">The minimum value to randomly generate.</param>
         /// <param name="maxValue">The maximum value to randomly generate.</param>
         /// <returns> The <see cref="float" /> that was randomly generated.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="random"/> is
+        /// <see langword="null"/>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1720:IdentifiersShouldNotContainTypeNames",
+            MessageId = "float",
+            Justification = "Correct description of function.")]
         public static float NextFloat(this Random random, float minValue, float maxValue)
         {
+            ParameterValidation.IsNotNull(random, nameof(random));
+
             var range = (double)maxValue - minValue;
             var sample = random.NextDouble();
             var scaled = (sample * range) + minValue;

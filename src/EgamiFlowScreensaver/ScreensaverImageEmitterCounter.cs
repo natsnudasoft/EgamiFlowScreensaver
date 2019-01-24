@@ -16,7 +16,9 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
     using Microsoft.Xna.Framework;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides a class to manage the rate that images should be emitted by a
@@ -52,8 +54,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         /// <param name="gameTime">A snapshot of the current game time.</param>
         /// <returns>The number of images that should be emitted.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="gameTime"/> is
+        /// <see langword="null"/>.</exception>
         public int UpdateEmit(GameTime gameTime)
         {
+            ParameterValidation.IsNotNull(gameTime, nameof(gameTime));
+
             var emitCount = 0;
             this.elapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             while (this.elapsed > this.particleRateInverse)

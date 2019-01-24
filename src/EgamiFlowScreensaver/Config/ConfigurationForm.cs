@@ -20,8 +20,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System.Linq;
     using System.Reflection;
     using System.Windows.Forms;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
-    using Properties;
 
     /// <summary>
     /// The configuration form to manage the settings of a <see cref="ScreensaverGame"/>.
@@ -35,20 +35,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// Initializes a new instance of the <see cref="ConfigurationForm"/> class.
         /// </summary>
         /// <param name="viewModel">The view model to bind to.</param>
-        /// <param name="isIndependantWindow">Whether or not the <see cref="ConfigurationForm"/> is
+        /// <param name="isIndependentWindow">Whether or not the <see cref="ConfigurationForm"/> is
         /// being opened as an independent window or as part of the screensaver settings window.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="viewModel"/> is
         /// empty.</exception>
 #pragma warning disable MEN003 // Method is too long
-        public ConfigurationForm(ConfigurationFormViewModel viewModel, bool isIndependantWindow)
+        public ConfigurationForm(ConfigurationFormViewModel viewModel, bool isIndependentWindow)
 #pragma warning restore MEN003 // Method is too long
         {
             ParameterValidation.IsNotNull(viewModel, nameof(viewModel));
 
             this.viewModel = viewModel;
             this.InitializeComponent();
-            if (isIndependantWindow)
+            if (isIndependentWindow)
             {
                 this.ShowInTaskbar = true;
             }
@@ -218,17 +218,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private static string GetEnumDisplayName<T>(T enumValue)
         {
             var enumValueMemberInfo = typeof(T).GetMember(enumValue.ToString()).FirstOrDefault();
+            var enumDisplayName = enumValueMemberInfo?.ToString();
             if (enumValueMemberInfo != null)
             {
                 var enumResourceDisplayNameAttribute =
                     enumValueMemberInfo.GetCustomAttribute<EnumResourceDisplayNameAttribute>();
                 if (enumResourceDisplayNameAttribute != null)
                 {
-                    return enumResourceDisplayNameAttribute.DisplayName;
+                    enumDisplayName = enumResourceDisplayNameAttribute.DisplayName;
                 }
             }
 
-            return enumValueMemberInfo.ToString();
+            return enumDisplayName;
         }
     }
 }

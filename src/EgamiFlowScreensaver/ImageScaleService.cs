@@ -20,6 +20,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Drawing.Imaging;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides a class for performing scaling of images.
@@ -28,21 +29,33 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public sealed class ImageScaleService : IImageScaleService
     {
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> is
+        /// <see langword="null"/>.</exception>
         public Bitmap ScaleImage(Image image, Size scaleSize, ImageScaleMode imageScaleMode)
         {
+            ParameterValidation.IsNotNull(image, nameof(image));
+
+            Bitmap scaledImage;
             switch (imageScaleMode)
             {
                 case ImageScaleMode.Fill:
-                    return FillImage(image, scaleSize);
+                    scaledImage = FillImage(image, scaleSize);
+                    break;
                 case ImageScaleMode.Fit:
-                    return FitImage(image, scaleSize);
+                    scaledImage = FitImage(image, scaleSize);
+                    break;
                 case ImageScaleMode.Stretch:
-                    return StretchImage(image, scaleSize);
+                    scaledImage = StretchImage(image, scaleSize);
+                    break;
                 case ImageScaleMode.Tile:
-                    return TileImage(image, scaleSize);
+                    scaledImage = TileImage(image, scaleSize);
+                    break;
                 default:
-                    return new Bitmap(image);
+                    scaledImage = new Bitmap(image);
+                    break;
             }
+
+            return scaledImage;
         }
 
         private static Bitmap FillImage(Image image, Size scaleSize)
@@ -72,12 +85,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             var tiledBitmap =
                 new Bitmap(scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppPArgb);
-            tiledBitmap.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-            using (var brush = new TextureBrush(image, WrapMode.Tile))
-            using (var graphics = Graphics.FromImage(tiledBitmap))
+            try
             {
-                SetupDefaultGraphicsOptions(graphics);
-                graphics.FillRectangle(brush, 0, 0, scaleSize.Width, scaleSize.Height);
+                tiledBitmap.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+                using (var brush = new TextureBrush(image, WrapMode.Tile))
+                using (var graphics = Graphics.FromImage(tiledBitmap))
+                {
+                    SetupDefaultGraphicsOptions(graphics);
+                    graphics.FillRectangle(brush, 0, 0, scaleSize.Width, scaleSize.Height);
+                }
+            }
+            catch
+            {
+                tiledBitmap.Dispose();
+                throw;
             }
 
             return tiledBitmap;
@@ -88,23 +109,31 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             var destRect = new Rectangle(0, 0, scaleSize.Width, scaleSize.Height);
             var resizedImage =
                 new Bitmap(scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppPArgb);
-            resizedImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-            using (var graphics = Graphics.FromImage(resizedImage))
+            try
             {
-                SetupDefaultGraphicsOptions(graphics);
-                using (var wrapMode = new ImageAttributes())
+                resizedImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+                using (var graphics = Graphics.FromImage(resizedImage))
                 {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(
-                        image,
-                        destRect,
-                        0,
-                        0,
-                        image.Width,
-                        image.Height,
-                        GraphicsUnit.Pixel,
-                        wrapMode);
+                    SetupDefaultGraphicsOptions(graphics);
+                    using (var wrapMode = new ImageAttributes())
+                    {
+                        wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                        graphics.DrawImage(
+                            image,
+                            destRect,
+                            0,
+                            0,
+                            image.Width,
+                            image.Height,
+                            GraphicsUnit.Pixel,
+                            wrapMode);
+                    }
                 }
+            }
+            catch
+            {
+                resizedImage.Dispose();
+                throw;
             }
 
             return resizedImage;

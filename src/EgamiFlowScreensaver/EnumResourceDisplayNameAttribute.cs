@@ -25,6 +25,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     /// specified resource type.
     /// </summary>
     /// <seealso cref="Attribute" />
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Microsoft.Design",
+        "CA1019:DefineAccessorsForAttributeArguments",
+        Justification = "Values are derived from this argument.")]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public sealed class EnumResourceDisplayNameAttribute : Attribute
     {

@@ -29,14 +29,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <inheritdoc/>
         public IntPtr SetWindowLongPtr(HandleRef windowHandle, int index, IntPtr newValue)
         {
-            if (IntPtr.Size == 8)
+            IntPtr offset;
+            const int IntPtrSize64 = 8;
+            if (IntPtr.Size == IntPtrSize64)
             {
-                return SetWindowLongPtr64(windowHandle, index, newValue);
+                offset = SetWindowLongPtr64(windowHandle, index, newValue);
             }
             else
             {
-                return new IntPtr(SetWindowLong32(windowHandle, index, newValue.ToInt32()));
+                offset = new IntPtr(SetWindowLong32(windowHandle, index, newValue.ToInt32()));
             }
+
+            return offset;
         }
 
         /// <inheritdoc/>
@@ -80,6 +84,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
         private static extern int SetWindowLong32(HandleRef hWnd, int nIndex, int dwNewLong);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Interoperability",
+            "CA1400:PInvokeEntryPointsShouldExist",
+            Justification = "This entry point exists in 64bit.")]
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
         private static extern IntPtr SetWindowLongPtr64(
             HandleRef hWnd,
@@ -87,16 +95,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             IntPtr dwNewLong);
 
         [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll", EntryPoint = "MoveWindow", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool MoveWindowInternal(
             IntPtr hWnd,
             int X,
             int Y,
             int nWidth,
             int nHeight,
-            bool bRepaint);
+            [MarshalAs(UnmanagedType.Bool)] bool bRepaint);
 
         [DllImport("user32.dll", EntryPoint = "SetParent", SetLastError = true)]
         private static extern IntPtr SetParentInternal(IntPtr hWndChild, IntPtr hWndNewParent);
@@ -105,6 +115,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private static extern IntPtr GetParentInternal(IntPtr hWnd);
 
         [DllImport("user32.dll", EntryPoint = "SetForegroundWindow", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetForegroundWindowInternal(IntPtr hWnd);
 #pragma warning restore CC0021 // Use nameof
     }

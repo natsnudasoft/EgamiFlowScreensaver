@@ -1,4 +1,4 @@
-﻿// <copyright file="ConfigurationDirLayoutRenderer.cs" company="natsnudasoft">
+﻿// <copyright file="ConfigurationDirectoryLayoutRenderer.cs" company="natsnudasoft">
 // Copyright (c) Adrian John Dunstan. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,26 +27,28 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// </summary>
     /// <seealso cref="LayoutRenderer" />
     [LayoutRenderer("ConfigDir")]
-    public sealed class ConfigurationDirLayoutRenderer : LayoutRenderer
+    public sealed class ConfigurationDirectoryLayoutRenderer : LayoutRenderer
     {
         private readonly IConfigurationFileService configFileService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationDirLayoutRenderer"/> class.
+        /// Initializes a new instance of the <see cref="ConfigurationDirectoryLayoutRenderer"/>
+        /// class.
         /// </summary>
-        public ConfigurationDirLayoutRenderer()
+        public ConfigurationDirectoryLayoutRenderer()
             : this(new ConfigurationFileService())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationDirLayoutRenderer"/> class.
+        /// Initializes a new instance of the <see cref="ConfigurationDirectoryLayoutRenderer"/>
+        /// class.
         /// </summary>
         /// <param name="configFileService">The configuration file service to use to retrieve the
         /// configuration directory.</param>
         /// <exception cref="ArgumentNullException"><paramref name="configFileService"/> is
         /// <see langword="null"/>.</exception>
-        public ConfigurationDirLayoutRenderer(IConfigurationFileService configFileService)
+        public ConfigurationDirectoryLayoutRenderer(IConfigurationFileService configFileService)
         {
             ParameterValidation.IsNotNull(configFileService, nameof(configFileService));
 
@@ -54,8 +56,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="builder"/>, or
+        /// <paramref name="logEvent"/> is <see langword="null"/>.</exception>
         protected override void Append(StringBuilder builder, LogEventInfo logEvent)
         {
+            ParameterValidation.IsNotNull(builder, nameof(builder));
+            ParameterValidation.IsNotNull(logEvent, nameof(logEvent));
+
             builder.Append(this.configFileService.ConfigPath);
         }
     }

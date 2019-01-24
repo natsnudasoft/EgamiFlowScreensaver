@@ -51,8 +51,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// containing the configuration.</param>
         /// <returns>A <see cref="LoggingConfiguration"/> loaded from an embedded resource.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="configurationName"/> is
+        /// <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="configurationName"/> is empty.
+        /// </exception>
         public LoggingConfiguration LoadConfiguration(string configurationName)
         {
+            ParameterValidation.IsNotNull(configurationName, nameof(configurationName));
+            ParameterValidation.IsNotEmpty(configurationName, nameof(configurationName));
+
             using (var configStream = this.configAssembly
                 .GetManifestResourceStream(configurationName))
             using (var configXmlReader = XmlReader.Create(configStream))

@@ -19,6 +19,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Extends the <see cref="GroupBox"/> control with the capability of exposing a value from the
@@ -78,6 +79,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <inheritdoc/>
         protected override void OnControlAdded(ControlEventArgs e)
         {
+            ParameterValidation.IsNotNull(e, nameof(e));
+
             base.OnControlAdded(e);
 
             if (e.Control is RadioButton radioButton)

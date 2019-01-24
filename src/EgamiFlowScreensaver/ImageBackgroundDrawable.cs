@@ -1,4 +1,4 @@
-﻿// <copyright file="ImageBackgroundDrawbale.cs" company="natsnudasoft">
+﻿// <copyright file="ImageBackgroundDrawable.cs" company="natsnudasoft">
 // Copyright (c) Adrian John Dunstan. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     /// </summary>
     /// <seealso cref="BackgroundDrawable" />
     /// <seealso cref="IDisposable" />
-    public sealed class ImageBackgroundDrawbale : BackgroundDrawable, IDisposable
+    public sealed class ImageBackgroundDrawable : BackgroundDrawable, IDisposable
     {
         private readonly string backgroundImageFilePath;
         private readonly ITextureConverterService textureConverterService;
@@ -38,7 +38,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private Vector2 imagePosition;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageBackgroundDrawbale"/> class.
+        /// Initializes a new instance of the <see cref="ImageBackgroundDrawable"/> class.
         /// </summary>
         /// <param name="backgroundImageFilePath">The path to image file to use as the background.
         /// </param>
@@ -51,7 +51,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <paramref name="screensaverArea"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="backgroundImageFilePath"/> is
         /// empty.</exception>
-        public ImageBackgroundDrawbale(
+        public ImageBackgroundDrawable(
             string backgroundImageFilePath,
             ITextureConverterService textureConverterService,
             IImageScaleService imageScaleService,
@@ -64,6 +64,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 backgroundImageFilePath,
                 nameof(backgroundImageFilePath));
             ParameterValidation.IsNotNull(textureConverterService, nameof(textureConverterService));
+            ParameterValidation.IsNotNull(imageScaleService, nameof(imageScaleService));
 
             this.backgroundImageFilePath = backgroundImageFilePath;
             this.textureConverterService = textureConverterService;
@@ -90,12 +91,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 case ImageScaleMode.Center:
                     this.CenterImagePosition();
                     break;
+                default:
+                    break;
             }
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="spriteBatch"/> is
+        /// <see langword="null"/>.</exception>
         public override void Draw(SpriteBatch spriteBatch)
         {
+            ParameterValidation.IsNotNull(spriteBatch, nameof(spriteBatch));
+
             foreach (var tiledTextureSegment in this.imageTiledTexture.TiledTextureSegments)
             {
                 spriteBatch.Draw(

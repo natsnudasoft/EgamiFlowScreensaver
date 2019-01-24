@@ -17,11 +17,13 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using System.Globalization;
     using System.Threading;
     using System.Windows.Forms;
     using Natsnudasoft.EgamiFlowScreensaver.Config;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
+    using Natsnudasoft.NatsnudaLibrary;
     using NLog;
-    using Properties;
 
     /// <summary>
     /// The main class.
@@ -34,9 +36,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// The main entry point for the application.
         /// </summary>
         /// <param name="args">The arguments passed to the application.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is
+        /// <see langword="null"/>.</exception>
         [STAThread]
         public static void Main(string[] args)
         {
+            ParameterValidation.IsNotNull(args, nameof(args));
+
             Application.ThreadException += ApplicationThreadException;
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
@@ -46,16 +52,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             LogManager.Configuration = nLogConfig;
             if (args.Length > 0)
             {
-                var command = args[0].ToLower().Trim().Substring(0, 2);
+                var command = args[0].ToUpperInvariant().Trim().Substring(0, 2);
                 switch (command)
                 {
-                    case "/c":
+                    case "/C":
                         ShowConfig(GetHandleArg(args));
                         break;
-                    case "/p":
+                    case "/P":
                         ShowPreview(GetHandleArg(args));
                         break;
-                    case "/s":
+                    case "/S":
+                    default:
                         ShowScreensaver();
                         break;
                 }
@@ -75,19 +82,27 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
         private static IntPtr GetHandleArg(string[] args)
         {
-            var handleArgString = args[0].Length > 3 ? args[0].Substring(3) : string.Empty;
-            if (handleArgString != string.Empty && int.TryParse(handleArgString, out int handle))
+            IntPtr handlePointer;
+            const int HandleStartIndex = 3;
+            var handleArgString = args[0].Length > HandleStartIndex ?
+                args[0].Substring(HandleStartIndex) :
+                string.Empty;
+            if (!string.IsNullOrEmpty(handleArgString) &&
+                int.TryParse(handleArgString, out int handle))
             {
-                return (IntPtr)handle;
+                handlePointer = (IntPtr)handle;
             }
             else
             {
-                return (IntPtr)int.Parse(args[1]);
+                handlePointer = (IntPtr)int.Parse(args[1], CultureInfo.InvariantCulture);
             }
+
+            return handlePointer;
         }
 
         private static DialogResult ShowConfig(IntPtr screensaverSettingsChildHandle)
         {
+            DialogResult result;
             Application.EnableVisualStyles();
             var configurationFileService = new ConfigurationFileService();
             var configurationFilesTempCache = new ConfigurationFilesTempCache();
@@ -107,17 +122,19 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                         configForm.StartPosition = FormStartPosition.Manual;
                         configForm.Location = screensaverSettingsAdapterForm.Location;
                         screensaverSettingsAdapterForm.ShowDialog();
-                        return configForm.DialogResult;
+                        result = configForm.DialogResult;
                     }
                 }
                 else
                 {
                     using (var configForm = new ConfigurationForm(viewModel, true))
                     {
-                        return configForm.ShowDialog();
+                        result = configForm.ShowDialog();
                     }
                 }
             }
+
+            return result;
         }
 
         private static void ShowPreview(IntPtr previewHandle)
