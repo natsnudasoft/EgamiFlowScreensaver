@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\..\..\packages\ReportGenerator.4.0.9\build\netstandard2.0\ReportGenerator.props" Condition="Exists('..\..\..\packages\ReportGenerator.4.0.9\build\netstandard2.0\ReportGenerator.props')" />
+  <Import Project="..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.6.3\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.6.3\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
+  <Import Project="..\..\..\packages\Text.Analyzers.2.6.3\build\Text.Analyzers.props" Condition="Exists('..\..\..\packages\Text.Analyzers.2.6.3\build\Text.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props')" />
+  <Import Project="..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\..\..\packages\xunit.runner.visualstudio.2.4.1\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\..\packages\xunit.runner.visualstudio.2.4.1\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props" Condition="Exists('..\..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props')" />
+  <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" />
+  <Import Project="..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +19,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Natsnudasoft.EgamiFlowScreensaver.Test</RootNamespace>
     <AssemblyName>Natsnudasoft.EgamiFlowScreensaver.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
@@ -25,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>EgamiFlowScreensaver.Test.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +44,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>EgamiFlowScreensaver.Test.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(APPVEYOR)' == 'True' And '$(APPVEYOR_PULL_REQUEST_NUMBER)' == '' ">
     <SignAssembly>true</SignAssembly>
@@ -43,38 +52,49 @@
     <DefineConstants>$(DefineConstants);APPVEYOR</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Castle.Core.4.1.0\lib\net45\Castle.Core.dll</HintPath>
+    <Reference Include="Albedo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=179ef6dd03497bbd, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Albedo.2.0.0\lib\net35\Albedo.dll</HintPath>
     </Reference>
-    <Reference Include="Moq, Version=4.7.63.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Moq.4.7.63\lib\net45\Moq.dll</HintPath>
+    <Reference Include="AutoFixture, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\AutoFixture.4.6.0\lib\net452\AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFixture.AutoMoq, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\AutoFixture.AutoMoq.4.6.0\lib\net452\AutoFixture.AutoMoq.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFixture.Idioms, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\AutoFixture.Idioms.4.6.0\lib\net452\AutoFixture.Idioms.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoFixture.Xunit2, Version=4.6.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\AutoFixture.Xunit2.4.6.0\lib\net452\AutoFixture.Xunit2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fare.2.1.1\lib\net35\Fare.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.10.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Moq.4.10.1\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Natsnudasoft.NatsnudaLibrary, Version=0.5.0.0, Culture=neutral, PublicKeyToken=b0f282eb5a9064bb, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NatsnudaLibrary.0.5.1\lib\net46\Natsnudasoft.NatsnudaLibrary.dll</HintPath>
+      <HintPath>..\..\..\packages\NatsnudaLibrary.0.5.2\lib\net46\Natsnudasoft.NatsnudaLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Natsnudasoft.NatsnudaLibrary.TestExtensions, Version=0.5.0.0, Culture=neutral, PublicKeyToken=b0f282eb5a9064bb, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NatsnudaLibrary.TestExtensions.0.5.1\lib\net46\Natsnudasoft.NatsnudaLibrary.TestExtensions.dll</HintPath>
+      <HintPath>..\..\..\packages\NatsnudaLibrary.TestExtensions.0.5.2\lib\net46\Natsnudasoft.NatsnudaLibrary.TestExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="Ploeh.Albedo, Version=1.0.2.0, Culture=neutral, PublicKeyToken=179ef6dd03497bbd, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Albedo.1.0.2\lib\net35\Ploeh.Albedo.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture, Version=3.50.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AutoFixture.3.50.3\lib\net40\Ploeh.AutoFixture.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture.AutoMoq, Version=3.50.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AutoFixture.AutoMoq.3.50.3\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture.Idioms, Version=3.50.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AutoFixture.Idioms.3.50.3\lib\net40\Ploeh.AutoFixture.Idioms.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture.Xunit2, Version=3.50.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\AutoFixture.Xunit2.3.50.3\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
-    </Reference>
-    <Reference Include="Ploeh.SemanticComparison, Version=3.50.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\SemanticComparison.3.50.3\lib\net40\Ploeh.SemanticComparison.dll</HintPath>
+    <Reference Include="SemanticComparison, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\SemanticComparison.4.0.0\lib\net452\SemanticComparison.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,16 +102,16 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
+      <HintPath>..\..\..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
+    <Reference Include="xunit.assert, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\xunit.assert.2.4.1\lib\netstandard1.1\xunit.assert.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
+    <Reference Include="xunit.execution.desktop, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\xunit.extensibility.execution.2.4.1\lib\net452\xunit.execution.desktop.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -125,36 +145,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\..\packages\codecracker.CSharp.1.0.3\analyzers\dotnet\cs\CodeCracker.Common.dll" />
-    <Analyzer Include="..\..\..\packages\codecracker.CSharp.1.0.3\analyzers\dotnet\cs\CodeCracker.CSharp.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Esent.Interop.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Menees.Analyzers.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Framework.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Tasks.Core.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Utilities.Core.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.AppContext.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Console.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Diagnostics.FileVersionInfo.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Diagnostics.StackTrace.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.Compression.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.FileSystem.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.IO.FileSystem.Primitives.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Algorithms.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Encoding.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.Primitives.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Security.Cryptography.X509Certificates.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Text.Encoding.CodePages.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Threading.Tasks.Dataflow.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Threading.Thread.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.ValueTuple.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.ReaderWriter.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XmlDocument.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XPath.dll" />
-    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.1.0.2\analyzers\dotnet\cs\System.Xml.XPath.XDocument.dll" />
-    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-    <Analyzer Include="..\..\..\packages\xunit.analyzers.0.5.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\codecracker.CSharp.1.1.0\analyzers\dotnet\cs\CodeCracker.CSharp.dll" />
+    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.2.0.3\analyzers\dotnet\cs\Menees.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\..\packages\Menees.Analyzers.2017.2.0.3\analyzers\dotnet\cs\Menees.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.61\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+    <Analyzer Include="..\..\..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets" Condition="Exists('..\..\..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets')" />
@@ -163,6 +159,15 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\SlowCheetah.2.5.48\build\SlowCheetah.targets'))" />
-    <Error Condition="!Exists('..\..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.runner.console.2.4.1\build\xunit.runner.console.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\xunit.runner.visualstudio.2.4.1\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.runner.visualstudio.2.4.1\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Text.Analyzers.2.6.3\build\Text.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Text.Analyzers.2.6.3\build\Text.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.6.3\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.6.3\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\ReportGenerator.4.0.9\build\netstandard2.0\ReportGenerator.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\ReportGenerator.4.0.9\build\netstandard2.0\ReportGenerator.props'))" />
   </Target>
 </Project>

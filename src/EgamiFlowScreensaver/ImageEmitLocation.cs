@@ -16,7 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
-    using Properties;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
 
     /// <summary>
     /// Represents values that describe the location that images will be emitted on a screensaver.

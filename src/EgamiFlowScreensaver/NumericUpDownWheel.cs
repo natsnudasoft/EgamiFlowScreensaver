@@ -17,6 +17,7 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System.Windows.Forms;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides a class to fix mouse wheel scrolling on a <see cref="NumericUpDown"/>.
@@ -27,26 +28,28 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <inheritdoc/>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            ParameterValidation.IsNotNull(e, nameof(e));
+
+            var alreadyHandled = false;
             if (e is HandledMouseEventArgs handledMouseEventArgs)
             {
-                if (handledMouseEventArgs.Handled)
-                {
-                    return;
-                }
-
+                alreadyHandled = handledMouseEventArgs.Handled;
                 handledMouseEventArgs.Handled = true;
             }
 
-            if (e.Delta < 0)
+            if (!alreadyHandled)
             {
-                this.DownButton();
-            }
-            else if (e.Delta > 0)
-            {
-                this.UpButton();
-            }
+                if (e.Delta < 0)
+                {
+                    this.DownButton();
+                }
+                else if (e.Delta > 0)
+                {
+                    this.UpButton();
+                }
 
-            base.OnMouseWheel(e);
+                base.OnMouseWheel(e);
+            }
         }
     }
 }

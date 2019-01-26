@@ -146,16 +146,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             public override bool Equals(object obj)
             {
+                var result = false;
                 if (obj is RECT)
                 {
-                    return this.Equals((RECT)obj);
+                    result = this.Equals((RECT)obj);
                 }
                 else if (obj is SystemRectangle)
                 {
-                    return this.Equals(new RECT((SystemRectangle)obj));
+                    result = this.Equals(new RECT((SystemRectangle)obj));
                 }
 
-                return false;
+                return result;
             }
 
             public override int GetHashCode()

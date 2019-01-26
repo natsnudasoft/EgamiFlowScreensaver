@@ -1,4 +1,4 @@
-﻿// <copyright file="ScreensaverImageItem.cs" company="natsnudasoft">
+﻿// <copyright file="IBackgroundDrawableFactory.cs" company="natsnudasoft">
 // Copyright (c) Adrian John Dunstan. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,28 +16,17 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-
     /// <summary>
-    /// Provides a class that encapsulates the current state of an image in a
-    /// <see cref="ScreensaverGame"/>.
+    /// Provides an interface describing methods to create instances of
+    /// <see cref="BackgroundDrawable"/>.
     /// </summary>
-    public sealed class ScreensaverImageItem
+    public interface IBackgroundDrawableFactory
     {
         /// <summary>
-        /// Gets or sets the current position of this screensaver image.
+        /// Creates an instance of <see cref="BackgroundDrawable"/>.
         /// </summary>
-        public Vector2 Position { get; set; }
-
-        /// <summary>
-        /// Gets or sets the speed that this screensaver image moves.
-        /// </summary>
-        public Vector2 Speed { get; set; }
-
-        /// <summary>
-        /// Gets or sets the texture of this screensaver image.
-        /// </summary>
-        public Texture2D Texture { get; set; }
+        /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <returns>The created instance of <see cref="BackgroundDrawable"/>.</returns>
+        BackgroundDrawable Create(ScreensaverArea screensaverArea);
     }
 }

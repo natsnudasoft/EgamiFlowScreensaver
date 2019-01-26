@@ -17,90 +17,75 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
-    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
-    using Natsnudasoft.EgamiFlowScreensaver.Config;
     using Natsnudasoft.NatsnudaLibrary;
-    using SystemColor = System.Drawing.Color;
 
     /// <summary>
-    /// Provides a class to manage a <see cref="BackgroundDrawable"/> based on a specified
-    /// <see cref="ScreensaverConfiguration"/>.
+    /// Provides a class to manage a <see cref="BackgroundDrawable"/> that will be created by a
+    /// specified <see cref="IBackgroundDrawableFactory"/>.
     /// </summary>
+    /// <seealso cref="IBackgroundDrawableManager"/>
+    /// <seealso cref="IDisposable"/>
     public sealed class BackgroundDrawableManager : IBackgroundDrawableManager, IDisposable
     {
-        private readonly IServiceProvider serviceProvider;
+        private readonly IBackgroundDrawableFactory backgroundDrawableFactory;
         private BackgroundDrawable backgroundDrawable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BackgroundDrawableManager"/> class.
         /// </summary>
-        /// <param name="serviceProvider">The service provider for the currently running
-        /// <see cref="Game"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="serviceProvider"/> is
+        /// <param name="backgroundDrawableFactory">The factory to use to provide instances of
+        /// <see cref="BackgroundDrawable"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="backgroundDrawableFactory"/> is
         /// <see langword="null"/>.</exception>
-        public BackgroundDrawableManager(IServiceProvider serviceProvider)
+        public BackgroundDrawableManager(IBackgroundDrawableFactory backgroundDrawableFactory)
         {
-            ParameterValidation.IsNotNull(serviceProvider, nameof(serviceProvider));
+            ParameterValidation.IsNotNull(
+                backgroundDrawableFactory,
+                nameof(backgroundDrawableFactory));
 
-            this.serviceProvider = serviceProvider;
+            this.backgroundDrawableFactory = backgroundDrawableFactory;
         }
 
         /// <inheritdoc/>
-        public void Initialize(
-            ScreensaverConfiguration screensaverConfiguration,
-            ScreensaverArea screensaverArea)
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
+        public void Initialize(ScreensaverArea screensaverArea)
         {
-            switch (screensaverConfiguration.BackgroundMode)
-            {
-                case BackgroundMode.Desktop:
-                    var screenCaptureService =
-                        this.serviceProvider.GetService<IScreenCaptureService>();
-                    this.backgroundDrawable = new DesktopBackgroundDrawable(
-                        screenCaptureService,
-                        screensaverArea);
-                    break;
-                case BackgroundMode.Image:
-                    var textureConverterService =
-                        this.serviceProvider.GetService<ITextureConverterService>();
-                    var imageScaleService = this.serviceProvider.GetService<IImageScaleService>();
-                    this.backgroundDrawable = new ImageBackgroundDrawbale(
-                        screensaverConfiguration.BackgroundImage.ImageFilePath,
-                        textureConverterService,
-                        imageScaleService,
-                        screensaverConfiguration.BackgroundImageScaleMode,
-                        screensaverArea);
-                    break;
-                case BackgroundMode.SolidColor:
-                    this.backgroundDrawable = new SolidColorBackgroundDrawable(
-                        screensaverConfiguration.BackgroundColor,
-                        screensaverArea);
-                    break;
-                default:
-                    this.backgroundDrawable = new SolidColorBackgroundDrawable(
-                        SystemColor.SteelBlue,
-                        screensaverArea);
-                    break;
-            }
+            ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
+
+            this.backgroundDrawable = this.backgroundDrawableFactory.Create(screensaverArea);
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="graphicsDevice"/> is
+        /// <see langword="null"/>.</exception>
         public void LoadContent(GraphicsDevice graphicsDevice)
         {
+            ParameterValidation.IsNotNull(graphicsDevice, nameof(graphicsDevice));
+
             this.CheckInitialized();
             this.backgroundDrawable.LoadContent(graphicsDevice);
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="graphicsDevice"/> is
+        /// <see langword="null"/>.</exception>
         public void BeforeDraw(GraphicsDevice graphicsDevice)
         {
+            ParameterValidation.IsNotNull(graphicsDevice, nameof(graphicsDevice));
+
             this.CheckInitialized();
             this.backgroundDrawable.BeforeDraw(graphicsDevice);
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="spriteBatch"/> is
+        /// <see langword="null"/>.</exception>
         public void Draw(SpriteBatch spriteBatch)
         {
+            ParameterValidation.IsNotNull(spriteBatch, nameof(spriteBatch));
+
             this.CheckInitialized();
             this.backgroundDrawable.Draw(spriteBatch);
         }
@@ -112,6 +97,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             GC.SuppressFinalize(this);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA2204:Literals should be spelled correctly",
+            MessageId = nameof(BackgroundDrawableManager),
+            Justification = "Exception message describing name of class.")]
         private void CheckInitialized()
         {
             if (this.backgroundDrawable == null)

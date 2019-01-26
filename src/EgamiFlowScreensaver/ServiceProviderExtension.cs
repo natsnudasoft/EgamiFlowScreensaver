@@ -17,6 +17,7 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides extension methods to <see cref="IServiceProvider"/>.
@@ -31,8 +32,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="serviceProvider">The service provider.</param>
         /// <returns>A service object of type <typeparamref name="T"/>, or <see langword="null"/> if
         /// there is no service object of type <typeparamref name="T"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="serviceProvider"/> is
+        /// <see langword="null"/>.</exception>
         public static T GetService<T>(this IServiceProvider serviceProvider)
         {
+            ParameterValidation.IsNotNull(serviceProvider, nameof(serviceProvider));
+
             return (T)serviceProvider.GetService(typeof(T));
         }
     }

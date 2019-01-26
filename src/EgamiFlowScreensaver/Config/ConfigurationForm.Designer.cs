@@ -13,6 +13,10 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Reliability",
+            "CA2000:Dispose objects before losing scope",
+            Justification = "This is auto generated code.")]
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();

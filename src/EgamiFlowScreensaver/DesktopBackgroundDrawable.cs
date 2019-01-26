@@ -59,8 +59,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="spriteBatch"/> is
+        /// <see langword="null"/>.</exception>
         public override void Draw(SpriteBatch spriteBatch)
         {
+            ParameterValidation.IsNotNull(spriteBatch, nameof(spriteBatch));
+
             foreach (var tiledTextureSegment in this.desktopTiledTexture.TiledTextureSegments)
             {
                 spriteBatch.Draw(

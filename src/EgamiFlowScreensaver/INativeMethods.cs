@@ -38,6 +38,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="newValue">The replacement value.</param>
         /// <returns>The previous value of the specified offset if the function succeeds; otherwise
         /// <see cref="IntPtr.Zero"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1720:IdentifiersShouldNotContainTypeNames",
+            MessageId = "long",
+            Justification = "Preserving original P/Invoke names.")]
         IntPtr SetWindowLongPtr(HandleRef windowHandle, int index, IntPtr newValue);
 
         /// <summary>
@@ -59,6 +64,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// otherwise, <see langword="false"/>.</param>
         /// <returns><see langword="true"/> if the function succeeds; otherwise,
         /// <see langword="false"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1704:IdentifiersShouldBeSpelledCorrectly",
+            MessageId = "x",
+            Justification = "Preserving original P/Invoke names.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Naming",
+            "CA1704:IdentifiersShouldBeSpelledCorrectly",
+            MessageId = "y",
+            Justification = "Preserving original P/Invoke names.")]
         bool MoveWindow(IntPtr windowHandle, int x, int y, int width, int height, bool repaint);
 
         /// <summary>

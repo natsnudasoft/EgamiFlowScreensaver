@@ -7,17 +7,21 @@
     <Rule Id="CC0070" Action="Info" />
   </Rules>
   <Rules AnalyzerId="Menees.Analyzers" RuleNamespace="Menees.Analyzers">
-    <Rule Id="MEN007" Action="None" />
     <Rule Id="MEN008" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1006" Action="None" />
     <Rule Id="CA1020" Action="None" />
+    <Rule Id="CA1300" Action="None" />
     <Rule Id="CA1811" Action="None" />
     <Rule Id="CA2202" Action="None" />
+    <Rule Id="CA2213" Action="None" />
     <Rule Id="CA2243" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0003" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1413" Action="None" />
   </Rules>
 </RuleSet>

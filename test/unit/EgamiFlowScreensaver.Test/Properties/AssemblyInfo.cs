@@ -19,7 +19,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
-
 [assembly: AssemblyTitle("EgamiFlowScreensaver.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

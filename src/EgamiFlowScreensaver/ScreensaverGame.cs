@@ -22,7 +22,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Natsnudasoft.EgamiFlowScreensaver.Config;
-    using Properties;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using SystemBitmap = System.Drawing.Bitmap;
     using SystemControl = System.Windows.Forms.Control;
     using SystemForm = System.Windows.Forms.Form;
@@ -43,7 +43,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private SpriteBatch spriteBatch;
         private RenderTarget2D renderTarget;
         private ScreensaverArea screensaverArea;
+#if !DEBUG
         private MouseState previousMouseState;
+#endif
         private KeyboardState previousKeyboardState;
         private IBackgroundDrawableManager backgroundDrawableManager;
         private ScreensaverImageManager screensaverImageManager;
@@ -100,9 +102,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             this.screensaverConfiguration = configFileService.Open();
             this.InitializeScreensaverMode();
             this.backgroundDrawableManager = this.Services.GetService<IBackgroundDrawableManager>();
-            this.backgroundDrawableManager.Initialize(
-                this.screensaverConfiguration,
-                this.screensaverArea);
+            this.backgroundDrawableManager.Initialize(this.screensaverArea);
             this.screensaverImageManager = new ScreensaverImageManager(this.screensaverArea);
             this.InitializeImages();
             this.screensaverImageEmitter = new ScreensaverImageEmitter(
@@ -126,11 +126,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <inheritdoc/>
         protected override void Update(GameTime gameTime)
         {
+#if !DEBUG
             var mouseState = Mouse.GetState();
+#endif
             var keyboardState = Keyboard.GetState();
             if (--this.ignoreInputFrameCount >= 0)
             {
+#if !DEBUG
                 this.previousMouseState = mouseState;
+#endif
                 this.previousKeyboardState = keyboardState;
             }
 
@@ -150,7 +154,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             this.screensaverImageManager.Update();
             this.screensaverImageEmitter.Update(gameTime);
 
+#if !DEBUG
             this.previousMouseState = mouseState;
+#endif
             this.previousKeyboardState = keyboardState;
             base.Update(gameTime);
         }

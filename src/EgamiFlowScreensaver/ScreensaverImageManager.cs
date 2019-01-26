@@ -84,8 +84,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <see cref="SpriteBatch"/>.
         /// </summary>
         /// <param name="spriteBatch">The sprite batch.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="spriteBatch"/> is
+        /// <see langword="null"/>.</exception>
         public void Draw(SpriteBatch spriteBatch)
         {
+            ParameterValidation.IsNotNull(spriteBatch, nameof(spriteBatch));
+
             foreach (var screensaverImageItem in this.screensaverImageItems)
             {
                 spriteBatch.Draw(

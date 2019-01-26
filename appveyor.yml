@@ -7,6 +7,7 @@
       secure: Xy9K/RzLTTlFzQrYUY0oAUfKUNufDfeVKPk47OxL/6jK7Mx6gB/RFl5tiHcXT4fr
     STRONG_NAME_SECRET:
       secure: 4W8bFbUP7bJsxCqGF6+xfy7kCUjQscJcrGmjegVxxBs=
+    IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
@@ -53,12 +54,15 @@
       prerelease: false
       on:
         appveyor_repo_tag: true
+  on_failure:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 -
   environment:
     COVERALLS_REPO_TOKEN:
       secure: Xy9K/RzLTTlFzQrYUY0oAUfKUNufDfeVKPk47OxL/6jK7Mx6gB/RFl5tiHcXT4fr
     STRONG_NAME_SECRET:
       secure: 4W8bFbUP7bJsxCqGF6+xfy7kCUjQscJcrGmjegVxxBs=
+    IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
@@ -90,3 +94,5 @@
   artifacts:
     - path: EgamiFlowScreensaver_Release_Any_CPU.zip
       name: EgamiFlowScreensaver_Release_Any_CPU
+  on_failure:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
