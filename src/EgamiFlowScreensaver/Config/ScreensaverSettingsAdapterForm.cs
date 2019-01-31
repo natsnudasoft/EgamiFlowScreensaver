@@ -25,6 +25,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// configuration form can be shown as a dialog of the window.
     /// </summary>
     /// <seealso cref="Form" />
+    [System.ComponentModel.DesignerCategory("Code")]
     public sealed class ScreensaverSettingsAdapterForm : Form
     {
         private readonly INativeMethods nativeMethods;
