@@ -88,6 +88,8 @@
     <Compile Include="Config\IConfigurationFileService.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />
+    <Compile Include="DataSourceDisplayValue.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="EnumResourceDisplayNameAttribute.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBackgroundDrawableFactory.cs" />
