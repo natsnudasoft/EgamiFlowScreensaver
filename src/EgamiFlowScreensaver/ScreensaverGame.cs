@@ -105,13 +105,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             this.backgroundDrawableManager.Initialize(this.screensaverArea);
             this.screensaverImageManager = new ScreensaverImageManager(this.screensaverArea);
             this.InitializeImages();
+            var random = this.Services.GetService<Random>();
+            var imageEmitDetailsFactory = this.Services.GetService<IImageEmitDetailsFactory>();
+            var imageEmitDetails = imageEmitDetailsFactory.Create(this.screensaverArea);
             this.screensaverImageEmitter = new ScreensaverImageEmitter(
-                new ScreensaverImageEmitterCounter(this.screensaverConfiguration.ImageEmitRate),
-                this.screensaverArea,
+                new ScreensaverImageEmitterCounter(imageEmitDetails.ImageEmitRate),
                 this.screensaverImageManager,
                 this.screensaverTextures,
-                this.screensaverConfiguration.MaxImageEmitCount,
-                this.screensaverConfiguration.ImageEmitLocation);
+                imageEmitDetails,
+                random);
             this.screensaverImageEmitter.Start();
             base.Initialize();
         }

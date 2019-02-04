@@ -92,10 +92,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             foreach (var screensaverImageItem in this.screensaverImageItems)
             {
-                spriteBatch.Draw(
-                    screensaverImageItem.Texture,
-                    screensaverImageItem.Position,
-                    Color.White);
+                screensaverImageItem.Draw(spriteBatch);
             }
         }
 
