@@ -73,6 +73,9 @@
     <Compile Include="BackgroundDrawableManager.cs" />
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="BottomLeftImageEmitDetails.cs" />
+    <Compile Include="BottomRightImageEmitDetails.cs" />
+    <Compile Include="CenterImageEmitDetails.cs" />
     <Compile Include="Config\ConfigurationDirectoryLayoutRenderer.cs" />
     <Compile Include="Config\ConfigurationFilesTempCache.cs" />
     <Compile Include="Config\ConfigurationFileService.cs" />
@@ -94,9 +97,15 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBackgroundDrawableFactory.cs" />
     <Compile Include="IBackgroundDrawableManager.cs" />
+    <Compile Include="IImageEmitDetails.cs" />
+    <Compile Include="IImageEmitDetailsFactory.cs" />
     <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawable.cs" />
+    <Compile Include="RandomCornerImageEmitDetails.cs" />
+    <Compile Include="RandomImageEmitDetails.cs" />
+    <Compile Include="ScreensaverConfigurationImageEmitDetailsFactory.cs" />
     <Compile Include="ImageEmitLocation.cs" />
+    <Compile Include="ImageEmitDetails.cs" />
     <Compile Include="ImageScaleMode.cs" />
     <Compile Include="ImageScaleService.cs" />
     <Compile Include="ITextureConverterService.cs" />
@@ -138,6 +147,8 @@
     <Compile Include="TextureConverterService.cs" />
     <Compile Include="TiledTexture2D.cs" />
     <Compile Include="TiledTexture2DSegment.cs" />
+    <Compile Include="TopLeftImageEmitDetails.cs" />
+    <Compile Include="TopRightImageEmitDetails.cs" />
     <Compile Include="WindowLongFlags.cs" />
     <EmbeddedResource Include="..\EgamiFlowScreensaver.Content\bin\$(MonoGamePlatform)\$(Configuration)\Content\adie.xnb">
       <Link>Content\adie.xnb</Link>
