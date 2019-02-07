@@ -87,9 +87,17 @@
     </Compile>
     <Compile Include="Config\ConfigurationFormViewModel.cs" />
     <Compile Include="Config\ConfigurationImageItem.cs" />
+    <Compile Include="Config\CustomEmitLocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\CustomEmitLocationForm.Designer.cs">
+      <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\CustomEmitLocationFormViewModel.cs" />
     <Compile Include="Config\IConfigurationFilesTempCache.cs" />
     <Compile Include="Config\IConfigurationFileService.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
+    <Compile Include="CustomImageEmitDetails.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />
     <Compile Include="DataSourceDisplayValue.cs" />
     <Compile Include="EnumHelper.cs" />
@@ -230,6 +238,9 @@
     </AdditionalFiles>
     <Content Include="Properties\NativeRes.rc2" />
     <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
+    <EmbeddedResource Include="Config\CustomEmitLocationForm.resx">
+      <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

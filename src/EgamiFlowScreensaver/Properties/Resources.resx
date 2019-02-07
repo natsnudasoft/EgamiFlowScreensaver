@@ -201,4 +201,7 @@
   <data name="ImageFileFilterString" xml:space="preserve">
     <value>Image Files (*.bmp, *.jpg, *.jpeg, *.png) | *.bmp; *.jpg; *.jpeg; *.png|All Files|*.*</value>
   </data>
+  <data name="ImageEmitLocationCustom" xml:space="preserve">
+    <value>Custom...</value>
+  </data>
 </root>

@@ -28,6 +28,7 @@
             System.Windows.Forms.Label imageEmitRateLabel;
             System.Windows.Forms.Label imagePositionLabel;
             System.Windows.Forms.Panel panel2;
+            this.chooseCustomEmitLocationButton = new System.Windows.Forms.Button();
             this.imageEmitLocationComboBox = new System.Windows.Forms.ComboBox();
             this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imageEmitRateNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -71,6 +72,7 @@
             // imagesGroupBox
             // 
             resources.ApplyResources(imagesGroupBox, "imagesGroupBox");
+            imagesGroupBox.Controls.Add(this.chooseCustomEmitLocationButton);
             imagesGroupBox.Controls.Add(imageEmitLocationLabel);
             imagesGroupBox.Controls.Add(this.imageEmitLocationComboBox);
             imagesGroupBox.Controls.Add(maxImageEmitCountLabel);
@@ -83,6 +85,14 @@
             imagesGroupBox.Controls.Add(this.imagesListBox);
             imagesGroupBox.Name = "imagesGroupBox";
             imagesGroupBox.TabStop = false;
+            // 
+            // chooseCustomEmitLocationButton
+            // 
+            resources.ApplyResources(this.chooseCustomEmitLocationButton, "chooseCustomEmitLocationButton");
+            this.chooseCustomEmitLocationButton.Name = "chooseCustomEmitLocationButton";
+            this.configurationToolTip.SetToolTip(this.chooseCustomEmitLocationButton, resources.GetString("chooseCustomEmitLocationButton.ToolTip"));
+            this.chooseCustomEmitLocationButton.UseVisualStyleBackColor = true;
+            // 
             // imageEmitLocationLabel
             // 
             resources.ApplyResources(imageEmitLocationLabel, "imageEmitLocationLabel");
@@ -297,5 +307,6 @@
         private NumericUpDownWheel maxImageEmitCountNumericUpDown;
         private System.Windows.Forms.ComboBox backgroundImageScaleModeComboBox;
         private System.Windows.Forms.ComboBox imageEmitLocationComboBox;
+        private System.Windows.Forms.Button chooseCustomEmitLocationButton;
     }
 }
