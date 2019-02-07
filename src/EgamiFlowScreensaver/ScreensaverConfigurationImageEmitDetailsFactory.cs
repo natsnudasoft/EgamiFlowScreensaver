@@ -79,6 +79,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             IImageEmitDetails imageEmitDetails;
             switch (screensaverConfiguration.ImageEmitLocation)
             {
+                case ImageEmitLocation.Custom:
+                    imageEmitDetails = new CustomImageEmitDetails(
+                        screensaverArea,
+                        screensaverConfiguration,
+                        this.random);
+                    break;
                 case ImageEmitLocation.RandomCorner:
                     imageEmitDetails = new RandomCornerImageEmitDetails(
                         screensaverArea,

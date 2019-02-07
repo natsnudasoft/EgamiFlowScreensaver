@@ -63,6 +63,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// Images should be emitted from random locations on the primary screen.
         /// </summary>
         [EnumResourceDisplayName(typeof(Resources), "ImageEmitLocationRandom")]
-        Random
+        Random,
+
+        /// <summary>
+        /// Images should be emitted from a custom location.
+        /// </summary>
+        [EnumResourceDisplayName(typeof(Resources), "ImageEmitLocationCustom")]
+        Custom
     }
 }
