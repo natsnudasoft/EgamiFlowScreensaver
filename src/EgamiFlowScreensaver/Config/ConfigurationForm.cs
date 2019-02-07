@@ -87,6 +87,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.viewModel.RemoveSelectedImage(this);
             };
 
+            this.chooseCustomEmitLocationButton.DataBindings.Add(
+                nameof(Button.Enabled),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsCustomImageEmitLocation));
+            this.chooseCustomEmitLocationButton.Click += (sender, e) =>
+            {
+                this.viewModel.ChooseCustomEmitLocation(this);
+            };
+
             this.chooseColorButton.DataBindings.Add(
                 nameof(Button.Enabled),
                 this.solidColorRadioButton,
