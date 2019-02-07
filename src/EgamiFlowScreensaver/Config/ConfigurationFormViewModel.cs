@@ -49,6 +49,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private float imageEmitRate;
         private int maxImageEmitCount;
         private ImageEmitLocation imageEmitLocation;
+        private int customImageEmitLocationX;
+        private int customImageEmitLocationY;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationFormViewModel"/> class.
@@ -154,7 +156,40 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         public ImageEmitLocation ImageEmitLocation
         {
             get => this.imageEmitLocation;
-            set => this.Set(ref this.imageEmitLocation, value);
+            set
+            {
+                this.Set(ref this.imageEmitLocation, value);
+                this.OnPropertyChanged(nameof(this.IsCustomImageEmitLocation));
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the location that images will be emitted is a custom
+        /// value.
+        /// </summary>
+        public bool IsCustomImageEmitLocation
+        {
+            get => this.ImageEmitLocation == ImageEmitLocation.Custom;
+        }
+
+        /// <summary>
+        /// Gets or sets the X coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        public int CustomImageEmitLocationX
+        {
+            get => this.customImageEmitLocationX;
+            set => this.Set(ref this.customImageEmitLocationX, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Y coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        public int CustomImageEmitLocationY
+        {
+            get => this.customImageEmitLocationY;
+            set => this.Set(ref this.customImageEmitLocationY, value);
         }
 
         /// <summary>
@@ -313,6 +348,25 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <summary>
+        /// Displays a dialog allowing a custom emit location to be selected.
+        /// </summary>
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void ChooseCustomEmitLocation(IWin32Window owner)
+        {
+            var emitLocationViewModel = new CustomEmitLocationFormViewModel();
+            using (var customEmitLocationDialog = new CustomEmitLocationForm(emitLocationViewModel))
+            {
+                emitLocationViewModel.CustomImageEmitLocationX = this.CustomImageEmitLocationX;
+                emitLocationViewModel.CustomImageEmitLocationY = this.CustomImageEmitLocationY;
+                if (customEmitLocationDialog.ShowDialog(owner) == DialogResult.OK)
+                {
+                    this.CustomImageEmitLocationX = emitLocationViewModel.CustomImageEmitLocationX;
+                    this.CustomImageEmitLocationY = emitLocationViewModel.CustomImageEmitLocationY;
+                }
+            }
+        }
+
+        /// <summary>
         /// Reads the configuration from disk and synchronises the properties with this view model.
         /// </summary>
         /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
@@ -350,6 +404,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
                 this.ImageEmitLocation = screensaverConfiguration.ImageEmitLocation;
+                this.CustomImageEmitLocationX = screensaverConfiguration.CustomImageEmitLocationX;
+                this.CustomImageEmitLocationY = screensaverConfiguration.CustomImageEmitLocationY;
                 this.Images.Clear();
                 foreach (var screensaverImage in screensaverImages)
                 {
@@ -420,7 +476,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 BackgroundImageScaleMode = newBackgroundImageScaleMode,
                 ImageEmitRate = this.ImageEmitRate,
                 MaxImageEmitCount = this.MaxImageEmitCount,
-                ImageEmitLocation = this.ImageEmitLocation
+                ImageEmitLocation = this.ImageEmitLocation,
+                CustomImageEmitLocationX = this.CustomImageEmitLocationX,
+                CustomImageEmitLocationY = this.CustomImageEmitLocationY
             };
             var committedImages = this.configurationFileService
                 .CommitCachedScreensaverImages(this.images);

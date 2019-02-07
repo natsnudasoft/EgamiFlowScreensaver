@@ -196,6 +196,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom....
+        /// </summary>
+        internal static string ImageEmitLocationCustom {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Random.
         /// </summary>
         internal static string ImageEmitLocationRandom {

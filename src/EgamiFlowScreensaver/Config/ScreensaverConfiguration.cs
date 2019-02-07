@@ -93,6 +93,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         [DefaultValue(ImageEmitLocation.RandomCorner)]
         public ImageEmitLocation ImageEmitLocation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the X coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        [ProtoMember(9, IsRequired = false)]
+        public int CustomImageEmitLocationX { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Y coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        [ProtoMember(10, IsRequired = false)]
+        public int CustomImageEmitLocationY { get; set; }
+
         [ProtoMember(3, DataFormat = DataFormat.FixedSize)]
         private int BackgroundColorSerialized
         {

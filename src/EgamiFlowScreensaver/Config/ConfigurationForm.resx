@@ -127,6 +127,44 @@
   <data name="imagesGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="chooseCustomEmitLocationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="chooseCustomEmitLocationButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chooseCustomEmitLocationButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>262, 296</value>
+  </data>
+  <data name="chooseCustomEmitLocationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="chooseCustomEmitLocationButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 26</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chooseCustomEmitLocationButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="chooseCustomEmitLocationButton.Text" xml:space="preserve">
+    <value>Choose Location</value>
+  </data>
+  <data name="chooseCustomEmitLocationButton.ToolTip" xml:space="preserve">
+    <value>Choose a location for the custom emit location.</value>
+  </data>
+  <data name="&gt;&gt;chooseCustomEmitLocationButton.Name" xml:space="preserve">
+    <value>chooseCustomEmitLocationButton</value>
+  </data>
+  <data name="&gt;&gt;chooseCustomEmitLocationButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chooseCustomEmitLocationButton.Parent" xml:space="preserve">
+    <value>imagesGroupBox</value>
+  </data>
+  <data name="&gt;&gt;chooseCustomEmitLocationButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="imageEmitLocationLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
