@@ -174,6 +174,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
             this.okButton.Click += (sender, e) =>
             {
+                this.okButton.Focus();
                 if (this.viewModel.Validate(this) &&
                     this.viewModel.CommitSettingsToDisk(this))
                 {
