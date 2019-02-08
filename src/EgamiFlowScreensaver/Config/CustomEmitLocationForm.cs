@@ -55,6 +55,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
             this.okButton.Click += (sender, e) =>
             {
+                this.okButton.Focus();
                 this.DialogResult = DialogResult.OK;
             };
         }
