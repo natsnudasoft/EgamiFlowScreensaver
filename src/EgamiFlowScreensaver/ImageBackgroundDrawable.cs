@@ -21,6 +21,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.NatsnudaLibrary;
     using SystemBitmap = System.Drawing.Bitmap;
+    using SystemColor = System.Drawing.Color;
 
     /// <summary>
     /// Provides a class which will draw a specified image as a <see cref="ScreensaverGame"/>
@@ -34,6 +35,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private readonly ITextureConverterService textureConverterService;
         private readonly IImageScaleService imageScaleService;
         private readonly ImageScaleMode imageScaleMode;
+        private readonly Color backgroundColor;
         private TiledTexture2D imageTiledTexture;
         private Vector2 imagePosition;
 
@@ -46,6 +48,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="imageScaleService">The image scale service.</param>
         /// <param name="imageScaleMode">How to scale and position the background image.</param>
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <param name="backgroundColor">The colour to use for the background.</param>
         /// <exception cref="ArgumentNullException"><paramref name="backgroundImageFilePath"/>,
         /// <paramref name="textureConverterService"/>, <paramref name="imageScaleService"/>, or
         /// <paramref name="screensaverArea"/> is <see langword="null"/>.</exception>
@@ -56,7 +59,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ITextureConverterService textureConverterService,
             IImageScaleService imageScaleService,
             ImageScaleMode imageScaleMode,
-            ScreensaverArea screensaverArea)
+            ScreensaverArea screensaverArea,
+            SystemColor backgroundColor)
             : base(screensaverArea)
         {
             ParameterValidation.IsNotNull(backgroundImageFilePath, nameof(backgroundImageFilePath));
@@ -70,6 +74,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             this.textureConverterService = textureConverterService;
             this.imageScaleService = imageScaleService;
             this.imageScaleMode = imageScaleMode;
+            this.backgroundColor = new Color(
+                backgroundColor.R,
+                backgroundColor.G,
+                backgroundColor.B,
+                byte.MaxValue);
         }
 
         /// <inheritdoc/>
@@ -94,6 +103,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 default:
                     break;
             }
+        }
+
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="graphicsDevice"/> is
+        /// <see langword="null"/>.</exception>
+        public override void BeforeDraw(GraphicsDevice graphicsDevice)
+        {
+            ParameterValidation.IsNotNull(graphicsDevice, nameof(graphicsDevice));
+
+            graphicsDevice.Clear(this.backgroundColor);
         }
 
         /// <inheritdoc/>

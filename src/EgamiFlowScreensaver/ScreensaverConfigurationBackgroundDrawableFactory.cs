@@ -114,7 +114,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 textureConverterService,
                 imageScaleService,
                 screensaverConfiguration.BackgroundImageScaleMode,
-                screensaverArea);
+                screensaverArea,
+                screensaverConfiguration.BackgroundColor);
         }
 
         private static BackgroundDrawable CreateSolidColorBackgroundDrawable(
