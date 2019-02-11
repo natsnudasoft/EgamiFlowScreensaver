@@ -96,10 +96,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.viewModel.ChooseCustomEmitLocation(this);
             };
 
-            this.chooseColorButton.DataBindings.Add(
+            var chooseColorEnabledBinding = new Binding(
                 nameof(Button.Enabled),
-                this.solidColorRadioButton,
-                nameof(RadioButton.Checked));
+                this,
+                nameof(this.IsChooseColorButtonEnabled));
+            this.chooseColorButton.DataBindings.Add(chooseColorEnabledBinding);
+            this.imageRadioButton.CheckedChanged += (sender, e) =>
+                chooseColorEnabledBinding.ReadValue();
+            this.solidColorRadioButton.CheckedChanged += (sender, e) =>
+                chooseColorEnabledBinding.ReadValue();
+
             this.chooseImageButton.DataBindings.Add(
                 nameof(Button.Enabled),
                 this.imageRadioButton,
@@ -181,6 +187,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                     this.DialogResult = DialogResult.OK;
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the choose colour button is enabled.
+        /// </summary>
+        public bool IsChooseColorButtonEnabled
+        {
+            get => this.imageRadioButton.Checked || this.solidColorRadioButton.Checked;
         }
 
         /// <inheritdoc/>
