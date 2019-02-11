@@ -455,6 +455,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 case BackgroundMode.Image:
                     backgroundImage = this.configurationFileService
                         .CommitCachedBackgroundImage(this.BackgroundImage);
+                    backgroundColor = this.BackgroundColor;
                     newBackgroundImageScaleMode = this.BackgroundImageScaleMode;
                     break;
 
