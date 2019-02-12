@@ -84,7 +84,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private static Bitmap TileImage(Image image, Size scaleSize)
         {
             var tiledBitmap =
-                new Bitmap(scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppPArgb);
+                new Bitmap(scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppArgb);
             try
             {
                 tiledBitmap.SetResolution(image.HorizontalResolution, image.VerticalResolution);
@@ -107,8 +107,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private static Bitmap ResizeImage(Image image, Size scaleSize)
         {
             var destRect = new Rectangle(0, 0, scaleSize.Width, scaleSize.Height);
-            var resizedImage =
-                new Bitmap(scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppPArgb);
+            var resizedImage = new Bitmap(
+                scaleSize.Width, scaleSize.Height, PixelFormat.Format32bppArgb);
             try
             {
                 resizedImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
