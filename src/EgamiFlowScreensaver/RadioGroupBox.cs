@@ -18,6 +18,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows.Forms;
     using Natsnudasoft.NatsnudaLibrary;
 
@@ -27,7 +28,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     /// the group.
     /// </summary>
     /// <seealso cref="GroupBox" />
-    public class RadioGroupBox : GroupBox
+    public class RadioGroupBox : GroupBox, INotifyPropertyChanged
     {
         private readonly List<RadioButton> radioButtons;
         private int selectedRadioIndex;
@@ -45,6 +46,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// </summary>
         public event EventHandler SelectedRadioIndexChanged;
 
+        /// <inheritdoc/>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Gets or sets the index of the <see cref="RadioButton"/> that is currently selected in
         /// this <see cref="RadioGroupBox"/>.
@@ -61,6 +65,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                         this.radioButtons[value].Checked = true;
                         this.selectedRadioIndex = value;
                         this.OnSelectedRadioIndexChanged();
+                        this.OnPropertyChanged(nameof(this.SelectedRadioIndex));
+                        this.OnPropertyChanged(nameof(this.SelectedRadioValue));
                     }
                 }
             }
@@ -92,6 +98,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     this.RadioButtonCheckedChanged((RadioButton)sender, radioButtonIndex);
                 };
             }
+        }
+
+        /// <summary>
+        /// Called when the value of a property changes.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void RadioButtonCheckedChanged(RadioButton radioButton, int newIndex)
