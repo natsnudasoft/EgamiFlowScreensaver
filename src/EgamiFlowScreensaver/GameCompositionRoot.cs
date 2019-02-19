@@ -75,6 +75,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             var imageEmitDetailsFactory =
                 new ScreensaverConfigurationImageEmitDetailsFactory(gameServiceContainer, random);
             gameServiceContainer.AddService<IImageEmitDetailsFactory>(imageEmitDetailsFactory);
+
+            var behaviorFactoriesFactory = new EnabledBehaviorFactoriesFactory(random);
+            gameServiceContainer.AddService<IBehaviorFactoriesFactory>(behaviorFactoriesFactory);
         }
     }
 }

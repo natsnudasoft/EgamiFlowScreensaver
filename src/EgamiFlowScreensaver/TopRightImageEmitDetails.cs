@@ -17,6 +17,8 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.EgamiFlowScreensaver.Config;
@@ -34,12 +36,17 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
         /// <param name="screensaverConfiguration">The <see cref="ScreensaverConfiguration"/>
         /// representing the configured state of the screensaver.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>, or
-        /// <paramref name="screensaverConfiguration"/> is <see langword="null"/>.</exception>
+        /// <param name="behaviorFactories">A collection of factories that define how to create
+        /// behaviours that will be attached to any images emitted by a
+        /// <see cref="ScreensaverImageEmitter"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>,
+        /// <paramref name="screensaverConfiguration"/>, or <paramref name="behaviorFactories"/>
+        /// is <see langword="null"/>.</exception>
         public TopRightImageEmitDetails(
             ScreensaverArea screensaverArea,
-            ScreensaverConfiguration screensaverConfiguration)
-            : base(screensaverArea, screensaverConfiguration)
+            ScreensaverConfiguration screensaverConfiguration,
+            IEnumerable<Func<IScreensaverImageItemBehavior>> behaviorFactories)
+            : base(screensaverArea, screensaverConfiguration, behaviorFactories)
         {
         }
 
@@ -49,16 +56,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
         /// <param name="screensaverConfiguration">The <see cref="ScreensaverConfiguration"/>
         /// representing the configured state of the screensaver.</param>
+        /// <param name="behaviorFactories">A collection of factories that define how to create
+        /// behaviours that will be attached to any images emitted by a
+        /// <see cref="ScreensaverImageEmitter"/>.</param>
         /// <param name="random">A pseudo-random number generator that can be used to generate
         /// randomness in the <see cref="TopRightImageEmitDetails"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>,
-        /// <paramref name="screensaverConfiguration"/>, or <paramref name="random"/> is
-        /// <see langword="null"/>.</exception>
+        /// <paramref name="screensaverConfiguration"/>, <paramref name="behaviorFactories"/>, or
+        /// <paramref name="random"/> is <see langword="null"/>.</exception>
         public TopRightImageEmitDetails(
             ScreensaverArea screensaverArea,
             ScreensaverConfiguration screensaverConfiguration,
+            IEnumerable<Func<IScreensaverImageItemBehavior>> behaviorFactories,
             Random random)
-            : base(screensaverArea, screensaverConfiguration, random)
+            : base(screensaverArea, screensaverConfiguration, behaviorFactories, random)
         {
         }
 
@@ -80,15 +91,29 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             var position = new Vector2(
                 this.Random.NextFloat(minX, maxX),
                 this.Random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                -this.Random.NextFloat(MinSpeed, MaxSpeed),
-                this.Random.NextFloat(MinSpeed, MaxSpeed));
-            return new ScreensaverImageItem(texture)
+            return new ScreensaverImageItem(
+                texture,
+                this.BehaviorFactories.Select(f => f?.Invoke()))
             {
                 Position = position,
-                Origin = origin,
-                Speed = speed
+                Origin = origin
             };
+        }
+
+        /// <inheritdoc/>
+        protected override Func<IScreensaverImageItemBehavior> CreateDefaultMovingBehaviorFactory()
+        {
+            IScreensaverImageItemBehavior CreateDefaultMovingBehavior()
+            {
+                const float minSpeed = MovingScreensaverImageItemBehavior.DefaultMinSpeed;
+                const float maxSpeed = MovingScreensaverImageItemBehavior.DefaultMaxSpeed;
+                var speed = new Vector2(
+                    -this.Random.NextFloat(minSpeed, maxSpeed),
+                    this.Random.NextFloat(minSpeed, maxSpeed));
+                return new MovingScreensaverImageItemBehavior(this.ScreensaverArea, speed);
+            }
+
+            return CreateDefaultMovingBehavior;
         }
     }
 }

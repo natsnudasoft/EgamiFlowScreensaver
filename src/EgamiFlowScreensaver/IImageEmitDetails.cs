@@ -16,6 +16,8 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
+    using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
@@ -37,6 +39,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         int MaxImageEmitCount { get; }
 
         /// <summary>
+        /// Gets a list of factories that define how to create behaviours that will be attached to
+        /// any images emitted by a <see cref="ScreensaverImageEmitter"/>.
+        /// </summary>
+        IEnumerable<Func<IScreensaverImageItemBehavior>> BehaviorFactories { get; }
+
+        /// <summary>
         /// Creates a <see cref="ScreensaverImageItem"/> based on the parameters of this
         /// <see cref="IImageEmitDetails"/>.
         /// </summary>
@@ -44,5 +52,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// emit location is being created for.</param>
         /// <returns>The <see cref="ScreensaverImageItem"/> that was created.</returns>
         ScreensaverImageItem CreateScreensaverImageItem(Texture2D texture);
+
+        /// <summary>
+        /// Inserts a set of default behaviour factories that define which behaviours will be
+        /// attached to any images emitted by a <see cref="ScreensaverImageEmitter"/>.
+        /// </summary>
+        void InsertDefaultBehaviorFactories();
     }
 }
