@@ -41,6 +41,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
         private readonly IConfigurationFileService configurationFileService;
         private readonly IConfigurationFilesTempCache configurationFilesTempCache;
+        private readonly IBehaviorConfigurationFactory behaviorConfigurationFactory;
+        private readonly IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory;
         private readonly BindingList<ConfigurationImageItem> images;
         private int selectedImageIndex = -1;
         private Image selectedImagePreview;
@@ -59,11 +61,21 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// perform operations in the configuration directory.</param>
         /// <param name="configurationFilesTempCache">The configuration files cache to use to
         /// cache configuration files before they are committed.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/> is
-        /// <see langword="null"/>.</exception>
+        /// <param name="behaviorConfigurationFactory">The behaviour configuration factory to use
+        /// to create instances of behaviour configurations based on a behaviour type.</param>
+        /// <param name="behaviorConfigurationFormFactory">The behaviour configuration form factory
+        /// to use to create instances of behaviour configuration forms based on a behaviour type.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/>,
+        /// <paramref name="configurationFilesTempCache"/>,
+        /// <paramref name="behaviorConfigurationFactory"/>, or
+        /// <paramref name="behaviorConfigurationFormFactory"/> is <see langword="null"/>.
+        /// </exception>
         public ConfigurationFormViewModel(
             IConfigurationFileService configurationFileService,
-            IConfigurationFilesTempCache configurationFilesTempCache)
+            IConfigurationFilesTempCache configurationFilesTempCache,
+            IBehaviorConfigurationFactory behaviorConfigurationFactory,
+            IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory)
         {
             ParameterValidation.IsNotNull(
                 configurationFileService,
@@ -71,14 +83,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             ParameterValidation.IsNotNull(
                 configurationFilesTempCache,
                 nameof(configurationFilesTempCache));
+            ParameterValidation.IsNotNull(
+                behaviorConfigurationFactory,
+                nameof(behaviorConfigurationFactory));
+            ParameterValidation.IsNotNull(
+                behaviorConfigurationFormFactory,
+                nameof(behaviorConfigurationFormFactory));
 
             this.configurationFileService = configurationFileService;
             this.configurationFilesTempCache = configurationFilesTempCache;
+            this.behaviorConfigurationFactory = behaviorConfigurationFactory;
+            this.behaviorConfigurationFormFactory = behaviorConfigurationFormFactory;
             this.images = new BindingList<ConfigurationImageItem>
             {
                 AllowNew = false,
                 RaiseListChangedEvents = true
             };
+            this.Behaviors = new List<ConfigurationBehavior>();
         }
 
         /// <summary>
@@ -213,6 +234,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             get => this.backgroundImageScaleMode;
             set => this.Set(ref this.backgroundImageScaleMode, value);
         }
+
+        /// <summary>
+        /// Gets a collection of configurations for behaviours that will be attached to any images
+        /// emitted.
+        /// </summary>
+        public IList<ConfigurationBehavior> Behaviors { get; }
 
         /// <summary>
         /// Displays a dialog allowing a new image to be added to the image item collection.
@@ -367,6 +394,30 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <summary>
+        /// Displays a dialog allowing behaviours to be applied and configured for image items.
+        /// </summary>
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void ApplyBehaviors(IWin32Window owner)
+        {
+            var applyBehaviorsFormViewModel = new ApplyBehaviorsFormViewModel(
+                this.Behaviors,
+                this.behaviorConfigurationFactory,
+                this.behaviorConfigurationFormFactory);
+            using (var applyBehaviorsDialog = new ApplyBehaviorsForm(applyBehaviorsFormViewModel))
+            {
+                if (applyBehaviorsDialog.ShowDialog(owner) == DialogResult.OK)
+                {
+                    this.Behaviors.Clear();
+                    applyBehaviorsFormViewModel.SynchronizeEnabledBehaviors();
+                    foreach (var behavior in applyBehaviorsFormViewModel.Behaviors)
+                    {
+                        this.Behaviors.Add(behavior);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Reads the configuration from disk and synchronises the properties with this view model.
         /// </summary>
         /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
@@ -410,6 +461,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 foreach (var screensaverImage in screensaverImages)
                 {
                     this.Images.Add(screensaverImage);
+                }
+
+                this.Behaviors.Clear();
+                foreach (var behavior in screensaverConfiguration.Behaviors)
+                {
+                    this.Behaviors.Add(behavior);
                 }
 
                 result = true;
@@ -486,6 +543,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             foreach (var configurationImageItem in committedImages)
             {
                 screensaverConfiguration.Images.Add(configurationImageItem);
+            }
+
+            foreach (var behavior in this.Behaviors)
+            {
+                screensaverConfiguration.Behaviors.Add(behavior);
             }
 
             try

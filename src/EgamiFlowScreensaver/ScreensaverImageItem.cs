@@ -17,6 +17,7 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.NatsnudaLibrary;
@@ -27,18 +28,25 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     /// </summary>
     public sealed class ScreensaverImageItem
     {
+        private readonly List<IScreensaverImageItemBehavior> behaviors;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverImageItem"/> class.
         /// </summary>
         /// <param name="texture">The texture that represents the image of this
         /// <see cref="ScreensaverImageItem"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="texture"/>
-        /// is <see langword="null"/>.</exception>
-        public ScreensaverImageItem(Texture2D texture)
+        /// <param name="behaviors">A collection of behaviours that should be attached to this
+        /// <see cref="ScreensaverImageItem"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="texture"/>, or
+        /// <paramref name="behaviors"/> is <see langword="null"/>.</exception>
+        public ScreensaverImageItem(
+            Texture2D texture,
+            IEnumerable<IScreensaverImageItemBehavior> behaviors)
         {
             ParameterValidation.IsNotNull(texture, nameof(texture));
 
             this.Texture = texture;
+            this.behaviors = new List<IScreensaverImageItemBehavior>(behaviors);
             this.Scale = Vector2.One;
             this.Color = Color.White;
             this.Alpha = 1f;
@@ -48,11 +56,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// Gets or sets the current position of this screensaver image.
         /// </summary>
         public Vector2 Position { get; set; }
-
-        /// <summary>
-        /// Gets or sets the speed that this screensaver image moves.
-        /// </summary>
-        public Vector2 Speed { get; set; }
 
         /// <summary>
         /// Gets the texture of this screensaver image.
@@ -88,6 +91,29 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// Gets or sets the current scale this screensaver image will be drawn at.
         /// </summary>
         public Vector2 Scale { get; set; }
+
+        /// <summary>
+        /// Performs any initialization steps required by this <see cref="ScreensaverImageItem"/>.
+        /// </summary>
+        public void Initialize()
+        {
+            foreach (var behavior in this.behaviors)
+            {
+                behavior.Initialize(this);
+            }
+        }
+
+        /// <summary>
+        /// Performs any update steps required by this <see cref="ScreensaverImageItem"/>.
+        /// </summary>
+        /// <param name="gameTime">A snapshot of the current game time.</param>
+        public void Update(GameTime gameTime)
+        {
+            foreach (var behavior in this.behaviors)
+            {
+                behavior.Update(this, gameTime);
+            }
+        }
 
         /// <summary>
         /// Draws this <see cref="ScreensaverImageItem"/> to the specified

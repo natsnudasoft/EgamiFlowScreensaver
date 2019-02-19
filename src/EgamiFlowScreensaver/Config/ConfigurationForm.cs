@@ -96,6 +96,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.viewModel.ChooseCustomEmitLocation(this);
             };
 
+            this.manageEmitBehaviorsButton.Click += (sender, e) =>
+            {
+                this.viewModel.ApplyBehaviors(this);
+            };
+
             var chooseColorEnabledBinding = new Binding(
                 nameof(Button.Enabled),
                 this,

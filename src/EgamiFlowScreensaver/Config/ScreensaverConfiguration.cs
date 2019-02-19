@@ -33,6 +33,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         public ScreensaverConfiguration()
         {
             this.Images = new List<ConfigurationImageItem>();
+            this.Behaviors = new List<ConfigurationBehavior>();
         }
 
         /// <summary>
@@ -106,6 +107,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         [ProtoMember(10, IsRequired = false)]
         public int CustomImageEmitLocationY { get; set; }
+
+        /// <summary>
+        /// Gets the collection of the configuration values for behaviours that will be applied to
+        /// any emitted images.
+        /// </summary>
+        [ProtoMember(11, IsRequired = false)]
+        public IList<ConfigurationBehavior> Behaviors { get; }
 
         [ProtoMember(3, DataFormat = DataFormat.FixedSize)]
         private int BackgroundColorSerialized
