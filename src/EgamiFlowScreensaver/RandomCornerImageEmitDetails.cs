@@ -17,6 +17,7 @@
 namespace Natsnudasoft.EgamiFlowScreensaver
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Xna.Framework.Graphics;
     using Natsnudasoft.EgamiFlowScreensaver.Config;
     using Natsnudasoft.NatsnudaLibrary;
@@ -27,7 +28,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     /// </summary>
     public sealed class RandomCornerImageEmitDetails : ImageEmitDetails
     {
-        private readonly Func<Texture2D, ScreensaverImageItem>[] screensaverImageItemStrategies;
+        private readonly ImageEmitDetails[] cornerEmitDetailsList;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RandomCornerImageEmitDetails"/> class.
@@ -36,31 +37,40 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="screensaverConfiguration">
         /// The <see cref="ScreensaverConfiguration"/> representing the configured state of the
         /// screensaver.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>, or
-        /// <paramref name="screensaverConfiguration"/> is <see langword="null"/>.</exception>
+        /// <param name="behaviorFactories">A collection of factories that define how to create
+        /// behaviours that will be attached to any images emitted by a
+        /// <see cref="ScreensaverImageEmitter"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>,
+        /// <paramref name="screensaverConfiguration"/>, or <paramref name="behaviorFactories"/>
+        /// is <see langword="null"/>.</exception>
         public RandomCornerImageEmitDetails(
             ScreensaverArea screensaverArea,
-            ScreensaverConfiguration screensaverConfiguration)
-            : base(screensaverArea, screensaverConfiguration)
+            ScreensaverConfiguration screensaverConfiguration,
+            IEnumerable<Func<IScreensaverImageItemBehavior>> behaviorFactories)
+            : base(screensaverArea, screensaverConfiguration, behaviorFactories)
         {
             var bottomRightImageEmitDetails = new BottomRightImageEmitDetails(
                 screensaverArea,
-                screensaverConfiguration);
+                screensaverConfiguration,
+                behaviorFactories);
             var topRightImageEmitDetails = new TopRightImageEmitDetails(
                 screensaverArea,
-                screensaverConfiguration);
+                screensaverConfiguration,
+                behaviorFactories);
             var topLeftImageEmitDetails = new TopLeftImageEmitDetails(
                 screensaverArea,
-                screensaverConfiguration);
+                screensaverConfiguration,
+                behaviorFactories);
             var bottomLeftImageEmitDetails = new BottomLeftImageEmitDetails(
                 screensaverArea,
-                screensaverConfiguration);
-            this.screensaverImageItemStrategies = new Func<Texture2D, ScreensaverImageItem>[]
+                screensaverConfiguration,
+                behaviorFactories);
+            this.cornerEmitDetailsList = new ImageEmitDetails[]
             {
-                bottomRightImageEmitDetails.CreateScreensaverImageItem,
-                topRightImageEmitDetails.CreateScreensaverImageItem,
-                topLeftImageEmitDetails.CreateScreensaverImageItem,
-                bottomLeftImageEmitDetails.CreateScreensaverImageItem
+                bottomRightImageEmitDetails,
+                topRightImageEmitDetails,
+                topLeftImageEmitDetails,
+                bottomLeftImageEmitDetails
             };
         }
 
@@ -70,40 +80,59 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
         /// <param name="screensaverConfiguration">The <see cref="ScreensaverConfiguration"/>
         /// representing the configured state of the screensaver.</param>
+        /// <param name="behaviorFactories">A collection of factories that define how to create
+        /// behaviours that will be attached to any images emitted by a
+        /// <see cref="ScreensaverImageEmitter"/>.</param>
         /// <param name="random">A pseudo-random number generator that can be used to generate
         /// randomness in the <see cref="RandomCornerImageEmitDetails"/>.</param>
         /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/>,
-        /// <paramref name="screensaverConfiguration"/>, or <paramref name="random"/> is
-        /// <see langword="null"/>.</exception>
+        /// <paramref name="screensaverConfiguration"/>, <paramref name="behaviorFactories"/>, or
+        /// <paramref name="random"/> is <see langword="null"/>.</exception>
         public RandomCornerImageEmitDetails(
             ScreensaverArea screensaverArea,
             ScreensaverConfiguration screensaverConfiguration,
+            IEnumerable<Func<IScreensaverImageItemBehavior>> behaviorFactories,
             Random random)
-            : base(screensaverArea, screensaverConfiguration, random)
+            : base(screensaverArea, screensaverConfiguration, behaviorFactories, random)
         {
             var bottomRightImageEmitDetails = new BottomRightImageEmitDetails(
                 screensaverArea,
                 screensaverConfiguration,
+                behaviorFactories,
                 random);
             var topRightImageEmitDetails = new TopRightImageEmitDetails(
                 screensaverArea,
                 screensaverConfiguration,
+                behaviorFactories,
                 random);
             var topLeftImageEmitDetails = new TopLeftImageEmitDetails(
                 screensaverArea,
                 screensaverConfiguration,
+                behaviorFactories,
                 random);
             var bottomLeftImageEmitDetails = new BottomLeftImageEmitDetails(
                 screensaverArea,
                 screensaverConfiguration,
+                behaviorFactories,
                 random);
-            this.screensaverImageItemStrategies = new Func<Texture2D, ScreensaverImageItem>[]
+            this.cornerEmitDetailsList = new ImageEmitDetails[]
             {
-                bottomRightImageEmitDetails.CreateScreensaverImageItem,
-                topRightImageEmitDetails.CreateScreensaverImageItem,
-                topLeftImageEmitDetails.CreateScreensaverImageItem,
-                bottomLeftImageEmitDetails.CreateScreensaverImageItem
+                bottomRightImageEmitDetails,
+                topRightImageEmitDetails,
+                topLeftImageEmitDetails,
+                bottomLeftImageEmitDetails
             };
+        }
+
+        /// <inheritdoc/>
+        public override void InsertDefaultBehaviorFactories()
+        {
+            foreach (var cornerEmitDetails in this.cornerEmitDetailsList)
+            {
+                cornerEmitDetails.InsertDefaultBehaviorFactories();
+            }
+
+            base.InsertDefaultBehaviorFactories();
         }
 
         /// <inheritdoc/>
@@ -114,8 +143,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ParameterValidation.IsNotNull(texture, nameof(texture));
 
             var randomEmitDetailFunctionIndex =
-                this.Random.Next(0, this.screensaverImageItemStrategies.Length);
-            return this.screensaverImageItemStrategies[randomEmitDetailFunctionIndex](texture);
+                this.Random.Next(0, this.cornerEmitDetailsList.Length);
+            return this.cornerEmitDetailsList[randomEmitDetailFunctionIndex]
+                .CreateScreensaverImageItem(texture);
         }
     }
 }

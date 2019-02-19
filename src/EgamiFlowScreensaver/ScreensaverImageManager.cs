@@ -47,35 +47,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <summary>
         /// Updates the state of this <see cref="ScreensaverImageManager"/>.
         /// </summary>
-        public void Update()
+        /// <param name="gameTime">A snapshot of the current game time.</param>
+        public void Update(GameTime gameTime)
         {
-            var screensaverBounds = this.screensaverArea.ScreensaverGameBounds;
             foreach (var screensaverImageItem in this.screensaverImageItems)
             {
-                screensaverImageItem.Position += screensaverImageItem.Speed;
-                var positionX = screensaverImageItem.Position.X;
-                var positionY = screensaverImageItem.Position.Y;
-                var speedX = screensaverImageItem.Speed.X;
-                var speedY = screensaverImageItem.Speed.Y;
-                var width = screensaverImageItem.Texture.Width;
-                var height = screensaverImageItem.Texture.Height;
-                if ((speedX > 0 && positionX + width > screensaverBounds.Right) ||
-                    (speedX < 0 && positionX < screensaverBounds.Left))
-                {
-                    screensaverImageItem.Speed = new Vector2(-speedX, speedY);
-                    var newX =
-                        speedX > 0 ? screensaverBounds.Right - width : screensaverBounds.Left;
-                    screensaverImageItem.Position = new Vector2(newX, positionY);
-                }
-
-                if ((speedY > 0 && positionY + height > screensaverBounds.Bottom) ||
-                    (speedY < 0 && positionY < screensaverBounds.Top))
-                {
-                    screensaverImageItem.Speed = new Vector2(speedX, -speedY);
-                    var newY =
-                        speedY > 0 ? screensaverBounds.Bottom - height : screensaverBounds.Top;
-                    screensaverImageItem.Position = new Vector2(positionX, newY);
-                }
+                screensaverImageItem.Update(gameTime);
             }
         }
 
@@ -107,6 +84,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             ParameterValidation.IsNotNull(screensaverImageItem, nameof(screensaverImageItem));
 
+            screensaverImageItem.Initialize();
             this.screensaverImageItems.Add(screensaverImageItem);
         }
     }

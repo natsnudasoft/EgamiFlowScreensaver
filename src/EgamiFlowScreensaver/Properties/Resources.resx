@@ -204,4 +204,36 @@
   <data name="ImageEmitLocationCustom" xml:space="preserve">
     <value>Custom...</value>
   </data>
+  <data name="ImageItemBehaviorTypeColorChange" xml:space="preserve">
+    <value>Colour Change Behaviour</value>
+  </data>
+  <data name="ImageItemBehaviorTypeAlphaChange" xml:space="preserve">
+    <value>Alpha Change Behaviour</value>
+  </data>
+  <data name="ImageItemBehaviorTypeScaleChange" xml:space="preserve">
+    <value>Scale Change Behaviour</value>
+  </data>
+  <data name="NoConfigurationFormForBehaviorCaption" xml:space="preserve">
+    <value>No configuration options available.</value>
+  </data>
+  <data name="NoConfigurationFormForBehaviorText" xml:space="preserve">
+    <value>There are no configuration options available for the selected behaviour type.</value>
+  </data>
+  <data name="ImageItemBehaviorTypeRotationChange" xml:space="preserve">
+    <value>Rotation Change Behaviour</value>
+  </data>
+  <data name="AlphaChangeBehaviorDescription" xml:space="preserve">
+    <value>A behaviour that causes emitted images to transition from one alpha value (transparency) to another over a specified time frame. Valid alpha values are between 0.0 and 1.0 inclusive, although the alpha start value can be less than 0.0 to delay when the transition becomes apparent on screen.</value>
+  </data>
+  <data name="ColorChangeBehaviorDescription" xml:space="preserve">
+    <value>A behaviour that causes emitted images to transition from one colour to another over a specified time frame.</value>
+  </data>
+  <data name="RotationChangeBehaviorDescription" xml:space="preserve">
+    <value>A behaviour that causes emitted images to transition from one rotation value (in degrees) to another over a specified time frame; valid rotation values can be any negative or positive value.
+Please note that changing image rotation can cause incorrect collision behaviour when images bounce off of the edges of the screen.</value>
+  </data>
+  <data name="ScaleChangeBehaviorDescription" xml:space="preserve">
+    <value>A behaviour that causes emitted images to transition from one scale (relative size) to another over a specified time frame. Valid scale values are between 0.0 and 1.0 inclusive, although scale start values van be less than 0.0 to delay when the transition becomes apparent on screen.
+Please note that changing image scale can cause incorrect collision behaviour when images bounce off of the edges of the screen.</value>
+  </data>
 </root>

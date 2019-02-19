@@ -28,6 +28,7 @@
             System.Windows.Forms.Label imageEmitRateLabel;
             System.Windows.Forms.Label imagePositionLabel;
             System.Windows.Forms.Panel panel2;
+            this.manageEmitBehaviorsButton = new System.Windows.Forms.Button();
             this.chooseCustomEmitLocationButton = new System.Windows.Forms.Button();
             this.imageEmitLocationComboBox = new System.Windows.Forms.ComboBox();
             this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -72,6 +73,7 @@
             // imagesGroupBox
             // 
             resources.ApplyResources(imagesGroupBox, "imagesGroupBox");
+            imagesGroupBox.Controls.Add(this.manageEmitBehaviorsButton);
             imagesGroupBox.Controls.Add(this.chooseCustomEmitLocationButton);
             imagesGroupBox.Controls.Add(imageEmitLocationLabel);
             imagesGroupBox.Controls.Add(this.imageEmitLocationComboBox);
@@ -85,6 +87,13 @@
             imagesGroupBox.Controls.Add(this.imagesListBox);
             imagesGroupBox.Name = "imagesGroupBox";
             imagesGroupBox.TabStop = false;
+            // 
+            // manageEmitBehaviorsButton
+            // 
+            resources.ApplyResources(this.manageEmitBehaviorsButton, "manageEmitBehaviorsButton");
+            this.manageEmitBehaviorsButton.Name = "manageEmitBehaviorsButton";
+            this.configurationToolTip.SetToolTip(this.manageEmitBehaviorsButton, resources.GetString("manageEmitBehaviorsButton.ToolTip"));
+            this.manageEmitBehaviorsButton.UseVisualStyleBackColor = true;
             // 
             // chooseCustomEmitLocationButton
             // 
@@ -308,5 +317,6 @@
         private System.Windows.Forms.ComboBox backgroundImageScaleModeComboBox;
         private System.Windows.Forms.ComboBox imageEmitLocationComboBox;
         private System.Windows.Forms.Button chooseCustomEmitLocationButton;
+        private System.Windows.Forms.Button manageEmitBehaviorsButton;
     }
 }
