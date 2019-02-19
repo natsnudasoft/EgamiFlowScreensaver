@@ -127,13 +127,53 @@
   <data name="imagesGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="manageEmitBehaviorsButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="manageEmitBehaviorsButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="manageEmitBehaviorsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>220, 332</value>
+  </data>
+  <data name="manageEmitBehaviorsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="manageEmitBehaviorsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 26</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="manageEmitBehaviorsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="manageEmitBehaviorsButton.Text" xml:space="preserve">
+    <value>Manage Emit Behaviours</value>
+  </data>
+  <metadata name="configurationToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="manageEmitBehaviorsButton.ToolTip" xml:space="preserve">
+    <value>Apply and configure a list of behaviours for emitted images.</value>
+  </data>
+  <data name="&gt;&gt;manageEmitBehaviorsButton.Name" xml:space="preserve">
+    <value>manageEmitBehaviorsButton</value>
+  </data>
+  <data name="&gt;&gt;manageEmitBehaviorsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;manageEmitBehaviorsButton.Parent" xml:space="preserve">
+    <value>imagesGroupBox</value>
+  </data>
+  <data name="&gt;&gt;manageEmitBehaviorsButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="chooseCustomEmitLocationButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="chooseCustomEmitLocationButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chooseCustomEmitLocationButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>262, 296</value>
   </data>
@@ -143,7 +183,6 @@
   <data name="chooseCustomEmitLocationButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 26</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="chooseCustomEmitLocationButton.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
@@ -163,7 +202,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;chooseCustomEmitLocationButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <metadata name="imageEmitLocationLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -192,9 +231,6 @@
   <data name="imageEmitLocationLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <metadata name="configurationToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="imageEmitLocationLabel.ToolTip" xml:space="preserve">
     <value>The location on the primary screen that images will be emitted.</value>
   </data>
@@ -208,7 +244,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imageEmitLocationLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="imageEmitLocationComboBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -235,7 +271,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imageEmitLocationComboBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <metadata name="maxImageEmitCountLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -277,7 +313,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;maxImageEmitCountLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="maxImageEmitCountNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>134, 267</value>
@@ -301,7 +337,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;maxImageEmitCountNumericUpDown.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <metadata name="imageEmitRateLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -343,7 +379,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imageEmitRateLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="imageEmitRateNumericUpDown.Location" type="System.Drawing.Point, System.Drawing">
     <value>106, 235</value>
@@ -367,7 +403,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imageEmitRateNumericUpDown.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="imagePreviewPictureBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -400,7 +436,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imagePreviewPictureBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="removeImageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -439,7 +475,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;removeImageButton.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="addImageButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -475,7 +511,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;addImageButton.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="imagesListBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -508,7 +544,7 @@
     <value>imagesGroupBox</value>
   </data>
   <data name="&gt;&gt;imagesListBox.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="imagesGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
@@ -520,7 +556,7 @@
     <value>0, 8, 0, 0</value>
   </data>
   <data name="imagesGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>376, 331</value>
+    <value>376, 367</value>
   </data>
   <data name="imagesGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -802,7 +838,7 @@
     <value>6</value>
   </data>
   <data name="backgroundRadioGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 351</value>
+    <value>12, 384</value>
   </data>
   <data name="backgroundRadioGroupBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -844,7 +880,7 @@
     <value>8, 8, 8, 8</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 512</value>
+    <value>400, 545</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -949,7 +985,7 @@
     <value>8, 8, 8, 8</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 512</value>
+    <value>128, 545</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -973,7 +1009,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>528, 512</value>
+    <value>528, 545</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

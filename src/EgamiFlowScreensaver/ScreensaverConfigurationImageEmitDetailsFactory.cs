@@ -76,6 +76,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             var configFileService = this.serviceProvider.GetService<IConfigurationFileService>();
             var screensaverConfiguration = configFileService.Open();
+            var behaviorFactoriesFactory = this.serviceProvider
+                .GetService<IBehaviorFactoriesFactory>();
+            var behaviorFactories = behaviorFactoriesFactory.Create(
+                screensaverArea,
+                screensaverConfiguration.Behaviors);
             IImageEmitDetails imageEmitDetails;
             switch (screensaverConfiguration.ImageEmitLocation)
             {
@@ -83,42 +88,49 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     imageEmitDetails = new CustomImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.RandomCorner:
                     imageEmitDetails = new RandomCornerImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.Random:
                     imageEmitDetails = new RandomImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.Center:
                     imageEmitDetails = new CenterImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.BottomRight:
                     imageEmitDetails = new BottomRightImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.TopRight:
                     imageEmitDetails = new TopRightImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.TopLeft:
                     imageEmitDetails = new TopLeftImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
                 case ImageEmitLocation.BottomLeft:
@@ -126,6 +138,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     imageEmitDetails = new BottomLeftImageEmitDetails(
                         screensaverArea,
                         screensaverConfiguration,
+                        behaviorFactories,
                         this.random);
                     break;
             }

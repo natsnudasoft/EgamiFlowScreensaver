@@ -106,9 +106,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             Application.EnableVisualStyles();
             var configurationFileService = new ConfigurationFileService();
             var configurationFilesTempCache = new ConfigurationFilesTempCache();
+            var behaviorConfigurationFactory = new BehaviorConfigurationFactory();
+            var behaviorConfigurationFormFactory = new BehaviorConfigurationFormFactory();
             using (var viewModel = new ConfigurationFormViewModel(
                 configurationFileService,
-                configurationFilesTempCache))
+                configurationFilesTempCache,
+                behaviorConfigurationFactory,
+                behaviorConfigurationFormFactory))
             {
                 var nativeMethods = new NativeMethods();
                 if (screensaverSettingsChildHandle != IntPtr.Zero)

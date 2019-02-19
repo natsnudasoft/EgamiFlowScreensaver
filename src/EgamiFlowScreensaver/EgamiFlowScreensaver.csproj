@@ -72,9 +72,37 @@
     <Compile Include="BackgroundDrawableManager.cs" />
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="EnabledBehaviorFactoriesFactory.cs" />
     <Compile Include="BottomLeftImageEmitDetails.cs" />
     <Compile Include="BottomRightImageEmitDetails.cs" />
     <Compile Include="CenterImageEmitDetails.cs" />
+    <Compile Include="ColorChangeScreensaverImageItemBehavior.cs" />
+    <Compile Include="Config\AlphaChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\AlphaChangeBehaviorForm.Designer.cs">
+      <DependentUpon>AlphaChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\AlphaChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ApplyBehaviorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ApplyBehaviorsForm.Designer.cs">
+      <DependentUpon>ApplyBehaviorsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ApplyBehaviorsFormViewModel.cs" />
+    <Compile Include="Config\BehaviorConfigurationFactory.cs" />
+    <Compile Include="Config\BehaviorConfigurationFormFactory.cs" />
+    <Compile Include="Config\ColorChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ColorChangeBehaviorForm.Designer.cs">
+      <DependentUpon>ColorChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ColorChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ColorChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\ConfigurationBehavior.cs" />
+    <Compile Include="Config\ConfigurationBehaviorFormViewModel.cs" />
     <Compile Include="Config\ConfigurationDirectoryLayoutRenderer.cs" />
     <Compile Include="Config\ConfigurationFilesTempCache.cs" />
     <Compile Include="Config\ConfigurationFileService.cs" />
@@ -86,6 +114,7 @@
     </Compile>
     <Compile Include="Config\ConfigurationFormViewModel.cs" />
     <Compile Include="Config\ConfigurationImageItem.cs" />
+    <Compile Include="Config\ConfigurationBehaviorType.cs" />
     <Compile Include="Config\CustomEmitLocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,23 +122,48 @@
       <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\CustomEmitLocationFormViewModel.cs" />
+    <Compile Include="Config\AlphaChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\IBehaviorConfigurationFactory.cs" />
+    <Compile Include="Config\IBehaviorConfigurationFormFactory.cs" />
     <Compile Include="Config\IConfigurationFilesTempCache.cs" />
     <Compile Include="Config\IConfigurationFileService.cs" />
+    <Compile Include="Config\RotationChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\RotationChangeBehaviorForm.Designer.cs">
+      <DependentUpon>RotationChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\RotationChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\RotationChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\ScaleChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ScaleChangeBehaviorForm.Designer.cs">
+      <DependentUpon>ScaleChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ScaleChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ScaleChangeConfigurationBehavior.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
     <Compile Include="CustomImageEmitDetails.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />
     <Compile Include="DataSourceDisplayValue.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="EnumResourceDisplayNameAttribute.cs" />
+    <Compile Include="AlphaChangeScreensaverImageItemBehavior.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBackgroundDrawableFactory.cs" />
     <Compile Include="IBackgroundDrawableManager.cs" />
+    <Compile Include="IBehaviorFactoriesFactory.cs" />
     <Compile Include="IImageEmitDetails.cs" />
     <Compile Include="IImageEmitDetailsFactory.cs" />
     <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawable.cs" />
+    <Compile Include="IScreensaverImageItemBehavior.cs" />
+    <Compile Include="MovingScreensaverImageItemBehavior.cs" />
     <Compile Include="RandomCornerImageEmitDetails.cs" />
     <Compile Include="RandomImageEmitDetails.cs" />
+    <Compile Include="RotationChangeScreensaverImageItemBehavior.cs" />
+    <Compile Include="ScaleChangeScreensaverImageItemBehavior.cs" />
     <Compile Include="ScreensaverConfigurationImageEmitDetailsFactory.cs" />
     <Compile Include="ImageEmitLocation.cs" />
     <Compile Include="ImageEmitDetails.cs" />
@@ -147,6 +201,7 @@
     <Compile Include="ScreensaverImageEmitter.cs" />
     <Compile Include="ScreensaverImageEmitterCounter.cs" />
     <Compile Include="ScreensaverImageItem.cs" />
+    <Compile Include="ScreensaverImageItemBehavior.cs" />
     <Compile Include="ScreensaverImageManager.cs" />
     <Compile Include="ScreensaverService.cs" />
     <Compile Include="ServiceProviderExtension.cs" />
@@ -156,6 +211,7 @@
     <Compile Include="TiledTexture2DSegment.cs" />
     <Compile Include="TopLeftImageEmitDetails.cs" />
     <Compile Include="TopRightImageEmitDetails.cs" />
+    <Compile Include="TransitionScreensaverImageItemBehavior.cs" />
     <Compile Include="WindowLongFlags.cs" />
     <EmbeddedResource Include="..\EgamiFlowScreensaver.Content\bin\$(MonoGamePlatform)\$(Configuration)\Content\adie.xnb">
       <Link>Content\adie.xnb</Link>
@@ -210,8 +266,26 @@
     </AdditionalFiles>
     <Content Include="Properties\NativeRes.rc2" />
     <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
+    <EmbeddedResource Include="Config\AlphaChangeBehaviorForm.resx">
+      <DependentUpon>AlphaChangeBehaviorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ApplyBehaviorsForm.resx">
+      <DependentUpon>ApplyBehaviorsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ColorChangeBehaviorForm.resx">
+      <DependentUpon>ColorChangeBehaviorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Config\CustomEmitLocationForm.resx">
       <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\RotationChangeBehaviorForm.resx">
+      <DependentUpon>RotationChangeBehaviorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ScaleChangeBehaviorForm.resx">
+      <DependentUpon>ScaleChangeBehaviorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NLog.config" />
     <None Include="NLog.xsd">
