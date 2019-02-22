@@ -37,7 +37,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private readonly IReadOnlyList<Texture2D> screensaverTextures;
         private readonly IImageEmitDetails imageEmitDetails;
         private readonly Random random;
-        private int currentEmitCount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverImageEmitter"/> class.
@@ -134,9 +133,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             if (this.IsRunning)
             {
-                if (this.currentEmitCount >= this.imageEmitDetails.MaxImageEmitCount)
+                var imageCount = this.screensaverImageManager.ImageCount;
+                if (imageCount >= this.imageEmitDetails.MaxImageEmitCount)
                 {
-                    this.Stop();
+                    this.StopIfNotInfiniteImageEmitMode();
                 }
                 else if (this.screensaverTextures.Count > 0)
                 {
@@ -148,13 +148,22 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                         var screensaverImageItem =
                             this.imageEmitDetails.CreateScreensaverImageItem(texture);
                         this.screensaverImageManager.AddScreensaverImage(screensaverImageItem);
-                        if (++this.currentEmitCount >= this.imageEmitDetails.MaxImageEmitCount)
+                        imageCount = this.screensaverImageManager.ImageCount;
+                        if (imageCount >= this.imageEmitDetails.MaxImageEmitCount)
                         {
-                            this.Stop();
+                            this.StopIfNotInfiniteImageEmitMode();
                             break;
                         }
                     }
                 }
+            }
+        }
+
+        private void StopIfNotInfiniteImageEmitMode()
+        {
+            if (!this.imageEmitDetails.IsInfiniteImageEmitMode)
+            {
+                this.Stop();
             }
         }
     }

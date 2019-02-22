@@ -137,6 +137,28 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
 
+            this.imageEmitLifetimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode));
+
+            this.imageEmitLifetimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode));
+            this.imageEmitLifetimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.ImageEmitLifetime),
+                true);
+
+            this.infiniteEmitModeCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
             var imageEmitLocationSource = Enum.GetValues(typeof(ImageEmitLocation))
                 .Cast<ImageEmitLocation>()
                 .Select(m => new DataSourceDisplayValue<ImageEmitLocation>(

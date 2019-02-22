@@ -28,6 +28,9 @@
             System.Windows.Forms.Label imageEmitRateLabel;
             System.Windows.Forms.Label imagePositionLabel;
             System.Windows.Forms.Panel panel2;
+            this.imageEmitLifetimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.imageEmitLifetimeLabel = new System.Windows.Forms.Label();
+            this.infiniteEmitModeCheckBox = new System.Windows.Forms.CheckBox();
             this.manageEmitBehaviorsButton = new System.Windows.Forms.Button();
             this.chooseCustomEmitLocationButton = new System.Windows.Forms.Button();
             this.imageEmitLocationComboBox = new System.Windows.Forms.ComboBox();
@@ -56,6 +59,7 @@
             panel2 = new System.Windows.Forms.Panel();
             panel1.SuspendLayout();
             imagesGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageEmitLifetimeNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxImageEmitCountNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageEmitRateNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePreviewPictureBox)).BeginInit();
@@ -73,6 +77,9 @@
             // imagesGroupBox
             // 
             resources.ApplyResources(imagesGroupBox, "imagesGroupBox");
+            imagesGroupBox.Controls.Add(this.imageEmitLifetimeNumericUpDownWheel);
+            imagesGroupBox.Controls.Add(this.imageEmitLifetimeLabel);
+            imagesGroupBox.Controls.Add(this.infiniteEmitModeCheckBox);
             imagesGroupBox.Controls.Add(this.manageEmitBehaviorsButton);
             imagesGroupBox.Controls.Add(this.chooseCustomEmitLocationButton);
             imagesGroupBox.Controls.Add(imageEmitLocationLabel);
@@ -87,6 +94,35 @@
             imagesGroupBox.Controls.Add(this.imagesListBox);
             imagesGroupBox.Name = "imagesGroupBox";
             imagesGroupBox.TabStop = false;
+            // 
+            // imageEmitLifetimeNumericUpDownWheel
+            // 
+            this.imageEmitLifetimeNumericUpDownWheel.DecimalPlaces = 2;
+            this.imageEmitLifetimeNumericUpDownWheel.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.imageEmitLifetimeNumericUpDownWheel, "imageEmitLifetimeNumericUpDownWheel");
+            this.imageEmitLifetimeNumericUpDownWheel.Maximum = new decimal(new int[] {
+            604800000,
+            0,
+            0,
+            0});
+            this.imageEmitLifetimeNumericUpDownWheel.Name = "imageEmitLifetimeNumericUpDownWheel";
+            // 
+            // imageEmitLifetimeLabel
+            // 
+            resources.ApplyResources(this.imageEmitLifetimeLabel, "imageEmitLifetimeLabel");
+            this.imageEmitLifetimeLabel.Name = "imageEmitLifetimeLabel";
+            this.configurationToolTip.SetToolTip(this.imageEmitLifetimeLabel, resources.GetString("imageEmitLifetimeLabel.ToolTip"));
+            // 
+            // infiniteEmitModeCheckBox
+            // 
+            resources.ApplyResources(this.infiniteEmitModeCheckBox, "infiniteEmitModeCheckBox");
+            this.infiniteEmitModeCheckBox.Name = "infiniteEmitModeCheckBox";
+            this.configurationToolTip.SetToolTip(this.infiniteEmitModeCheckBox, resources.GetString("infiniteEmitModeCheckBox.ToolTip"));
+            this.infiniteEmitModeCheckBox.UseVisualStyleBackColor = true;
             // 
             // manageEmitBehaviorsButton
             // 
@@ -288,6 +324,7 @@
             panel1.ResumeLayout(false);
             imagesGroupBox.ResumeLayout(false);
             imagesGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageEmitLifetimeNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxImageEmitCountNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageEmitRateNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePreviewPictureBox)).EndInit();
@@ -318,5 +355,8 @@
         private System.Windows.Forms.ComboBox imageEmitLocationComboBox;
         private System.Windows.Forms.Button chooseCustomEmitLocationButton;
         private System.Windows.Forms.Button manageEmitBehaviorsButton;
+        private System.Windows.Forms.CheckBox infiniteEmitModeCheckBox;
+        private NumericUpDownWheel imageEmitLifetimeNumericUpDownWheel;
+        private System.Windows.Forms.Label imageEmitLifetimeLabel;
     }
 }

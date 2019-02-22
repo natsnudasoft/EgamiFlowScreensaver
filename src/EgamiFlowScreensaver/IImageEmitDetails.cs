@@ -39,6 +39,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         int MaxImageEmitCount { get; }
 
         /// <summary>
+        /// Gets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        /// <value><see langword="true"/> if images should be emitted infinitely; otherwise
+        /// <see langword="false"/>.</value>
+        bool IsInfiniteImageEmitMode { get; }
+
+        /// <summary>
+        /// Gets the time that emitted images should live for.
+        /// </summary>
+        /// <remarks>This setting is only used if <see cref="IsInfiniteImageEmitMode"/> is
+        /// <see langword="true"/>.</remarks>
+        TimeSpan ImageEmitLifetime { get; }
+
+        /// <summary>
         /// Gets a list of factories that define how to create behaviours that will be attached to
         /// any images emitted by a <see cref="ScreensaverImageEmitter"/>.
         /// </summary>
