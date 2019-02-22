@@ -160,6 +160,7 @@
     <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawable.cs" />
     <Compile Include="IScreensaverImageItemBehavior.cs" />
+    <Compile Include="LifetimeScreensaverImageItemBehavior.cs" />
     <Compile Include="MovingScreensaverImageItemBehavior.cs" />
     <Compile Include="RandomCornerImageEmitDetails.cs" />
     <Compile Include="RandomImageEmitDetails.cs" />

@@ -93,6 +93,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         public Vector2 Scale { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether or not this <see cref="ScreensaverImageItem"/> is
+        /// destroyed.
+        /// </summary>
+        /// <value><see langword="true"/> if this <see cref="ScreensaverImageItem"/> is destroyed;
+        /// otherwise <see langword="false"/>.</value>
+        public bool IsDestroyed { get; private set; }
+
+        /// <summary>
         /// Performs any initialization steps required by this <see cref="ScreensaverImageItem"/>.
         /// </summary>
         public void Initialize()
@@ -136,6 +144,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 this.Scale,
                 this.SpriteEffects,
                 0f);
+        }
+
+        /// <summary>
+        /// Requests that this <see cref="ScreensaverImageItem"/> be destroyed.
+        /// </summary>
+        public void Destroy()
+        {
+            this.IsDestroyed = true;
         }
     }
 }
