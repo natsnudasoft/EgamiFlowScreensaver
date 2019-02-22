@@ -53,6 +53,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private ImageEmitLocation imageEmitLocation;
         private int customImageEmitLocationX;
         private int customImageEmitLocationY;
+        private bool isInfiniteEmitMode;
+        private double emitLifetime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationFormViewModel"/> class.
@@ -240,6 +242,28 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// emitted.
         /// </summary>
         public IList<ConfigurationBehavior> Behaviors { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        /// <value><see langword="true"/> if images should be emitted infinitely; otherwise
+        /// <see langword="false"/>.</value>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.isInfiniteEmitMode;
+            set => this.Set(ref this.isInfiniteEmitMode, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the time that emitted images should live for (in milliseconds).
+        /// </summary>
+        /// <remarks>This setting is only used if <see cref="IsInfiniteImageEmitMode"/> is
+        /// <see langword="true"/>.</remarks>
+        public double ImageEmitLifetime
+        {
+            get => this.emitLifetime;
+            set => this.Set(ref this.emitLifetime, value);
+        }
 
         /// <summary>
         /// Displays a dialog allowing a new image to be added to the image item collection.
@@ -457,6 +481,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.ImageEmitLocation = screensaverConfiguration.ImageEmitLocation;
                 this.CustomImageEmitLocationX = screensaverConfiguration.CustomImageEmitLocationX;
                 this.CustomImageEmitLocationY = screensaverConfiguration.CustomImageEmitLocationY;
+                this.IsInfiniteImageEmitMode = screensaverConfiguration.IsInfiniteImageEmitMode;
+                this.ImageEmitLifetime =
+                    screensaverConfiguration.ImageEmitLifetime.TotalMilliseconds;
                 this.Images.Clear();
                 foreach (var screensaverImage in screensaverImages)
                 {
@@ -536,7 +563,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 MaxImageEmitCount = this.MaxImageEmitCount,
                 ImageEmitLocation = this.ImageEmitLocation,
                 CustomImageEmitLocationX = this.CustomImageEmitLocationX,
-                CustomImageEmitLocationY = this.CustomImageEmitLocationY
+                CustomImageEmitLocationY = this.CustomImageEmitLocationY,
+                IsInfiniteImageEmitMode = this.IsInfiniteImageEmitMode,
+                ImageEmitLifetime =
+                    new TimeSpan((long)(this.ImageEmitLifetime * TimeSpan.TicksPerMillisecond))
             };
             var committedImages = this.configurationFileService
                 .CommitCachedScreensaverImages(this.images);

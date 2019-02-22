@@ -62,10 +62,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             var emitCount = 0;
             this.elapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            while (this.elapsed > this.particleRateInverse)
+            if (!gameTime.IsRunningSlowly)
             {
-                ++emitCount;
-                this.elapsed -= this.particleRateInverse;
+                while (this.elapsed > this.particleRateInverse)
+                {
+                    ++emitCount;
+                    this.elapsed -= this.particleRateInverse;
+                }
             }
 
             return emitCount;

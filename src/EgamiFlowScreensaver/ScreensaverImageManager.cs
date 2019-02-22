@@ -28,7 +28,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public sealed class ScreensaverImageManager
     {
         private readonly ScreensaverArea screensaverArea;
-        private readonly List<ScreensaverImageItem> screensaverImageItems;
+        private readonly LinkedList<ScreensaverImageItem> screensaverImageItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverImageManager"/> class.
@@ -41,7 +41,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
 
             this.screensaverArea = screensaverArea;
-            this.screensaverImageItems = new List<ScreensaverImageItem>();
+            this.screensaverImageItems = new LinkedList<ScreensaverImageItem>();
+        }
+
+        /// <summary>
+        /// Gets the number of images currently managed by this instance.
+        /// </summary>
+        public int ImageCount
+        {
+            get => this.screensaverImageItems.Count;
         }
 
         /// <summary>
@@ -50,9 +58,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="gameTime">A snapshot of the current game time.</param>
         public void Update(GameTime gameTime)
         {
-            foreach (var screensaverImageItem in this.screensaverImageItems)
+            var screensaverImageItemNode = this.screensaverImageItems.First;
+            while (screensaverImageItemNode != null)
             {
+                var nextNode = screensaverImageItemNode.Next;
+                var screensaverImageItem = screensaverImageItemNode.Value;
                 screensaverImageItem.Update(gameTime);
+                if (screensaverImageItem.IsDestroyed)
+                {
+                    this.screensaverImageItems.Remove(screensaverImageItemNode);
+                }
+
+                screensaverImageItemNode = nextNode;
             }
         }
 
@@ -85,7 +102,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ParameterValidation.IsNotNull(screensaverImageItem, nameof(screensaverImageItem));
 
             screensaverImageItem.Initialize();
-            this.screensaverImageItems.Add(screensaverImageItem);
+            this.screensaverImageItems.AddFirst(screensaverImageItem);
         }
     }
 }
