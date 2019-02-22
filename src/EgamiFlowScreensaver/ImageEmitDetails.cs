@@ -110,6 +110,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <inheritdoc/>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.ScreensaverConfiguration.IsInfiniteImageEmitMode;
+        }
+
+        /// <inheritdoc/>
+        public TimeSpan ImageEmitLifetime
+        {
+            get => this.ScreensaverConfiguration.ImageEmitLifetime;
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<Func<IScreensaverImageItemBehavior>> BehaviorFactories
         {
             get => this.behaviorFactories;
@@ -185,9 +197,26 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             }
         }
 
+        private Func<IScreensaverImageItemBehavior> CreateDefaultLifetimeBehaviorFactory()
+        {
+            IScreensaverImageItemBehavior CreateDefaultLifetimeBehavior()
+            {
+                return new LifetimeScreensaverImageItemBehavior(
+                    this.ScreensaverArea,
+                    this.ImageEmitLifetime);
+            }
+
+            return CreateDefaultLifetimeBehavior;
+        }
+
         private IEnumerable<Func<IScreensaverImageItemBehavior>>
             CreateDefaultImageEmitBehaviorFactories()
         {
+            if (this.ScreensaverConfiguration.IsInfiniteImageEmitMode)
+            {
+                yield return this.CreateDefaultLifetimeBehaviorFactory();
+            }
+
             yield return this.CreateDefaultMovingBehaviorFactory();
         }
     }
