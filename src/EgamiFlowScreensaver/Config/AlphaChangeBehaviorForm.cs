@@ -60,6 +60,47 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(AlphaChangeBehaviorFormViewModel.TransitionTime),
                 true);
 
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.IsInfiniteImageEmitMode));
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.endTransitionAlphaLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionAlphaNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionAlphaNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionAlpha),
+                true);
+
+            this.endTransitionTimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionTime),
+                true);
+
             this.okButton.Click += (sender, e) =>
             {
                 if (this.viewModel.Validate(this))

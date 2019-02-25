@@ -27,7 +27,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public sealed class LifetimeScreensaverImageItemBehavior : ScreensaverImageItemBehavior
     {
         private readonly TimeSpan lifetime;
-        private bool isFinished;
         private TimeSpan currentTime;
 
         /// <summary>
@@ -67,14 +66,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ParameterValidation.IsNotNull(screensaverImageItem, nameof(screensaverImageItem));
             ParameterValidation.IsNotNull(gameTime, nameof(gameTime));
 
-            if (!this.isFinished)
+            this.currentTime += gameTime.ElapsedGameTime;
+            if (this.currentTime >= this.lifetime)
             {
-                this.currentTime += gameTime.ElapsedGameTime;
-                if (this.currentTime >= this.lifetime)
-                {
-                    screensaverImageItem.Destroy();
-                    this.isFinished = true;
-                }
+                screensaverImageItem.BeginDestroy();
+                this.IsFinished = true;
             }
         }
     }

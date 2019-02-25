@@ -56,5 +56,45 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     Vector2.Max(Vector2.Lerp(startScale, endScale, p), Vector2.Zero))
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScaleChangeScreensaverImageItemBehavior"/>
+        /// class.
+        /// </summary>
+        /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <param name="startScale">The scale that the image item this behaviour is applied to will
+        /// start at. This value can have components out of range to delay the start of the
+        /// transition.</param>
+        /// <param name="endScale">The scale that the image item this behaviour is applied to will
+        /// finish at. This value can have components out of range to advance the end of the
+        /// transition.</param>
+        /// <param name="transitionTime">The time the image item this behaviour is applied to will
+        /// take to transition between the specified scales.</param>
+        /// <param name="endTransitionScale">The scale value that the image item this behaviour is
+        /// applied to will finish at when it is being destroyed (starting from
+        /// <paramref name="endScale"/>).</param>
+        /// <param name="endTransitionTime">The time the image item this behaviour is applied to
+        /// will take to transition when it is being destroyed.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="transitionTime"/>, or
+        /// <paramref name="endTransitionTime"/> is less than a zero time.</exception>
+        public ScaleChangeScreensaverImageItemBehavior(
+            ScreensaverArea screensaverArea,
+            Vector2 startScale,
+            Vector2 endScale,
+            TimeSpan transitionTime,
+            Vector2 endTransitionScale,
+            TimeSpan endTransitionTime)
+            : base(
+                screensaverArea,
+                transitionTime,
+                (s, p) => s.Scale =
+                    Vector2.Max(Vector2.Lerp(startScale, endScale, p), Vector2.Zero),
+                endTransitionTime,
+                (s, p) => s.Scale =
+                    Vector2.Max(Vector2.Lerp(endScale, endTransitionScale, p), Vector2.Zero))
+        {
+        }
     }
 }

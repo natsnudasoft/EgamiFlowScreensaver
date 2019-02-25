@@ -25,6 +25,20 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public interface IScreensaverImageItemBehavior
     {
         /// <summary>
+        /// Gets a value indicating whether this behaviour is finished.
+        /// </summary>
+        bool IsFinished { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether or not this behaviour will block the image item that
+        /// it is attached to from being destroyed until <see cref="IsFinished"/> is set to
+        /// <see langword="true"/>.
+        /// </summary>
+        /// <value><see langword="true"/> if this behaviour should block the image item that it is
+        /// attached to from being destroyed; otherwise <see langword="false"/>.</value>
+        bool BlocksDestroy { get; }
+
+        /// <summary>
         /// Performs any initialization steps required by this
         /// <see cref="IScreensaverImageItemBehavior"/> that will be applied to the specified
         /// <see cref="ScreensaverImageItem"/>.

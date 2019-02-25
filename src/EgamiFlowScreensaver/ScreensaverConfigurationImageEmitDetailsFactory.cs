@@ -80,7 +80,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 .GetService<IBehaviorFactoriesFactory>();
             var behaviorFactories = behaviorFactoriesFactory.Create(
                 screensaverArea,
-                screensaverConfiguration.Behaviors);
+                screensaverConfiguration.Behaviors,
+                screensaverConfiguration.IsInfiniteImageEmitMode);
             IImageEmitDetails imageEmitDetails;
             switch (screensaverConfiguration.ImageEmitLocation)
             {

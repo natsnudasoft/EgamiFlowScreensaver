@@ -387,6 +387,24 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transition time less than image lifetime..
+        /// </summary>
+        internal static string TransitionTimeLessThanLifetimeCaption {
+            get {
+                return ResourceManager.GetString("TransitionTimeLessThanLifetimeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The transition time of this behaviour is longer than the lifetime of any emitted images, this may cause strange behaviour, are you sure you want to continue with these values?.
+        /// </summary>
+        internal static string TransitionTimeLessThanLifetimeText {
+            get {
+                return ResourceManager.GetString("TransitionTimeLessThanLifetimeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unhandled Exception.
         /// </summary>
         internal static string UnhandledExceptionCaption {

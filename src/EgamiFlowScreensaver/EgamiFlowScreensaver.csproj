@@ -72,6 +72,7 @@
     <Compile Include="BackgroundDrawableManager.cs" />
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="Config\ILifetimeDetails.cs" />
     <Compile Include="EnabledBehaviorFactoriesFactory.cs" />
     <Compile Include="BottomLeftImageEmitDetails.cs" />
     <Compile Include="BottomRightImageEmitDetails.cs" />

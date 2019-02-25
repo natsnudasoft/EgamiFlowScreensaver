@@ -65,6 +65,47 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(RotationChangeBehaviorFormViewModel.TransitionTime),
                 true);
 
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Enabled),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.IsInfiniteImageEmitMode));
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.endTransitionRotationLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionRotationNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionRotationNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionRotation),
+                true);
+
+            this.endTransitionTimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(RotationChangeBehaviorFormViewModel.EndTransitionTime),
+                true);
+
             this.okButton.Click += (sender, e) =>
             {
                 if (this.viewModel.Validate(this))

@@ -124,7 +124,287 @@
   <data name="configurationGroupBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="yCoordinateEndTransitionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="yCoordinateEndTransitionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>210, 180</value>
+  </data>
+  <data name="yCoordinateEndTransitionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="yCoordinateEndTransitionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="yCoordinateEndTransitionLabel.Text" xml:space="preserve">
+    <value>y</value>
+  </data>
+  <data name="yCoordinateEndTransitionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;yCoordinateEndTransitionLabel.Name" xml:space="preserve">
+    <value>yCoordinateEndTransitionLabel</value>
+  </data>
+  <data name="&gt;&gt;yCoordinateEndTransitionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;yCoordinateEndTransitionLabel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;yCoordinateEndTransitionLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 180</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.Text" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="xCoordinateEndTransitionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;xCoordinateEndTransitionLabel.Name" xml:space="preserve">
+    <value>xCoordinateEndTransitionLabel</value>
+  </data>
+  <data name="&gt;&gt;xCoordinateEndTransitionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;xCoordinateEndTransitionLabel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;xCoordinateEndTransitionLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="endTransitionScaleYNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>210, 206</value>
+  </data>
+  <data name="endTransitionScaleYNumericUpDownWheel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="endTransitionScaleYNumericUpDownWheel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="endTransitionScaleYNumericUpDownWheel.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleYNumericUpDownWheel.Name" xml:space="preserve">
+    <value>endTransitionScaleYNumericUpDownWheel</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleYNumericUpDownWheel.Type" xml:space="preserve">
+    <value>Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel, Natsnudasoft.EgamiFlowScreensaver, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleYNumericUpDownWheel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleYNumericUpDownWheel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="endTransitionScaleXNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 206</value>
+  </data>
+  <data name="endTransitionScaleXNumericUpDownWheel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="endTransitionScaleXNumericUpDownWheel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="endTransitionScaleXNumericUpDownWheel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleXNumericUpDownWheel.Name" xml:space="preserve">
+    <value>endTransitionScaleXNumericUpDownWheel</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleXNumericUpDownWheel.Type" xml:space="preserve">
+    <value>Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel, Natsnudasoft.EgamiFlowScreensaver, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleXNumericUpDownWheel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleXNumericUpDownWheel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="endTransitionScaleLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="endTransitionScaleLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="endTransitionScaleLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 208</value>
+  </data>
+  <data name="endTransitionScaleLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
+  </data>
+  <data name="endTransitionScaleLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 13</value>
+  </data>
+  <data name="endTransitionScaleLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="endTransitionScaleLabel.Text" xml:space="preserve">
+    <value>End Transition Scale</value>
+  </data>
+  <data name="endTransitionScaleLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <metadata name="configurationToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="endTransitionScaleLabel.ToolTip" xml:space="preserve">
+    <value>The scale value (along x and y axis) that the end transition will finish at (starting from the end scale value).</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleLabel.Name" xml:space="preserve">
+    <value>endTransitionScaleLabel</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleLabel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionScaleLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="endTransitionTimeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="endTransitionTimeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="endTransitionTimeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 240</value>
+  </data>
+  <data name="endTransitionTimeLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 0, 6, 0</value>
+  </data>
+  <data name="endTransitionTimeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 13</value>
+  </data>
+  <data name="endTransitionTimeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="endTransitionTimeLabel.Text" xml:space="preserve">
+    <value>End Transition Time</value>
+  </data>
+  <data name="endTransitionTimeLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="endTransitionTimeLabel.ToolTip" xml:space="preserve">
+    <value>The amount of time (in milliseconds) that the end transition will take. This time extends the original image lifetime.</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeLabel.Name" xml:space="preserve">
+    <value>endTransitionTimeLabel</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeLabel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="endTransitionTimeNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 238</value>
+  </data>
+  <data name="endTransitionTimeNumericUpDownWheel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="endTransitionTimeNumericUpDownWheel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="endTransitionTimeNumericUpDownWheel.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeNumericUpDownWheel.Name" xml:space="preserve">
+    <value>endTransitionTimeNumericUpDownWheel</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeNumericUpDownWheel.Type" xml:space="preserve">
+    <value>Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel, Natsnudasoft.EgamiFlowScreensaver, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeNumericUpDownWheel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionTimeNumericUpDownWheel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="horizontalSplitterLabel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="horizontalSplitterLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="horizontalSplitterLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 143</value>
+  </data>
+  <data name="horizontalSplitterLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 6, 0, 6</value>
+  </data>
+  <data name="horizontalSplitterLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>295, 2</value>
+  </data>
+  <data name="horizontalSplitterLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;horizontalSplitterLabel.Name" xml:space="preserve">
+    <value>horizontalSplitterLabel</value>
+  </data>
+  <data name="&gt;&gt;horizontalSplitterLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;horizontalSplitterLabel.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;horizontalSplitterLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>84, 157</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>6, 6, 6, 6</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 17</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.Text" xml:space="preserve">
+    <value>End Transition Enabled</value>
+  </data>
+  <data name="endTransitionEnabledCheckBox.ToolTip" xml:space="preserve">
+    <value>Whether or not the end transition will play when emitted images reach the end of their lifetime.</value>
+  </data>
+  <data name="&gt;&gt;endTransitionEnabledCheckBox.Name" xml:space="preserve">
+    <value>endTransitionEnabledCheckBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionEnabledCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;endTransitionEnabledCheckBox.Parent" xml:space="preserve">
+    <value>configurationGroupBox</value>
+  </data>
+  <data name="&gt;&gt;endTransitionEnabledCheckBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
   <data name="endScaleYNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
     <value>164, 79</value>
   </data>
@@ -134,7 +414,6 @@
   <data name="endScaleYNumericUpDownWheel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="endScaleYNumericUpDownWheel.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
@@ -148,7 +427,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;endScaleYNumericUpDownWheel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>9</value>
   </data>
   <metadata name="endScaleLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -177,9 +456,6 @@
   <data name="endScaleLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <metadata name="configurationToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="endScaleLabel.ToolTip" xml:space="preserve">
     <value>The scale value (along x and y axis) that this transition will finish at.</value>
   </data>
@@ -193,7 +469,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;endScaleLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>10</value>
   </data>
   <data name="endScaleXNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
     <value>77, 79</value>
@@ -217,7 +493,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;endScaleXNumericUpDownWheel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>11</value>
   </data>
   <data name="yCoordinateLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -247,7 +523,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;yCoordinateLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>12</value>
   </data>
   <data name="xCoordinateLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -277,7 +553,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;xCoordinateLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>13</value>
   </data>
   <data name="startScaleYNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
     <value>164, 47</value>
@@ -301,7 +577,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;startScaleYNumericUpDownWheel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>14</value>
   </data>
   <metadata name="startScaleLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -343,7 +619,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;startScaleLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>15</value>
   </data>
   <data name="startScaleXNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
     <value>77, 47</value>
@@ -367,7 +643,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;startScaleXNumericUpDownWheel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>16</value>
   </data>
   <metadata name="transitionTimeLabel.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
@@ -409,7 +685,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;transitionTimeLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>17</value>
   </data>
   <data name="transitionTimeNumericUpDownWheel.Location" type="System.Drawing.Point, System.Drawing">
     <value>97, 111</value>
@@ -433,7 +709,7 @@
     <value>configurationGroupBox</value>
   </data>
   <data name="&gt;&gt;transitionTimeNumericUpDownWheel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>18</value>
   </data>
   <data name="configurationGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
@@ -445,7 +721,7 @@
     <value>0, 8, 0, 0</value>
   </data>
   <data name="configurationGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 142</value>
+    <value>295, 269</value>
   </data>
   <data name="configurationGroupBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -544,7 +820,7 @@
     <value>Right</value>
   </data>
   <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 0</value>
+    <value>319, 0</value>
   </data>
   <data name="panel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -553,7 +829,7 @@
     <value>8, 8, 8, 8</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 167</value>
+    <value>128, 294</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -586,7 +862,7 @@
     <value>8, 8, 8, 8</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>272, 167</value>
+    <value>319, 294</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -610,10 +886,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>400, 167</value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+    <value>447, 294</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
