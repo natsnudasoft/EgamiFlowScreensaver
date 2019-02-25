@@ -18,6 +18,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
     using System.Windows.Forms;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
@@ -27,11 +28,30 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="ConfigurationBehaviorFormViewModel" />
     public sealed class ScaleChangeBehaviorFormViewModel : ConfigurationBehaviorFormViewModel
     {
+        private readonly ILifetimeDetails lifetimeDetails;
         private float startScaleX;
         private float startScaleY;
         private float endScaleX;
         private float endScaleY;
         private double transitionTime;
+        private bool endTransitionEnabled;
+        private float endTransitionScaleX;
+        private float endTransitionScaleY;
+        private double endTransitionTime;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScaleChangeBehaviorFormViewModel"/> class.
+        /// </summary>
+        /// <param name="lifetimeDetails">The current lifetime settings of any images emitted.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="lifetimeDetails"/> is
+        /// <see langword="null"/>.</exception>
+        public ScaleChangeBehaviorFormViewModel(ILifetimeDetails lifetimeDetails)
+        {
+            ParameterValidation.IsNotNull(lifetimeDetails, nameof(lifetimeDetails));
+
+            this.lifetimeDetails = lifetimeDetails;
+        }
 
         /// <summary>
         /// Gets or sets the scale along the x axis that the behaviour should start from.
@@ -78,6 +98,56 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             set => this.Set(ref this.transitionTime, value);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.lifetimeDetails.IsInfiniteImageEmitMode;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the ending transition will be enabled for
+        /// the image item this behaviour is attached to.
+        /// </summary>
+        /// <value><see langword="true"/> if the ending transition will be enabled for the image
+        /// item this behaviour is attached to; otherwise <see langword="false"/>.</value>
+        public bool EndTransitionEnabled
+        {
+            get => this.endTransitionEnabled;
+            set => this.Set(ref this.endTransitionEnabled, value && this.IsInfiniteImageEmitMode);
+        }
+
+        /// <summary>
+        /// Gets or sets the scale value along the x axis that the behaviour will finish at when the
+        /// image item it is attached to is being destroyed.
+        /// </summary>
+        public float EndTransitionScaleX
+        {
+            get => this.endTransitionScaleX;
+            set => this.Set(ref this.endTransitionScaleX, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the scale value along the y axis that the behaviour will finish at when the
+        /// image item it is attached to is being destroyed.
+        /// </summary>
+        public float EndTransitionScaleY
+        {
+            get => this.endTransitionScaleY;
+            set => this.Set(ref this.endTransitionScaleY, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the time that the behaviour will take to transition when the image item
+        /// it is attached to is being destroyed (in milliseconds).
+        /// </summary>
+        public double EndTransitionTime
+        {
+            get => this.endTransitionTime;
+            set => this.Set(ref this.endTransitionTime, value);
+        }
+
         /// <inheritdoc/>
         /// <exception cref="ArgumentNullException"><paramref name="behavior"/> is
         /// <see langword="null"/>.</exception>
@@ -95,6 +165,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.EndScaleY = scaleChangeConfigurationBehavior.EndScaleY;
                 this.TransitionTime =
                     scaleChangeConfigurationBehavior.TransitionTime.TotalMilliseconds;
+                this.EndTransitionEnabled = scaleChangeConfigurationBehavior.EndTransitionEnabled;
+                this.EndTransitionScaleX = scaleChangeConfigurationBehavior.EndTransitionScaleX;
+                this.EndTransitionScaleY = scaleChangeConfigurationBehavior.EndTransitionScaleY;
+                this.EndTransitionTime =
+                    scaleChangeConfigurationBehavior.EndTransitionTime.TotalMilliseconds;
             }
             else
             {
@@ -112,11 +187,35 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 EndScaleX = this.EndScaleX,
                 EndScaleY = this.EndScaleY,
                 TransitionTime =
-                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond))
+                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond)),
+                EndTransitionEnabled = this.EndTransitionEnabled,
+                EndTransitionScaleX = this.EndTransitionScaleX,
+                EndTransitionScaleY = this.EndTransitionScaleY,
+                EndTransitionTime =
+                    new TimeSpan((long)(this.EndTransitionTime * TimeSpan.TicksPerMillisecond))
             };
         }
 
         /// <inheritdoc/>
-        public override bool Validate(IWin32Window owner) => true;
+        public override bool Validate(IWin32Window owner)
+        {
+            var validated = true;
+            if (this.IsInfiniteImageEmitMode &&
+                this.TransitionTime > this.lifetimeDetails.ImageEmitLifetime)
+            {
+                if (MessageBox.Show(
+                    owner,
+                    Resources.TransitionTimeLessThanLifetimeText,
+                    Resources.TransitionTimeLessThanLifetimeCaption,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2) == DialogResult.No)
+                {
+                    validated = false;
+                }
+            }
+
+            return validated;
+        }
     }
 }

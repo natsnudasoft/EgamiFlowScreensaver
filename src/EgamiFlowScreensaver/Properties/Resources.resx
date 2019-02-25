@@ -236,4 +236,10 @@ Please note that changing image rotation can cause incorrect collision behaviour
     <value>A behaviour that causes emitted images to transition from one scale (relative size) to another over a specified time frame. Valid scale values are between 0.0 and 1.0 inclusive, although scale start values van be less than 0.0 to delay when the transition becomes apparent on screen.
 Please note that changing image scale can cause incorrect collision behaviour when images bounce off of the edges of the screen.</value>
   </data>
+  <data name="TransitionTimeLessThanLifetimeCaption" xml:space="preserve">
+    <value>Transition time less than image lifetime.</value>
+  </data>
+  <data name="TransitionTimeLessThanLifetimeText" xml:space="preserve">
+    <value>The transition time of this behaviour is longer than the lifetime of any emitted images, this may cause strange behaviour, are you sure you want to continue with these values?</value>
+  </data>
 </root>

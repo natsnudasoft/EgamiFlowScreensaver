@@ -30,6 +30,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     public class RotationChangeConfigurationBehavior : ConfigurationBehavior
     {
         private const long DefaultTransitionTime = 750 * TimeSpan.TicksPerMillisecond;
+        private const long DefaultEndTransitionTime = 500 * TimeSpan.TicksPerMillisecond;
 
         /// <inheritdoc/>
         public override ConfigurationBehaviorType ConfigurationBehaviorType
@@ -69,12 +70,42 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         public TimeSpan TransitionTime { get; set; } = new TimeSpan(DefaultTransitionTime);
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the ending transition will be enabled for
+        /// the image item this behaviour is attached to.
+        /// </summary>
+        /// <value><see langword="true"/> if the ending transition will be enabled for the image
+        /// item this behaviour is attached to; otherwise <see langword="false"/>.</value>
+        [ProtoMember(5, IsRequired = false)]
+        public bool EndTransitionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rotation value that the behaviour will finish at when the image item
+        /// it is attached to is being destroyed.
+        /// </summary>
+        [ProtoMember(6, IsRequired = false)]
+        public float EndTransitionRotation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time that the behaviour will take to transition when the image item
+        /// it is attached to is being destroyed.
+        /// </summary>
+        public TimeSpan EndTransitionTime { get; set; } = new TimeSpan(DefaultEndTransitionTime);
+
         [ProtoMember(4)]
         [DefaultValue(DefaultTransitionTime)]
         private long TransitionTimeSerialized
         {
             get => this.TransitionTime.Ticks;
             set => this.TransitionTime = new TimeSpan(value);
+        }
+
+        [ProtoMember(7, IsRequired = false)]
+        [DefaultValue(DefaultEndTransitionTime)]
+        private long EndTransitionTimeSerialized
+        {
+            get => this.EndTransitionTime.Ticks;
+            set => this.EndTransitionTime = new TimeSpan(value);
         }
     }
 }

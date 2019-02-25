@@ -93,6 +93,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         public Vector2 Scale { get; set; }
 
         /// <summary>
+        /// Gets a value indicating whether or not this <see cref="ScreensaverImageItem"/> is in the
+        /// process of being destroyed.
+        /// </summary>
+        /// <value><see langword="true"/> if this <see cref="ScreensaverImageItem"/> is in the
+        /// process of being destroyed; otherwise <see langword="false"/>.</value>
+        public bool IsDestroying { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether or not this <see cref="ScreensaverImageItem"/> is
         /// destroyed.
         /// </summary>
@@ -117,10 +125,22 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="gameTime">A snapshot of the current game time.</param>
         public void Update(GameTime gameTime)
         {
+            var shouldDestroy = true;
             foreach (var behavior in this.behaviors)
             {
-                behavior.Update(this, gameTime);
+                if (!behavior.IsFinished)
+                {
+                    behavior.Update(this, gameTime);
+                }
+
+                if (shouldDestroy)
+                {
+                    shouldDestroy =
+                        this.IsDestroying && (!behavior.BlocksDestroy || behavior.IsFinished);
+                }
             }
+
+            this.IsDestroyed = shouldDestroy;
         }
 
         /// <summary>
@@ -147,11 +167,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         }
 
         /// <summary>
-        /// Requests that this <see cref="ScreensaverImageItem"/> be destroyed.
+        /// Requests that this <see cref="ScreensaverImageItem"/> be destroyed as soon as all
+        /// blocking behaviours have finished.
         /// </summary>
-        public void Destroy()
+        public void BeginDestroy()
         {
-            this.IsDestroyed = true;
+            this.IsDestroying = true;
         }
     }
 }

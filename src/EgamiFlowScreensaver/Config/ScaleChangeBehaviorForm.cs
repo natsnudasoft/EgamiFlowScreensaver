@@ -72,6 +72,57 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(ScaleChangeBehaviorFormViewModel.TransitionTime),
                 true);
 
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Enabled),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.IsInfiniteImageEmitMode));
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.endTransitionScaleLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(AlphaChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionScaleXNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionScaleXNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionScaleX),
+                true);
+
+            this.endTransitionScaleYNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionScaleYNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionScaleY),
+                true);
+
+            this.endTransitionTimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ScaleChangeBehaviorFormViewModel.EndTransitionTime),
+                true);
+
             this.okButton.Click += (sender, e) =>
             {
                 if (this.viewModel.Validate(this))

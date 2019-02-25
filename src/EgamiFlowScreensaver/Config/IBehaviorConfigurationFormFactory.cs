@@ -30,6 +30,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         /// <param name="behaviorType">The type of the behaviour to create a configuration form for.
         /// </param>
+        /// <param name="lifetimeDetails">The current lifetime settings of any images emitted.
+        /// </param>
         /// <param name="behaviorForm">If successful contains the created behaviour configuration
         /// form.</param>
         /// <param name="behaviorFormViewModel">If successful contains the created view model
@@ -39,10 +41,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Design",
             "CA1021:AvoidOutParameters",
-            MessageId = "1#",
+            MessageId = "2#",
             Justification = "We allow this in a 'Try' method.")]
         bool TryCreate(
             ConfigurationBehaviorType behaviorType,
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel);
     }

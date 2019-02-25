@@ -58,6 +58,41 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(ColorChangeBehaviorFormViewModel.TransitionTime),
                 true);
 
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Enabled),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.IsInfiniteImageEmitMode));
+            this.endTransitionEnabledCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.EndTransitionEnabled),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+            this.chooseEndTransitionColorButton.DataBindings.Add(
+                nameof(Button.Enabled),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.chooseEndTransitionColorButton.Click += (sender, e) =>
+            {
+                this.viewModel.ChooseEndTransitionColor(this);
+            };
+
+            this.endTransitionTimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.EndTransitionEnabled));
+
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.EndTransitionEnabled));
+            this.endTransitionTimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ColorChangeBehaviorFormViewModel.EndTransitionTime),
+                true);
+
             this.okButton.Click += (sender, e) =>
             {
                 if (this.viewModel.Validate(this))

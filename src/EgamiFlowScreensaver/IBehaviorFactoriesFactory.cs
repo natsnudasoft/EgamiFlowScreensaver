@@ -33,9 +33,12 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <param name="screensaverArea">The description of the area of the screensaver.</param>
         /// <param name="configurationBehaviors">The list of configuration behaviours to use as a
         /// template to create the behaviour factories.</param>
+        /// <param name="isInfiniteImageEmitMode">A value indicating whether or not images will be
+        /// emitted infinitely.</param>
         /// <returns>The collection of factories that was created.</returns>
         IEnumerable<Func<IScreensaverImageItemBehavior>> Create(
             ScreensaverArea screensaverArea,
-            IEnumerable<ConfigurationBehavior> configurationBehaviors);
+            IEnumerable<ConfigurationBehavior> configurationBehaviors,
+            bool isInfiniteImageEmitMode);
     }
 }

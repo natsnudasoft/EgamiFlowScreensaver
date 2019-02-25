@@ -31,6 +31,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     public sealed class ColorChangeConfigurationBehavior : ConfigurationBehavior
     {
         private const long DefaultTransitionTime = 5000 * TimeSpan.TicksPerMillisecond;
+        private const long DefaultEndTransitionTime = 1000 * TimeSpan.TicksPerMillisecond;
 
         /// <inheritdoc/>
         public override ConfigurationBehaviorType ConfigurationBehaviorType
@@ -59,6 +60,27 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// </summary>
         public TimeSpan TransitionTime { get; set; } = new TimeSpan(DefaultTransitionTime);
 
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the ending transition will be enabled for
+        /// the image item this behaviour is attached to.
+        /// </summary>
+        /// <value><see langword="true"/> if the ending transition will be enabled for the image
+        /// item this behaviour is attached to; otherwise <see langword="false"/>.</value>
+        [ProtoMember(4, IsRequired = false)]
+        public bool EndTransitionEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the colour that the behaviour will finish at when the image item it is
+        /// attached to is being destroyed.
+        /// </summary>
+        public Color EndTransitionColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// Gets or sets the time that the behaviour will take to transition when the image item
+        /// it is attached to is being destroyed.
+        /// </summary>
+        public TimeSpan EndTransitionTime { get; set; } = new TimeSpan(DefaultEndTransitionTime);
+
         [ProtoMember(1, DataFormat = DataFormat.FixedSize)]
         private int StartColorSerialized
         {
@@ -79,6 +101,21 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             get => this.TransitionTime.Ticks;
             set => this.TransitionTime = new TimeSpan(value);
+        }
+
+        [ProtoMember(5, DataFormat = DataFormat.FixedSize, IsRequired = false)]
+        private int EndTransitionColorSerialized
+        {
+            get => this.EndTransitionColor.ToArgb();
+            set => this.EndTransitionColor = Color.FromArgb(value);
+        }
+
+        [ProtoMember(6, IsRequired = false)]
+        [DefaultValue(DefaultEndTransitionTime)]
+        private long EndTransitionTimeSerialized
+        {
+            get => this.EndTransitionTime.Ticks;
+            set => this.EndTransitionTime = new TimeSpan(value);
         }
     }
 }

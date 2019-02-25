@@ -16,7 +16,9 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
+    using System;
     using System.Windows.Forms;
+    using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
     /// Provides a class capable of creating configuration forms and their associated view models
@@ -27,28 +29,45 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     public class BehaviorConfigurationFormFactory : IBehaviorConfigurationFormFactory
     {
         /// <inheritdoc/>
+        /// <exception cref="ArgumentNullException"><paramref name="lifetimeDetails"/> is
+        /// <see langword="null"/>.</exception>
         public bool TryCreate(
             ConfigurationBehaviorType behaviorType,
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel)
         {
+            ParameterValidation.IsNotNull(lifetimeDetails, nameof(lifetimeDetails));
+
             bool result;
             switch (behaviorType)
             {
                 case ConfigurationBehaviorType.ColorChange:
-                    CreateColorChangeForm(out behaviorForm, out behaviorFormViewModel);
+                    CreateColorChangeForm(
+                        lifetimeDetails,
+                        out behaviorForm,
+                        out behaviorFormViewModel);
                     result = true;
                     break;
                 case ConfigurationBehaviorType.ScaleChange:
-                    CreateScaleChangeForm(out behaviorForm, out behaviorFormViewModel);
+                    CreateScaleChangeForm(
+                        lifetimeDetails,
+                        out behaviorForm,
+                        out behaviorFormViewModel);
                     result = true;
                     break;
                 case ConfigurationBehaviorType.AlphaChange:
-                    CreateAlphaChangeForm(out behaviorForm, out behaviorFormViewModel);
+                    CreateAlphaChangeForm(
+                        lifetimeDetails,
+                        out behaviorForm,
+                        out behaviorFormViewModel);
                     result = true;
                     break;
                 case ConfigurationBehaviorType.RotationChange:
-                    CreateRotationChangeForm(out behaviorForm, out behaviorFormViewModel);
+                    CreateRotationChangeForm(
+                        lifetimeDetails,
+                        out behaviorForm,
+                        out behaviorFormViewModel);
                     result = true;
                     break;
                 default:
@@ -62,37 +81,45 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         private static void CreateColorChangeForm(
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel)
         {
-            var colorChangeBehaviorFormViewModel = new ColorChangeBehaviorFormViewModel();
+            var colorChangeBehaviorFormViewModel =
+                new ColorChangeBehaviorFormViewModel(lifetimeDetails);
             behaviorFormViewModel = colorChangeBehaviorFormViewModel;
             behaviorForm = new ColorChangeBehaviorForm(colorChangeBehaviorFormViewModel);
         }
 
         private static void CreateScaleChangeForm(
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel)
         {
-            var scaleChangeBehaviorFormViewModel = new ScaleChangeBehaviorFormViewModel();
+            var scaleChangeBehaviorFormViewModel =
+                new ScaleChangeBehaviorFormViewModel(lifetimeDetails);
             behaviorFormViewModel = scaleChangeBehaviorFormViewModel;
             behaviorForm = new ScaleChangeBehaviorForm(scaleChangeBehaviorFormViewModel);
         }
 
         private static void CreateAlphaChangeForm(
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel)
         {
-            var alphaChangeBehaviorFormViewModel = new AlphaChangeBehaviorFormViewModel();
+            var alphaChangeBehaviorFormViewModel =
+                new AlphaChangeBehaviorFormViewModel(lifetimeDetails);
             behaviorFormViewModel = alphaChangeBehaviorFormViewModel;
             behaviorForm = new AlphaChangeBehaviorForm(alphaChangeBehaviorFormViewModel);
         }
 
         private static void CreateRotationChangeForm(
+            ILifetimeDetails lifetimeDetails,
             out Form behaviorForm,
             out ConfigurationBehaviorFormViewModel behaviorFormViewModel)
         {
-            var rotationChangeBehaviorFormViewModel = new RotationChangeBehaviorFormViewModel();
+            var rotationChangeBehaviorFormViewModel =
+                new RotationChangeBehaviorFormViewModel(lifetimeDetails);
             behaviorFormViewModel = rotationChangeBehaviorFormViewModel;
             behaviorForm = new RotationChangeBehaviorForm(rotationChangeBehaviorFormViewModel);
         }

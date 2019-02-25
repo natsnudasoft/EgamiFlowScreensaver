@@ -19,6 +19,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     using System;
     using System.Drawing;
     using System.Windows.Forms;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
@@ -28,7 +29,25 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="ConfigurationBehaviorFormViewModel" />
     public sealed class ColorChangeBehaviorFormViewModel : ConfigurationBehaviorFormViewModel
     {
+        private readonly ILifetimeDetails lifetimeDetails;
         private double transitionTime;
+        private bool endTransitionEnabled;
+        private Color endTransitionColor;
+        private double endTransitionTime;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorChangeBehaviorFormViewModel"/> class.
+        /// </summary>
+        /// <param name="lifetimeDetails">The current lifetime settings of any images emitted.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="lifetimeDetails"/> is
+        /// <see langword="null"/>.</exception>
+        public ColorChangeBehaviorFormViewModel(ILifetimeDetails lifetimeDetails)
+        {
+            ParameterValidation.IsNotNull(lifetimeDetails, nameof(lifetimeDetails));
+
+            this.lifetimeDetails = lifetimeDetails;
+        }
 
         /// <summary>
         /// Gets the colour that the behaviour should start from.
@@ -47,6 +66,46 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             get => this.transitionTime;
             set => this.Set(ref this.transitionTime, value);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.lifetimeDetails.IsInfiniteImageEmitMode;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the ending transition will be enabled for
+        /// the image item this behaviour is attached to.
+        /// </summary>
+        /// <value><see langword="true"/> if the ending transition will be enabled for the image
+        /// item this behaviour is attached to; otherwise <see langword="false"/>.</value>
+        public bool EndTransitionEnabled
+        {
+            get => this.endTransitionEnabled;
+            set => this.Set(ref this.endTransitionEnabled, value && this.IsInfiniteImageEmitMode);
+        }
+
+        /// <summary>
+        /// Gets or sets the colour that the behaviour will finish at when the image item it is
+        /// attached to is being destroyed.
+        /// </summary>
+        public Color EndTransitionColor
+        {
+            get => this.endTransitionColor;
+            set => this.Set(ref this.endTransitionColor, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the time that the behaviour will take to transition when the image item
+        /// it is attached to is being destroyed (in milliseconds).
+        /// </summary>
+        public double EndTransitionTime
+        {
+            get => this.endTransitionTime;
+            set => this.Set(ref this.endTransitionTime, value);
         }
 
         /// <summary>
@@ -73,6 +132,18 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             }
         }
 
+        /// <summary>
+        /// Displays a dialog allowing the end transition colour to be selected.
+        /// </summary>
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void ChooseEndTransitionColor(IWin32Window owner)
+        {
+            if (ChooseColor(owner, this.EndTransitionColor, out var newColor))
+            {
+                this.EndTransitionColor = newColor;
+            }
+        }
+
         /// <inheritdoc/>
         /// <exception cref="ArgumentNullException"><paramref name="behavior"/> is
         /// <see langword="null"/>.</exception>
@@ -88,6 +159,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.EndColor = colorChangeConfigurationBehavior.EndColor;
                 this.TransitionTime =
                     colorChangeConfigurationBehavior.TransitionTime.TotalMilliseconds;
+                this.EndTransitionEnabled = colorChangeConfigurationBehavior.EndTransitionEnabled;
+                this.EndTransitionColor = colorChangeConfigurationBehavior.EndTransitionColor;
+                this.EndTransitionTime =
+                    colorChangeConfigurationBehavior.EndTransitionTime.TotalMilliseconds;
             }
             else
             {
@@ -103,12 +178,35 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 StartColor = this.StartColor,
                 EndColor = this.EndColor,
                 TransitionTime =
-                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond))
+                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond)),
+                EndTransitionEnabled = this.EndTransitionEnabled,
+                EndTransitionColor = this.EndTransitionColor,
+                EndTransitionTime =
+                    new TimeSpan((long)(this.EndTransitionTime * TimeSpan.TicksPerMillisecond))
             };
         }
 
         /// <inheritdoc/>
-        public override bool Validate(IWin32Window owner) => true;
+        public override bool Validate(IWin32Window owner)
+        {
+            var validated = true;
+            if (this.IsInfiniteImageEmitMode &&
+                this.TransitionTime > this.lifetimeDetails.ImageEmitLifetime)
+            {
+                if (MessageBox.Show(
+                    owner,
+                    Resources.TransitionTimeLessThanLifetimeText,
+                    Resources.TransitionTimeLessThanLifetimeCaption,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2) == DialogResult.No)
+                {
+                    validated = false;
+                }
+            }
+
+            return validated;
+        }
 
         private static bool ChooseColor(
             IWin32Window owner,
