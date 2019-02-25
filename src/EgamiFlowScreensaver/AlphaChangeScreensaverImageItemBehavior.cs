@@ -56,5 +56,45 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     MathHelper.Clamp(MathHelper.Lerp(startAlpha, endAlpha, p), 0f, 1f))
         {
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AlphaChangeScreensaverImageItemBehavior"/>
+        /// class.
+        /// </summary>
+        /// <param name="screensaverArea">The description of the area of the screensaver.</param>
+        /// <param name="startAlpha">The alpha value that the image item this behaviour is applied
+        /// to will start at. This value can be out of range to delay the start of the transition.
+        /// </param>
+        /// <param name="endAlpha">The alpha value that the image item this behaviour is applied to
+        /// will finish at. This value can be out of range to advance to the end of the transition
+        /// faster.</param>
+        /// <param name="transitionTime">The time the image item this behaviour is applied to will
+        /// take to transition between the specified alpha values.</param>
+        /// <param name="endTransitionAlpha">The alpha value that the image item this behaviour is
+        /// applied to will finish at when it is being destroyed (starting from
+        /// <paramref name="endAlpha"/>).</param>
+        /// <param name="endTransitionTime">The time the image item this behaviour is applied to
+        /// will take to transition when it is being destroyed.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="screensaverArea"/> is
+        /// <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="transitionTime"/>, or
+        /// <paramref name="endTransitionTime"/> is less than a zero time.</exception>
+        public AlphaChangeScreensaverImageItemBehavior(
+            ScreensaverArea screensaverArea,
+            float startAlpha,
+            float endAlpha,
+            TimeSpan transitionTime,
+            float endTransitionAlpha,
+            TimeSpan endTransitionTime)
+            : base(
+                screensaverArea,
+                transitionTime,
+                (s, p) => s.Alpha =
+                    MathHelper.Clamp(MathHelper.Lerp(startAlpha, endAlpha, p), 0f, 1f),
+                endTransitionTime,
+                (s, p) => s.Alpha =
+                    MathHelper.Clamp(MathHelper.Lerp(endAlpha, endTransitionAlpha, p), 0f, 1f))
+        {
+        }
     }
 }

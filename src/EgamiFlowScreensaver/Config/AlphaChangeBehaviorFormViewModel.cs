@@ -18,6 +18,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
     using System.Windows.Forms;
+    using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
 
     /// <summary>
@@ -27,9 +28,27 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// <seealso cref="ConfigurationBehaviorFormViewModel" />
     public sealed class AlphaChangeBehaviorFormViewModel : ConfigurationBehaviorFormViewModel
     {
+        private readonly ILifetimeDetails lifetimeDetails;
         private double transitionTime;
         private float startAlpha;
         private float endAlpha;
+        private bool endTransitionEnabled;
+        private float endTransitionAlpha;
+        private double endTransitionTime;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AlphaChangeBehaviorFormViewModel"/> class.
+        /// </summary>
+        /// <param name="lifetimeDetails">The current lifetime settings of any images emitted.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="lifetimeDetails"/> is
+        /// <see langword="null"/>.</exception>
+        public AlphaChangeBehaviorFormViewModel(ILifetimeDetails lifetimeDetails)
+        {
+            ParameterValidation.IsNotNull(lifetimeDetails, nameof(lifetimeDetails));
+
+            this.lifetimeDetails = lifetimeDetails;
+        }
 
         /// <summary>
         /// Gets or sets the alpha value that the behaviour should start from.
@@ -58,6 +77,46 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             set => this.Set(ref this.transitionTime, value);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.lifetimeDetails.IsInfiniteImageEmitMode;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not the ending transition will be enabled for
+        /// the image item this behaviour is attached to.
+        /// </summary>
+        /// <value><see langword="true"/> if the ending transition will be enabled for the image
+        /// item this behaviour is attached to; otherwise <see langword="false"/>.</value>
+        public bool EndTransitionEnabled
+        {
+            get => this.endTransitionEnabled;
+            set => this.Set(ref this.endTransitionEnabled, value && this.IsInfiniteImageEmitMode);
+        }
+
+        /// <summary>
+        /// Gets or sets the alpha value that the behaviour will finish at when the image item
+        /// it is attached to is being destroyed.
+        /// </summary>
+        public float EndTransitionAlpha
+        {
+            get => this.endTransitionAlpha;
+            set => this.Set(ref this.endTransitionAlpha, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the time that the behaviour will take to transition when the image item
+        /// it is attached to is being destroyed (in milliseconds).
+        /// </summary>
+        public double EndTransitionTime
+        {
+            get => this.endTransitionTime;
+            set => this.Set(ref this.endTransitionTime, value);
+        }
+
         /// <inheritdoc/>
         /// <exception cref="ArgumentNullException"><paramref name="behavior"/> is
         /// <see langword="null"/>.</exception>
@@ -73,6 +132,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.EndAlpha = alphaChangeConfigurationBehavior.EndAlpha;
                 this.TransitionTime =
                     alphaChangeConfigurationBehavior.TransitionTime.TotalMilliseconds;
+                this.EndTransitionEnabled = alphaChangeConfigurationBehavior.EndTransitionEnabled;
+                this.EndTransitionAlpha = alphaChangeConfigurationBehavior.EndTransitionAlpha;
+                this.EndTransitionTime =
+                    alphaChangeConfigurationBehavior.EndTransitionTime.TotalMilliseconds;
             }
             else
             {
@@ -88,11 +151,34 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 StartAlpha = this.StartAlpha,
                 EndAlpha = this.EndAlpha,
                 TransitionTime =
-                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond))
+                    new TimeSpan((long)(this.TransitionTime * TimeSpan.TicksPerMillisecond)),
+                EndTransitionEnabled = this.EndTransitionEnabled,
+                EndTransitionAlpha = this.EndTransitionAlpha,
+                EndTransitionTime =
+                    new TimeSpan((long)(this.EndTransitionTime * TimeSpan.TicksPerMillisecond))
             };
         }
 
         /// <inheritdoc/>
-        public override bool Validate(IWin32Window owner) => true;
+        public override bool Validate(IWin32Window owner)
+        {
+            var validated = true;
+            if (this.IsInfiniteImageEmitMode &&
+                this.TransitionTime > this.lifetimeDetails.ImageEmitLifetime)
+            {
+                if (MessageBox.Show(
+                    owner,
+                    Resources.TransitionTimeLessThanLifetimeText,
+                    Resources.TransitionTimeLessThanLifetimeCaption,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2) == DialogResult.No)
+                {
+                    validated = false;
+                }
+            }
+
+            return validated;
+        }
     }
 }

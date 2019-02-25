@@ -35,7 +35,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// </summary>
     /// <seealso cref="ObservableBase" />
     /// <seealso cref="IDisposable" />
-    public sealed class ConfigurationFormViewModel : ObservableBase, IDisposable
+    public sealed class ConfigurationFormViewModel : ObservableBase, IDisposable, ILifetimeDetails
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
@@ -426,7 +426,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             var applyBehaviorsFormViewModel = new ApplyBehaviorsFormViewModel(
                 this.Behaviors,
                 this.behaviorConfigurationFactory,
-                this.behaviorConfigurationFormFactory);
+                this.behaviorConfigurationFormFactory,
+                this);
             using (var applyBehaviorsDialog = new ApplyBehaviorsForm(applyBehaviorsFormViewModel))
             {
                 if (applyBehaviorsDialog.ShowDialog(owner) == DialogResult.OK)

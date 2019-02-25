@@ -52,19 +52,25 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         /// <paramref name="configurationBehaviors"/> is <see langword="null"/>.</exception>
         public IEnumerable<Func<IScreensaverImageItemBehavior>> Create(
             ScreensaverArea screensaverArea,
-            IEnumerable<ConfigurationBehavior> configurationBehaviors)
+            IEnumerable<ConfigurationBehavior> configurationBehaviors,
+            bool isInfiniteImageEmitMode)
         {
             ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
             ParameterValidation.IsNotNull(configurationBehaviors, nameof(configurationBehaviors));
 
             return configurationBehaviors
                 .Where(b => b.Enabled)
-                .Select(b => CreateBehaviorFactory(screensaverArea, b, this.random));
+                .Select(b => CreateBehaviorFactory(
+                    screensaverArea,
+                    b,
+                    isInfiniteImageEmitMode,
+                    this.random));
         }
 
         private static Func<IScreensaverImageItemBehavior> CreateBehaviorFactory(
             ScreensaverArea screensaverArea,
             ConfigurationBehavior configurationBehavior,
+            bool isInfiniteImageEmitMode,
             Random random)
         {
             Func<IScreensaverImageItemBehavior> behaviorFactory;
@@ -74,21 +80,25 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 case ConfigurationBehaviorType.ColorChange:
                     behaviorFactory = CreateColorChangeBehaviorFactory(
                         screensaverArea,
+                        isInfiniteImageEmitMode,
                         configurationBehavior as ColorChangeConfigurationBehavior);
                     break;
                 case ConfigurationBehaviorType.ScaleChange:
                     behaviorFactory = CreateScaleChangeBehaviorFactory(
                         screensaverArea,
+                        isInfiniteImageEmitMode,
                         configurationBehavior as ScaleChangeConfigurationBehavior);
                     break;
                 case ConfigurationBehaviorType.AlphaChange:
                     behaviorFactory = CreateAlphaChangeBehaviorFactory(
                         screensaverArea,
+                        isInfiniteImageEmitMode,
                         configurationBehavior as AlphaChangeConfigurationBehavior);
                     break;
                 case ConfigurationBehaviorType.RotationChange:
                     behaviorFactory = CreateRotationChangeBehaviorFactory(
                         screensaverArea,
+                        isInfiniteImageEmitMode,
                         configurationBehavior as RotationChangeConfigurationBehavior,
                         random);
                     break;
@@ -102,8 +112,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
         private static Func<IScreensaverImageItemBehavior> CreateColorChangeBehaviorFactory(
             ScreensaverArea screensaverArea,
+            bool isInfiniteImageEmitMode,
             ColorChangeConfigurationBehavior configurationBehavior)
         {
+            Func<IScreensaverImageItemBehavior> colorChangeBehaviorFactory;
             var startColor = new Color(
                 configurationBehavior.StartColor.R,
                 configurationBehavior.StartColor.G,
@@ -114,56 +126,145 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                 configurationBehavior.EndColor.G,
                 configurationBehavior.EndColor.B,
                 byte.MaxValue);
-            return () => new ColorChangeScreensaverImageItemBehavior(
-                screensaverArea,
-                startColor,
-                endColor,
-                configurationBehavior.TransitionTime);
+            if (!configurationBehavior.EndTransitionEnabled || !isInfiniteImageEmitMode)
+            {
+                colorChangeBehaviorFactory = () => new ColorChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    startColor,
+                    endColor,
+                    configurationBehavior.TransitionTime);
+            }
+            else
+            {
+                var endTransitionColor = new Color(
+                    configurationBehavior.EndTransitionColor.R,
+                    configurationBehavior.EndTransitionColor.G,
+                    configurationBehavior.EndTransitionColor.B,
+                    byte.MaxValue);
+                colorChangeBehaviorFactory = () => new ColorChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    startColor,
+                    endColor,
+                    configurationBehavior.TransitionTime,
+                    endTransitionColor,
+                    configurationBehavior.EndTransitionTime);
+            }
+
+            return colorChangeBehaviorFactory;
         }
 
         private static Func<IScreensaverImageItemBehavior> CreateScaleChangeBehaviorFactory(
             ScreensaverArea screensaverArea,
+            bool isInfiniteImageEmitMode,
             ScaleChangeConfigurationBehavior configurationBehavior)
         {
-            return () => new ScaleChangeScreensaverImageItemBehavior(
-                screensaverArea,
-                new Vector2(configurationBehavior.StartScaleX, configurationBehavior.StartScaleY),
-                new Vector2(configurationBehavior.EndScaleX, configurationBehavior.EndScaleY),
-                configurationBehavior.TransitionTime);
+            Func<IScreensaverImageItemBehavior> scaleChangeBehaviorFactory;
+            if (!configurationBehavior.EndTransitionEnabled || !isInfiniteImageEmitMode)
+            {
+                scaleChangeBehaviorFactory = () => new ScaleChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    new Vector2(
+                        configurationBehavior.StartScaleX,
+                        configurationBehavior.StartScaleY),
+                    new Vector2(configurationBehavior.EndScaleX, configurationBehavior.EndScaleY),
+                    configurationBehavior.TransitionTime);
+            }
+            else
+            {
+                scaleChangeBehaviorFactory = () => new ScaleChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    new Vector2(
+                        configurationBehavior.StartScaleX,
+                        configurationBehavior.StartScaleY),
+                    new Vector2(configurationBehavior.EndScaleX, configurationBehavior.EndScaleY),
+                    configurationBehavior.TransitionTime,
+                    new Vector2(
+                        configurationBehavior.EndTransitionScaleX,
+                        configurationBehavior.EndTransitionScaleY),
+                    configurationBehavior.EndTransitionTime);
+            }
+
+            return scaleChangeBehaviorFactory;
         }
 
         private static Func<IScreensaverImageItemBehavior> CreateAlphaChangeBehaviorFactory(
             ScreensaverArea screensaverArea,
+            bool isInfiniteImageEmitMode,
             AlphaChangeConfigurationBehavior configurationBehavior)
         {
-            return () => new AlphaChangeScreensaverImageItemBehavior(
-                screensaverArea,
-                configurationBehavior.StartAlpha,
-                configurationBehavior.EndAlpha,
-                configurationBehavior.TransitionTime);
+            Func<IScreensaverImageItemBehavior> alphaChangeBehaviorFactory;
+            if (!configurationBehavior.EndTransitionEnabled || !isInfiniteImageEmitMode)
+            {
+                alphaChangeBehaviorFactory = () => new AlphaChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    configurationBehavior.StartAlpha,
+                    configurationBehavior.EndAlpha,
+                    configurationBehavior.TransitionTime);
+            }
+            else
+            {
+                alphaChangeBehaviorFactory = () => new AlphaChangeScreensaverImageItemBehavior(
+                    screensaverArea,
+                    configurationBehavior.StartAlpha,
+                    configurationBehavior.EndAlpha,
+                    configurationBehavior.TransitionTime,
+                    configurationBehavior.EndTransitionAlpha,
+                    configurationBehavior.EndTransitionTime);
+            }
+
+            return alphaChangeBehaviorFactory;
         }
 
         private static Func<IScreensaverImageItemBehavior> CreateRotationChangeBehaviorFactory(
             ScreensaverArea screensaverArea,
+            bool isInfiniteImageEmitMode,
             RotationChangeConfigurationBehavior configurationBehavior,
             Random random)
         {
+            Func<IScreensaverImageItemBehavior> rotationChangeBehaviorFactory;
             var startRadians = MathHelper.ToRadians(configurationBehavior.StartRotation);
             var endRadians = MathHelper.ToRadians(configurationBehavior.EndRotation);
-            return () =>
+            if (!configurationBehavior.EndTransitionEnabled || !isInfiniteImageEmitMode)
             {
-                if (configurationBehavior.RandomlyInvertRotation && random.Next(0, 2) == 0)
+                rotationChangeBehaviorFactory = () =>
                 {
-                    startRadians = -startRadians;
-                    endRadians = -endRadians;
-                }
+                    if (configurationBehavior.RandomlyInvertRotation && random.Next(0, 2) == 0)
+                    {
+                        startRadians = -startRadians;
+                        endRadians = -endRadians;
+                    }
 
-                return new RotationChangeScreensaverImageItemBehavior(
-                    screensaverArea,
-                    startRadians,
-                    endRadians,
-                    configurationBehavior.TransitionTime);
-            };
+                    return new RotationChangeScreensaverImageItemBehavior(
+                        screensaverArea,
+                        startRadians,
+                        endRadians,
+                        configurationBehavior.TransitionTime);
+                };
+            }
+            else
+            {
+                var endTransitionRadians =
+                    MathHelper.ToRadians(configurationBehavior.EndTransitionRotation);
+                rotationChangeBehaviorFactory = () =>
+                {
+                    if (configurationBehavior.RandomlyInvertRotation && random.Next(0, 2) == 0)
+                    {
+                        startRadians = -startRadians;
+                        endRadians = -endRadians;
+                        endTransitionRadians = -endTransitionRadians;
+                    }
+
+                    return new RotationChangeScreensaverImageItemBehavior(
+                        screensaverArea,
+                        startRadians,
+                        endRadians,
+                        configurationBehavior.TransitionTime,
+                        endTransitionRadians,
+                        configurationBehavior.EndTransitionTime);
+                };
+            }
+
+            return rotationChangeBehaviorFactory;
         }
     }
 }
