@@ -11,6 +11,9 @@
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
+  init:
+    - ps: if (-not($env:APPVEYOR_PULL_REQUEST_NUMBER)) {$env:APPVEYOR_CACHE_SKIP_RESTORE = "true"}
+    - ps: echo $env:APPVEYOR_PULL_REQUEST_NUMBER
   install:
     - choco install gitversion.portable -y
     - nuget install secure-file -ExcludeVersion
@@ -66,6 +69,9 @@
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
+  init:
+    - ps: if (-not($env:APPVEYOR_PULL_REQUEST_NUMBER)) {$env:APPVEYOR_CACHE_SKIP_RESTORE = "true"}
+    - ps: echo $env:APPVEYOR_PULL_REQUEST_NUMBER
   install:
     - choco install gitversion.portable -y
     - nuget install secure-file -ExcludeVersion
