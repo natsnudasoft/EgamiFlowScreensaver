@@ -39,6 +39,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             this.ScreensaverArea = screensaverArea;
         }
 
+        /// <inheritdoc/>
+        public bool IsFinished { get; protected set; }
+
+        /// <inheritdoc/>
+        public virtual bool BlocksDestroy
+        {
+            get => false;
+        }
+
         /// <summary>
         /// Gets the description of the area of the screensaver.
         /// </summary>

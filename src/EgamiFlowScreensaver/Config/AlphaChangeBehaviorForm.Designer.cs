@@ -42,6 +42,12 @@
             System.Windows.Forms.Panel panel1;
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.endTransitionAlphaLabel = new System.Windows.Forms.Label();
+            this.endTransitionAlphaNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.endTransitionTimeLabel = new System.Windows.Forms.Label();
+            this.endTransitionTimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.horizontalSplitterLabel = new System.Windows.Forms.Label();
+            this.endTransitionEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.startAlphaNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.endAlphaNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.transitionTimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -54,6 +60,8 @@
             panel1 = new System.Windows.Forms.Panel();
             panel2.SuspendLayout();
             configurationGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionAlphaNumericUpDownWheel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionTimeNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.startAlphaNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endAlphaNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transitionTimeNumericUpDownWheel)).BeginInit();
@@ -85,6 +93,12 @@
             // configurationGroupBox
             // 
             resources.ApplyResources(configurationGroupBox, "configurationGroupBox");
+            configurationGroupBox.Controls.Add(this.endTransitionAlphaLabel);
+            configurationGroupBox.Controls.Add(this.endTransitionAlphaNumericUpDownWheel);
+            configurationGroupBox.Controls.Add(this.endTransitionTimeLabel);
+            configurationGroupBox.Controls.Add(this.endTransitionTimeNumericUpDownWheel);
+            configurationGroupBox.Controls.Add(this.horizontalSplitterLabel);
+            configurationGroupBox.Controls.Add(this.endTransitionEnabledCheckBox);
             configurationGroupBox.Controls.Add(startAlphaLabel);
             configurationGroupBox.Controls.Add(this.startAlphaNumericUpDownWheel);
             configurationGroupBox.Controls.Add(endAlphaLabel);
@@ -93,6 +107,63 @@
             configurationGroupBox.Controls.Add(this.transitionTimeNumericUpDownWheel);
             configurationGroupBox.Name = "configurationGroupBox";
             configurationGroupBox.TabStop = false;
+            // 
+            // endTransitionAlphaLabel
+            // 
+            resources.ApplyResources(this.endTransitionAlphaLabel, "endTransitionAlphaLabel");
+            this.endTransitionAlphaLabel.Name = "endTransitionAlphaLabel";
+            this.configurationToolTip.SetToolTip(this.endTransitionAlphaLabel, resources.GetString("endTransitionAlphaLabel.ToolTip"));
+            // 
+            // endTransitionAlphaNumericUpDownWheel
+            // 
+            resources.ApplyResources(this.endTransitionAlphaNumericUpDownWheel, "endTransitionAlphaNumericUpDownWheel");
+            this.endTransitionAlphaNumericUpDownWheel.DecimalPlaces = 5;
+            this.endTransitionAlphaNumericUpDownWheel.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.endTransitionAlphaNumericUpDownWheel.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.endTransitionAlphaNumericUpDownWheel.Name = "endTransitionAlphaNumericUpDownWheel";
+            // 
+            // endTransitionTimeLabel
+            // 
+            resources.ApplyResources(this.endTransitionTimeLabel, "endTransitionTimeLabel");
+            this.endTransitionTimeLabel.Name = "endTransitionTimeLabel";
+            this.configurationToolTip.SetToolTip(this.endTransitionTimeLabel, resources.GetString("endTransitionTimeLabel.ToolTip"));
+            // 
+            // endTransitionTimeNumericUpDownWheel
+            // 
+            resources.ApplyResources(this.endTransitionTimeNumericUpDownWheel, "endTransitionTimeNumericUpDownWheel");
+            this.endTransitionTimeNumericUpDownWheel.DecimalPlaces = 2;
+            this.endTransitionTimeNumericUpDownWheel.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.endTransitionTimeNumericUpDownWheel.Maximum = new decimal(new int[] {
+            604800000,
+            0,
+            0,
+            0});
+            this.endTransitionTimeNumericUpDownWheel.Name = "endTransitionTimeNumericUpDownWheel";
+            // 
+            // horizontalSplitterLabel
+            // 
+            resources.ApplyResources(this.horizontalSplitterLabel, "horizontalSplitterLabel");
+            this.horizontalSplitterLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.horizontalSplitterLabel.Name = "horizontalSplitterLabel";
+            // 
+            // endTransitionEnabledCheckBox
+            // 
+            resources.ApplyResources(this.endTransitionEnabledCheckBox, "endTransitionEnabledCheckBox");
+            this.endTransitionEnabledCheckBox.Name = "endTransitionEnabledCheckBox";
+            this.configurationToolTip.SetToolTip(this.endTransitionEnabledCheckBox, resources.GetString("endTransitionEnabledCheckBox.ToolTip"));
+            this.endTransitionEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // startAlphaLabel
             // 
@@ -194,6 +265,8 @@
             panel2.ResumeLayout(false);
             configurationGroupBox.ResumeLayout(false);
             configurationGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionAlphaNumericUpDownWheel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionTimeNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.startAlphaNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.endAlphaNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transitionTimeNumericUpDownWheel)).EndInit();
@@ -210,5 +283,11 @@
         private NumericUpDownWheel transitionTimeNumericUpDownWheel;
         private NumericUpDownWheel startAlphaNumericUpDownWheel;
         private NumericUpDownWheel endAlphaNumericUpDownWheel;
+        private System.Windows.Forms.Label endTransitionTimeLabel;
+        private NumericUpDownWheel endTransitionTimeNumericUpDownWheel;
+        private System.Windows.Forms.Label horizontalSplitterLabel;
+        private System.Windows.Forms.CheckBox endTransitionEnabledCheckBox;
+        private NumericUpDownWheel endTransitionAlphaNumericUpDownWheel;
+        private System.Windows.Forms.Label endTransitionAlphaLabel;
     }
 }

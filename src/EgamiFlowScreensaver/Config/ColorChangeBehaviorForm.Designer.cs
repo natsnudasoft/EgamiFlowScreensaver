@@ -40,6 +40,11 @@
             System.Windows.Forms.Panel panel1;
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.endTransitionTimeLabel = new System.Windows.Forms.Label();
+            this.endTransitionTimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.horizontalSplitterLabel = new System.Windows.Forms.Label();
+            this.chooseEndTransitionColorButton = new System.Windows.Forms.Button();
+            this.endTransitionEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.chooseEndColorButton = new System.Windows.Forms.Button();
             this.chooseStartColorButton = new System.Windows.Forms.Button();
             this.transitionTimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -50,6 +55,7 @@
             panel1 = new System.Windows.Forms.Panel();
             panel2.SuspendLayout();
             configurationGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionTimeNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.transitionTimeNumericUpDownWheel)).BeginInit();
             panel1.SuspendLayout();
             this.SuspendLayout();
@@ -79,12 +85,59 @@
             // configurationGroupBox
             // 
             resources.ApplyResources(configurationGroupBox, "configurationGroupBox");
+            configurationGroupBox.Controls.Add(this.endTransitionTimeLabel);
+            configurationGroupBox.Controls.Add(this.endTransitionTimeNumericUpDownWheel);
+            configurationGroupBox.Controls.Add(this.horizontalSplitterLabel);
+            configurationGroupBox.Controls.Add(this.chooseEndTransitionColorButton);
+            configurationGroupBox.Controls.Add(this.endTransitionEnabledCheckBox);
             configurationGroupBox.Controls.Add(transitionTimeLabel);
             configurationGroupBox.Controls.Add(this.chooseEndColorButton);
             configurationGroupBox.Controls.Add(this.chooseStartColorButton);
             configurationGroupBox.Controls.Add(this.transitionTimeNumericUpDownWheel);
             configurationGroupBox.Name = "configurationGroupBox";
             configurationGroupBox.TabStop = false;
+            // 
+            // endTransitionTimeLabel
+            // 
+            resources.ApplyResources(this.endTransitionTimeLabel, "endTransitionTimeLabel");
+            this.endTransitionTimeLabel.Name = "endTransitionTimeLabel";
+            this.configurationToolTip.SetToolTip(this.endTransitionTimeLabel, resources.GetString("endTransitionTimeLabel.ToolTip"));
+            // 
+            // endTransitionTimeNumericUpDownWheel
+            // 
+            resources.ApplyResources(this.endTransitionTimeNumericUpDownWheel, "endTransitionTimeNumericUpDownWheel");
+            this.endTransitionTimeNumericUpDownWheel.DecimalPlaces = 2;
+            this.endTransitionTimeNumericUpDownWheel.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.endTransitionTimeNumericUpDownWheel.Maximum = new decimal(new int[] {
+            604800000,
+            0,
+            0,
+            0});
+            this.endTransitionTimeNumericUpDownWheel.Name = "endTransitionTimeNumericUpDownWheel";
+            // 
+            // horizontalSplitterLabel
+            // 
+            resources.ApplyResources(this.horizontalSplitterLabel, "horizontalSplitterLabel");
+            this.horizontalSplitterLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.horizontalSplitterLabel.Name = "horizontalSplitterLabel";
+            // 
+            // chooseEndTransitionColorButton
+            // 
+            resources.ApplyResources(this.chooseEndTransitionColorButton, "chooseEndTransitionColorButton");
+            this.chooseEndTransitionColorButton.Name = "chooseEndTransitionColorButton";
+            this.configurationToolTip.SetToolTip(this.chooseEndTransitionColorButton, resources.GetString("chooseEndTransitionColorButton.ToolTip"));
+            this.chooseEndTransitionColorButton.UseVisualStyleBackColor = true;
+            // 
+            // endTransitionEnabledCheckBox
+            // 
+            resources.ApplyResources(this.endTransitionEnabledCheckBox, "endTransitionEnabledCheckBox");
+            this.endTransitionEnabledCheckBox.Name = "endTransitionEnabledCheckBox";
+            this.configurationToolTip.SetToolTip(this.endTransitionEnabledCheckBox, resources.GetString("endTransitionEnabledCheckBox.ToolTip"));
+            this.endTransitionEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // transitionTimeLabel
             // 
@@ -146,6 +199,7 @@
             panel2.ResumeLayout(false);
             configurationGroupBox.ResumeLayout(false);
             configurationGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.endTransitionTimeNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.transitionTimeNumericUpDownWheel)).EndInit();
             panel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -160,5 +214,10 @@
         private NumericUpDownWheel transitionTimeNumericUpDownWheel;
         private System.Windows.Forms.Button chooseEndColorButton;
         private System.Windows.Forms.Button chooseStartColorButton;
+        private System.Windows.Forms.CheckBox endTransitionEnabledCheckBox;
+        private System.Windows.Forms.Button chooseEndTransitionColorButton;
+        private System.Windows.Forms.Label horizontalSplitterLabel;
+        private NumericUpDownWheel endTransitionTimeNumericUpDownWheel;
+        private System.Windows.Forms.Label endTransitionTimeLabel;
     }
 }

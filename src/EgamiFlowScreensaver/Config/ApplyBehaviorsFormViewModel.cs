@@ -32,6 +32,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     {
         private readonly IBehaviorConfigurationFactory behaviorConfigurationFactory;
         private readonly IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory;
+        private readonly ILifetimeDetails lifetimeDetails;
         private readonly Dictionary<ConfigurationBehaviorType, ConfigurationBehavior> behaviors;
         private readonly HashSet<ConfigurationBehaviorType> enabledBehaviorTypes;
 
@@ -48,13 +49,16 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// configurations needed by this view model.</param>
         /// <param name="behaviorConfigurationFormFactory">A factory to be used to create any
         /// behaviour configuration forms needed by this view model.</param>
+        /// <param name="lifetimeDetails">The current lifetime settings of any images emitted.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="behaviorConfigurationFactory"/>,
-        /// or <paramref name="behaviorConfigurationFormFactory"/> is <see langword="null"/>.
-        /// </exception>
+        /// <paramref name="behaviorConfigurationFormFactory"/>, or
+        /// <paramref name="lifetimeDetails"/> is <see langword="null"/>.</exception>
         public ApplyBehaviorsFormViewModel(
             IEnumerable<ConfigurationBehavior> behaviors,
             IBehaviorConfigurationFactory behaviorConfigurationFactory,
-            IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory)
+            IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory,
+            ILifetimeDetails lifetimeDetails)
         {
             ParameterValidation.IsNotNull(
                 behaviorConfigurationFactory,
@@ -62,9 +66,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             ParameterValidation.IsNotNull(
                 behaviorConfigurationFormFactory,
                 nameof(behaviorConfigurationFormFactory));
+            ParameterValidation.IsNotNull(lifetimeDetails, nameof(lifetimeDetails));
 
             this.behaviorConfigurationFactory = behaviorConfigurationFactory;
             this.behaviorConfigurationFormFactory = behaviorConfigurationFormFactory;
+            this.lifetimeDetails = lifetimeDetails;
             this.behaviors = behaviors.ToDictionary(b => b.ConfigurationBehaviorType);
             this.enabledBehaviorTypes = new HashSet<ConfigurationBehaviorType>(behaviors
                 .Where(b => b.Enabled)
@@ -182,6 +188,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             var behavior = this.GetOrCreateBehavior(behaviorType);
             if (this.behaviorConfigurationFormFactory.TryCreate(
                 behaviorType,
+                this.lifetimeDetails,
                 out var behaviorForm,
                 out var behaviorFormViewModel))
             {
