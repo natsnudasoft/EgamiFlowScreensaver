@@ -37,6 +37,8 @@ the screensaver while it is running, as well as configure a few other settings a
     * [Remove Image](#remove-image)
     * [Image Emit Rate](#image-emit-rate)
     * [Max Image Emit Count](#max-image-emit-count)
+    * [Image Emit Lifetime](#image-emit-lifetime)
+    * [Infinite Emit Mode](#infinite-emit-mode)
     * [Image Emit Location](#image-emit-location)
 - [Manage Emit Behaviours](#manage-emit-behaviours)
     * [Configure Behaviour](#configure-behaviour)
@@ -61,6 +63,15 @@ The number of new images that will be created by the screensaver per second.
 #### Max Image Emit Count
 The maximum number of images that will be created by the screensaver; when this number of images
 are floating around the screen, the screensaver will stop creating new images.
+
+#### Image Emit Lifetime
+The time that emitted images will stay on the screen for (in milliseconds) if *Infinite Emit Mode*
+is enabled. Behaviour transitions may extend this lifetime.
+
+#### Infinite Emit Mode
+Whether or not images will be emitted infinitely. In this mode, images will be destroyed after the
+time set by *Image Emit Lifetime*, and may have transitioning effects while they are being destroyed
+if any behaviours that allow this are enabled and configured to do so.
 
 #### Image Emit Location
 The location that images will be emitted at on the screensaver; possible values are described
