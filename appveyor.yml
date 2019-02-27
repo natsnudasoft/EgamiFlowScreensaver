@@ -20,7 +20,7 @@
     - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
   before_build:
     - nuget restore
-    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs
     - ps: tools\sign-mono-game.ps1
     - ps: tools\replace-version-numbers.ps1
   build:
@@ -75,7 +75,7 @@
     - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
   before_build:
     - nuget restore
-    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs
     - ps: tools\sign-mono-game.ps1
     - ps: tools\replace-version-numbers.ps1
   build:
