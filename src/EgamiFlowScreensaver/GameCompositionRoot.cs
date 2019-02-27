@@ -43,6 +43,9 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             ParameterValidation.IsNotNull(gameServiceContainer, nameof(gameServiceContainer));
 
+            var random = new Random();
+            gameServiceContainer.AddService(random);
+
             var graphicsDeviceService = gameServiceContainer.GetService<IGraphicsDeviceService>();
 
             var nativeMethods = new NativeMethods();
@@ -68,6 +71,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             var imageScaleService = new ImageScaleService();
             gameServiceContainer.AddService<IImageScaleService>(imageScaleService);
+
+            var imageEmitDetailsFactory =
+                new ScreensaverConfigurationImageEmitDetailsFactory(gameServiceContainer, random);
+            gameServiceContainer.AddService<IImageEmitDetailsFactory>(imageEmitDetailsFactory);
+
+            var behaviorFactoriesFactory = new EnabledBehaviorFactoriesFactory(random);
+            gameServiceContainer.AddService<IBehaviorFactoriesFactory>(behaviorFactoriesFactory);
         }
     }
 }

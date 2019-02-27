@@ -35,12 +35,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     /// </summary>
     /// <seealso cref="ObservableBase" />
     /// <seealso cref="IDisposable" />
-    public sealed class ConfigurationFormViewModel : ObservableBase, IDisposable
+    public sealed class ConfigurationFormViewModel : ObservableBase, IDisposable, ILifetimeDetails
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IConfigurationFileService configurationFileService;
         private readonly IConfigurationFilesTempCache configurationFilesTempCache;
+        private readonly IBehaviorConfigurationFactory behaviorConfigurationFactory;
+        private readonly IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory;
         private readonly BindingList<ConfigurationImageItem> images;
         private int selectedImageIndex = -1;
         private Image selectedImagePreview;
@@ -49,6 +51,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         private float imageEmitRate;
         private int maxImageEmitCount;
         private ImageEmitLocation imageEmitLocation;
+        private int customImageEmitLocationX;
+        private int customImageEmitLocationY;
+        private bool isInfiniteEmitMode;
+        private double emitLifetime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationFormViewModel"/> class.
@@ -57,11 +63,21 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         /// perform operations in the configuration directory.</param>
         /// <param name="configurationFilesTempCache">The configuration files cache to use to
         /// cache configuration files before they are committed.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/> is
-        /// <see langword="null"/>.</exception>
+        /// <param name="behaviorConfigurationFactory">The behaviour configuration factory to use
+        /// to create instances of behaviour configurations based on a behaviour type.</param>
+        /// <param name="behaviorConfigurationFormFactory">The behaviour configuration form factory
+        /// to use to create instances of behaviour configuration forms based on a behaviour type.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="configurationFileService"/>,
+        /// <paramref name="configurationFilesTempCache"/>,
+        /// <paramref name="behaviorConfigurationFactory"/>, or
+        /// <paramref name="behaviorConfigurationFormFactory"/> is <see langword="null"/>.
+        /// </exception>
         public ConfigurationFormViewModel(
             IConfigurationFileService configurationFileService,
-            IConfigurationFilesTempCache configurationFilesTempCache)
+            IConfigurationFilesTempCache configurationFilesTempCache,
+            IBehaviorConfigurationFactory behaviorConfigurationFactory,
+            IBehaviorConfigurationFormFactory behaviorConfigurationFormFactory)
         {
             ParameterValidation.IsNotNull(
                 configurationFileService,
@@ -69,14 +85,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             ParameterValidation.IsNotNull(
                 configurationFilesTempCache,
                 nameof(configurationFilesTempCache));
+            ParameterValidation.IsNotNull(
+                behaviorConfigurationFactory,
+                nameof(behaviorConfigurationFactory));
+            ParameterValidation.IsNotNull(
+                behaviorConfigurationFormFactory,
+                nameof(behaviorConfigurationFormFactory));
 
             this.configurationFileService = configurationFileService;
             this.configurationFilesTempCache = configurationFilesTempCache;
+            this.behaviorConfigurationFactory = behaviorConfigurationFactory;
+            this.behaviorConfigurationFormFactory = behaviorConfigurationFormFactory;
             this.images = new BindingList<ConfigurationImageItem>
             {
                 AllowNew = false,
                 RaiseListChangedEvents = true
             };
+            this.Behaviors = new List<ConfigurationBehavior>();
         }
 
         /// <summary>
@@ -154,7 +179,40 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         public ImageEmitLocation ImageEmitLocation
         {
             get => this.imageEmitLocation;
-            set => this.Set(ref this.imageEmitLocation, value);
+            set
+            {
+                this.Set(ref this.imageEmitLocation, value);
+                this.OnPropertyChanged(nameof(this.IsCustomImageEmitLocation));
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the location that images will be emitted is a custom
+        /// value.
+        /// </summary>
+        public bool IsCustomImageEmitLocation
+        {
+            get => this.ImageEmitLocation == ImageEmitLocation.Custom;
+        }
+
+        /// <summary>
+        /// Gets or sets the X coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        public int CustomImageEmitLocationX
+        {
+            get => this.customImageEmitLocationX;
+            set => this.Set(ref this.customImageEmitLocationX, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Y coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        public int CustomImageEmitLocationY
+        {
+            get => this.customImageEmitLocationY;
+            set => this.Set(ref this.customImageEmitLocationY, value);
         }
 
         /// <summary>
@@ -177,6 +235,34 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         {
             get => this.backgroundImageScaleMode;
             set => this.Set(ref this.backgroundImageScaleMode, value);
+        }
+
+        /// <summary>
+        /// Gets a collection of configurations for behaviours that will be attached to any images
+        /// emitted.
+        /// </summary>
+        public IList<ConfigurationBehavior> Behaviors { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        /// <value><see langword="true"/> if images should be emitted infinitely; otherwise
+        /// <see langword="false"/>.</value>
+        public bool IsInfiniteImageEmitMode
+        {
+            get => this.isInfiniteEmitMode;
+            set => this.Set(ref this.isInfiniteEmitMode, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the time that emitted images should live for (in milliseconds).
+        /// </summary>
+        /// <remarks>This setting is only used if <see cref="IsInfiniteImageEmitMode"/> is
+        /// <see langword="true"/>.</remarks>
+        public double ImageEmitLifetime
+        {
+            get => this.emitLifetime;
+            set => this.Set(ref this.emitLifetime, value);
         }
 
         /// <summary>
@@ -313,6 +399,50 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         }
 
         /// <summary>
+        /// Displays a dialog allowing a custom emit location to be selected.
+        /// </summary>
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void ChooseCustomEmitLocation(IWin32Window owner)
+        {
+            var emitLocationViewModel = new CustomEmitLocationFormViewModel();
+            using (var customEmitLocationDialog = new CustomEmitLocationForm(emitLocationViewModel))
+            {
+                emitLocationViewModel.CustomImageEmitLocationX = this.CustomImageEmitLocationX;
+                emitLocationViewModel.CustomImageEmitLocationY = this.CustomImageEmitLocationY;
+                if (customEmitLocationDialog.ShowDialog(owner) == DialogResult.OK)
+                {
+                    this.CustomImageEmitLocationX = emitLocationViewModel.CustomImageEmitLocationX;
+                    this.CustomImageEmitLocationY = emitLocationViewModel.CustomImageEmitLocationY;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Displays a dialog allowing behaviours to be applied and configured for image items.
+        /// </summary>
+        /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
+        public void ApplyBehaviors(IWin32Window owner)
+        {
+            var applyBehaviorsFormViewModel = new ApplyBehaviorsFormViewModel(
+                this.Behaviors,
+                this.behaviorConfigurationFactory,
+                this.behaviorConfigurationFormFactory,
+                this);
+            using (var applyBehaviorsDialog = new ApplyBehaviorsForm(applyBehaviorsFormViewModel))
+            {
+                if (applyBehaviorsDialog.ShowDialog(owner) == DialogResult.OK)
+                {
+                    this.Behaviors.Clear();
+                    applyBehaviorsFormViewModel.SynchronizeEnabledBehaviors();
+                    foreach (var behavior in applyBehaviorsFormViewModel.Behaviors)
+                    {
+                        this.Behaviors.Add(behavior);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Reads the configuration from disk and synchronises the properties with this view model.
         /// </summary>
         /// <param name="owner">The window that will own any dialogs that will be displayed.</param>
@@ -350,10 +480,21 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.ImageEmitRate = screensaverConfiguration.ImageEmitRate;
                 this.MaxImageEmitCount = screensaverConfiguration.MaxImageEmitCount;
                 this.ImageEmitLocation = screensaverConfiguration.ImageEmitLocation;
+                this.CustomImageEmitLocationX = screensaverConfiguration.CustomImageEmitLocationX;
+                this.CustomImageEmitLocationY = screensaverConfiguration.CustomImageEmitLocationY;
+                this.IsInfiniteImageEmitMode = screensaverConfiguration.IsInfiniteImageEmitMode;
+                this.ImageEmitLifetime =
+                    screensaverConfiguration.ImageEmitLifetime.TotalMilliseconds;
                 this.Images.Clear();
                 foreach (var screensaverImage in screensaverImages)
                 {
                     this.Images.Add(screensaverImage);
+                }
+
+                this.Behaviors.Clear();
+                foreach (var behavior in screensaverConfiguration.Behaviors)
+                {
+                    this.Behaviors.Add(behavior);
                 }
 
                 result = true;
@@ -399,6 +540,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 case BackgroundMode.Image:
                     backgroundImage = this.configurationFileService
                         .CommitCachedBackgroundImage(this.BackgroundImage);
+                    backgroundColor = this.BackgroundColor;
                     newBackgroundImageScaleMode = this.BackgroundImageScaleMode;
                     break;
 
@@ -420,13 +562,23 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 BackgroundImageScaleMode = newBackgroundImageScaleMode,
                 ImageEmitRate = this.ImageEmitRate,
                 MaxImageEmitCount = this.MaxImageEmitCount,
-                ImageEmitLocation = this.ImageEmitLocation
+                ImageEmitLocation = this.ImageEmitLocation,
+                CustomImageEmitLocationX = this.CustomImageEmitLocationX,
+                CustomImageEmitLocationY = this.CustomImageEmitLocationY,
+                IsInfiniteImageEmitMode = this.IsInfiniteImageEmitMode,
+                ImageEmitLifetime =
+                    new TimeSpan((long)(this.ImageEmitLifetime * TimeSpan.TicksPerMillisecond))
             };
             var committedImages = this.configurationFileService
                 .CommitCachedScreensaverImages(this.images);
             foreach (var configurationImageItem in committedImages)
             {
                 screensaverConfiguration.Images.Add(configurationImageItem);
+            }
+
+            foreach (var behavior in this.Behaviors)
+            {
+                screensaverConfiguration.Behaviors.Add(behavior);
             }
 
             try

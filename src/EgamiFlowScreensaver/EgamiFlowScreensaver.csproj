@@ -8,7 +8,6 @@
   <Import Project="..\..\packages\Costura.Fody.3.3.1\build\Costura.Fody.props" Condition="Exists('..\..\packages\Costura.Fody.3.3.1\build\Costura.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
-  <Import Project="..\..\packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets" Condition="Exists('..\..\packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -73,6 +72,38 @@
     <Compile Include="BackgroundDrawableManager.cs" />
     <Compile Include="BackgroundMode.cs" />
     <Compile Include="BackgroundDrawable.cs" />
+    <Compile Include="Config\ILifetimeDetails.cs" />
+    <Compile Include="EnabledBehaviorFactoriesFactory.cs" />
+    <Compile Include="BottomLeftImageEmitDetails.cs" />
+    <Compile Include="BottomRightImageEmitDetails.cs" />
+    <Compile Include="CenterImageEmitDetails.cs" />
+    <Compile Include="ColorChangeScreensaverImageItemBehavior.cs" />
+    <Compile Include="Config\AlphaChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\AlphaChangeBehaviorForm.Designer.cs">
+      <DependentUpon>AlphaChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\AlphaChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ApplyBehaviorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ApplyBehaviorsForm.Designer.cs">
+      <DependentUpon>ApplyBehaviorsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ApplyBehaviorsFormViewModel.cs" />
+    <Compile Include="Config\BehaviorConfigurationFactory.cs" />
+    <Compile Include="Config\BehaviorConfigurationFormFactory.cs" />
+    <Compile Include="Config\ColorChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ColorChangeBehaviorForm.Designer.cs">
+      <DependentUpon>ColorChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ColorChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ColorChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\ConfigurationBehavior.cs" />
+    <Compile Include="Config\ConfigurationBehaviorFormViewModel.cs" />
     <Compile Include="Config\ConfigurationDirectoryLayoutRenderer.cs" />
     <Compile Include="Config\ConfigurationFilesTempCache.cs" />
     <Compile Include="Config\ConfigurationFileService.cs" />
@@ -84,17 +115,60 @@
     </Compile>
     <Compile Include="Config\ConfigurationFormViewModel.cs" />
     <Compile Include="Config\ConfigurationImageItem.cs" />
+    <Compile Include="Config\ConfigurationBehaviorType.cs" />
+    <Compile Include="Config\CustomEmitLocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\CustomEmitLocationForm.Designer.cs">
+      <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\CustomEmitLocationFormViewModel.cs" />
+    <Compile Include="Config\AlphaChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\IBehaviorConfigurationFactory.cs" />
+    <Compile Include="Config\IBehaviorConfigurationFormFactory.cs" />
     <Compile Include="Config\IConfigurationFilesTempCache.cs" />
     <Compile Include="Config\IConfigurationFileService.cs" />
+    <Compile Include="Config\RotationChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\RotationChangeBehaviorForm.Designer.cs">
+      <DependentUpon>RotationChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\RotationChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\RotationChangeConfigurationBehavior.cs" />
+    <Compile Include="Config\ScaleChangeBehaviorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ScaleChangeBehaviorForm.Designer.cs">
+      <DependentUpon>ScaleChangeBehaviorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Config\ScaleChangeBehaviorFormViewModel.cs" />
+    <Compile Include="Config\ScaleChangeConfigurationBehavior.cs" />
     <Compile Include="Config\ScreensaverConfiguration.cs" />
+    <Compile Include="CustomImageEmitDetails.cs" />
     <Compile Include="DesktopBackgroundDrawable.cs" />
+    <Compile Include="DataSourceDisplayValue.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="EnumResourceDisplayNameAttribute.cs" />
+    <Compile Include="AlphaChangeScreensaverImageItemBehavior.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBackgroundDrawableFactory.cs" />
     <Compile Include="IBackgroundDrawableManager.cs" />
+    <Compile Include="IBehaviorFactoriesFactory.cs" />
+    <Compile Include="IImageEmitDetails.cs" />
+    <Compile Include="IImageEmitDetailsFactory.cs" />
     <Compile Include="IImageScaleService.cs" />
     <Compile Include="ImageBackgroundDrawable.cs" />
+    <Compile Include="IScreensaverImageItemBehavior.cs" />
+    <Compile Include="LifetimeScreensaverImageItemBehavior.cs" />
+    <Compile Include="MovingScreensaverImageItemBehavior.cs" />
+    <Compile Include="RandomCornerImageEmitDetails.cs" />
+    <Compile Include="RandomImageEmitDetails.cs" />
+    <Compile Include="RotationChangeScreensaverImageItemBehavior.cs" />
+    <Compile Include="ScaleChangeScreensaverImageItemBehavior.cs" />
+    <Compile Include="ScreensaverConfigurationImageEmitDetailsFactory.cs" />
     <Compile Include="ImageEmitLocation.cs" />
+    <Compile Include="ImageEmitDetails.cs" />
     <Compile Include="ImageScaleMode.cs" />
     <Compile Include="ImageScaleService.cs" />
     <Compile Include="ITextureConverterService.cs" />
@@ -102,9 +176,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ObservableBase.cs" />
-    <Compile Include="Config\ScreensaverSettingsAdapterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Config\ScreensaverSettingsAdapterForm.cs" />
     <Compile Include="GameCompositionRoot.cs" />
     <Compile Include="INativeMethods.cs" />
     <Compile Include="IScreenCaptureService.cs" />
@@ -131,6 +203,7 @@
     <Compile Include="ScreensaverImageEmitter.cs" />
     <Compile Include="ScreensaverImageEmitterCounter.cs" />
     <Compile Include="ScreensaverImageItem.cs" />
+    <Compile Include="ScreensaverImageItemBehavior.cs" />
     <Compile Include="ScreensaverImageManager.cs" />
     <Compile Include="ScreensaverService.cs" />
     <Compile Include="ServiceProviderExtension.cs" />
@@ -138,6 +211,9 @@
     <Compile Include="TextureConverterService.cs" />
     <Compile Include="TiledTexture2D.cs" />
     <Compile Include="TiledTexture2DSegment.cs" />
+    <Compile Include="TopLeftImageEmitDetails.cs" />
+    <Compile Include="TopRightImageEmitDetails.cs" />
+    <Compile Include="TransitionScreensaverImageItemBehavior.cs" />
     <Compile Include="WindowLongFlags.cs" />
     <EmbeddedResource Include="..\EgamiFlowScreensaver.Content\bin\$(MonoGamePlatform)\$(Configuration)\Content\adie.xnb">
       <Link>Content\adie.xnb</Link>
@@ -155,8 +231,8 @@
     <Reference Include="Costura, Version=3.3.1.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Costura.Fody.3.3.1\lib\net40\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.7.1.189, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MonoGame.Framework.WindowsDX.3.7.1.189\lib\net45\MonoGame.Framework.dll</HintPath>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Natsnudasoft.NatsnudaLibrary, Version=0.5.0.0, Culture=neutral, PublicKeyToken=b0f282eb5a9064bb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NatsnudaLibrary.0.5.2\lib\net46\Natsnudasoft.NatsnudaLibrary.dll</HintPath>
@@ -166,33 +242,6 @@
     </Reference>
     <Reference Include="protobuf-net, Version=2.4.0.0, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\packages\protobuf-net.2.4.0\lib\net40\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct2D1, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.Direct2D1.4.2.0\lib\net45\SharpDX.Direct2D1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D11, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.Direct3D11.4.2.0\lib\net45\SharpDX.Direct3D11.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.Direct3D9.4.2.0\lib\net45\SharpDX.Direct3D9.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DXGI, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.DXGI.4.2.0\lib\net45\SharpDX.DXGI.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.Mathematics.4.2.0\lib\net45\SharpDX.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.MediaFoundation, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.MediaFoundation.4.2.0\lib\net45\SharpDX.MediaFoundation.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XAudio2, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.XAudio2.4.2.0\lib\net45\SharpDX.XAudio2.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.XInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpDX.XInput.4.2.0\lib\net45\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -219,6 +268,27 @@
     </AdditionalFiles>
     <Content Include="Properties\NativeRes.rc2" />
     <MonoGameContentReference Include="Content\EmptyContent.mgcb" />
+    <EmbeddedResource Include="Config\AlphaChangeBehaviorForm.resx">
+      <DependentUpon>AlphaChangeBehaviorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ApplyBehaviorsForm.resx">
+      <DependentUpon>ApplyBehaviorsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ColorChangeBehaviorForm.resx">
+      <DependentUpon>ColorChangeBehaviorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\CustomEmitLocationForm.resx">
+      <DependentUpon>CustomEmitLocationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\RotationChangeBehaviorForm.resx">
+      <DependentUpon>RotationChangeBehaviorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\ScaleChangeBehaviorForm.resx">
+      <DependentUpon>ScaleChangeBehaviorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
@@ -276,7 +346,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Fody.3.3.5\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.3.3.5\build\Fody.targets'))" />
     <Error Condition="!Exists('..\..\packages\Costura.Fody.3.3.1\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.3.3.1\build\Costura.Fody.props'))" />
-    <Error Condition="!Exists('..\..\packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MonoGame.Framework.WindowsDX.3.7.1.189\build\MonoGame.Framework.WindowsDX.targets'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.3\build\Microsoft.CodeQuality.Analyzers.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.NetCore.Analyzers.2.6.3\build\Microsoft.NetCore.Analyzers.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.NetFramework.Analyzers.2.6.3\build\Microsoft.NetFramework.Analyzers.props'))" />

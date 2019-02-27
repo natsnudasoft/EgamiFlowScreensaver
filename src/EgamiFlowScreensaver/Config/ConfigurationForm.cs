@@ -18,7 +18,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
     using System;
     using System.Linq;
-    using System.Reflection;
     using System.Windows.Forms;
     using Natsnudasoft.EgamiFlowScreensaver.Properties;
     using Natsnudasoft.NatsnudaLibrary;
@@ -88,10 +87,30 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 this.viewModel.RemoveSelectedImage(this);
             };
 
-            this.chooseColorButton.DataBindings.Add(
+            this.chooseCustomEmitLocationButton.DataBindings.Add(
                 nameof(Button.Enabled),
-                this.solidColorRadioButton,
-                nameof(RadioButton.Checked));
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsCustomImageEmitLocation));
+            this.chooseCustomEmitLocationButton.Click += (sender, e) =>
+            {
+                this.viewModel.ChooseCustomEmitLocation(this);
+            };
+
+            this.manageEmitBehaviorsButton.Click += (sender, e) =>
+            {
+                this.viewModel.ApplyBehaviors(this);
+            };
+
+            var chooseColorEnabledBinding = new Binding(
+                nameof(Button.Enabled),
+                this,
+                nameof(this.IsChooseColorButtonEnabled));
+            this.chooseColorButton.DataBindings.Add(chooseColorEnabledBinding);
+            this.imageRadioButton.CheckedChanged += (sender, e) =>
+                chooseColorEnabledBinding.ReadValue();
+            this.solidColorRadioButton.CheckedChanged += (sender, e) =>
+                chooseColorEnabledBinding.ReadValue();
+
             this.chooseImageButton.DataBindings.Add(
                 nameof(Button.Enabled),
                 this.imageRadioButton,
@@ -103,11 +122,14 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 nameof(RadioButton.Checked));
             var imageScaleModeSource = Enum.GetValues(typeof(ImageScaleMode))
                 .Cast<ImageScaleMode>()
-                .Select(m => new { DisplayValue = GetEnumDisplayName(m), Value = m })
+                .Select(m => new DataSourceDisplayValue<ImageScaleMode>(
+                    EnumHelper.GetEnumDisplayName(m), m))
                 .ToArray();
             this.backgroundImageScaleModeComboBox.DataSource = imageScaleModeSource;
-            this.backgroundImageScaleModeComboBox.DisplayMember = "DisplayValue";
-            this.backgroundImageScaleModeComboBox.ValueMember = "Value";
+            this.backgroundImageScaleModeComboBox.DisplayMember =
+                nameof(DataSourceDisplayValue<ImageScaleMode>.DisplayValue);
+            this.backgroundImageScaleModeComboBox.ValueMember =
+                nameof(DataSourceDisplayValue<ImageScaleMode>.Value);
             this.backgroundImageScaleModeComboBox.DataBindings.Add(
                 nameof(ComboBox.SelectedValue),
                 this.viewModel,
@@ -115,13 +137,38 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
 
+            this.imageEmitLifetimeLabel.DataBindings.Add(
+                nameof(Label.Enabled),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode));
+
+            this.imageEmitLifetimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Enabled),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode));
+            this.imageEmitLifetimeNumericUpDownWheel.DataBindings.Add(
+                nameof(NumericUpDownWheel.Value),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.ImageEmitLifetime),
+                true);
+
+            this.infiniteEmitModeCheckBox.DataBindings.Add(
+                nameof(CheckBox.Checked),
+                this.viewModel,
+                nameof(ConfigurationFormViewModel.IsInfiniteImageEmitMode),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
             var imageEmitLocationSource = Enum.GetValues(typeof(ImageEmitLocation))
                 .Cast<ImageEmitLocation>()
-                .Select(m => new { DisplayValue = GetEnumDisplayName(m), Value = m })
+                .Select(m => new DataSourceDisplayValue<ImageEmitLocation>(
+                    EnumHelper.GetEnumDisplayName(m), m))
                 .ToArray();
             this.imageEmitLocationComboBox.DataSource = imageEmitLocationSource;
-            this.imageEmitLocationComboBox.DisplayMember = "DisplayValue";
-            this.imageEmitLocationComboBox.ValueMember = "Value";
+            this.imageEmitLocationComboBox.DisplayMember =
+                nameof(DataSourceDisplayValue<ImageEmitLocation>.DisplayValue);
+            this.imageEmitLocationComboBox.ValueMember =
+                nameof(DataSourceDisplayValue<ImageEmitLocation>.Value);
             this.imageEmitLocationComboBox.DataBindings.Add(
                 nameof(ComboBox.SelectedValue),
                 this.viewModel,
@@ -160,12 +207,21 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
 
             this.okButton.Click += (sender, e) =>
             {
+                this.okButton.Focus();
                 if (this.viewModel.Validate(this) &&
                     this.viewModel.CommitSettingsToDisk(this))
                 {
                     this.DialogResult = DialogResult.OK;
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the choose colour button is enabled.
+        /// </summary>
+        public bool IsChooseColorButtonEnabled
+        {
+            get => this.imageRadioButton.Checked || this.solidColorRadioButton.Checked;
         }
 
         /// <inheritdoc/>
@@ -213,23 +269,6 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
             }
 
             base.Dispose(disposing);
-        }
-
-        private static string GetEnumDisplayName<T>(T enumValue)
-        {
-            var enumValueMemberInfo = typeof(T).GetMember(enumValue.ToString()).FirstOrDefault();
-            var enumDisplayName = enumValueMemberInfo?.ToString();
-            if (enumValueMemberInfo != null)
-            {
-                var enumResourceDisplayNameAttribute =
-                    enumValueMemberInfo.GetCustomAttribute<EnumResourceDisplayNameAttribute>();
-                if (enumResourceDisplayNameAttribute != null)
-                {
-                    enumDisplayName = enumResourceDisplayNameAttribute.DisplayName;
-                }
-            }
-
-            return enumDisplayName;
         }
     }
 }

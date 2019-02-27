@@ -23,11 +23,16 @@
             System.Windows.Forms.Panel panel1;
             System.Windows.Forms.GroupBox imagesGroupBox;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
-            System.Windows.Forms.Label label3;
-            System.Windows.Forms.Label label1;
+            System.Windows.Forms.Label imageEmitLocationLabel;
+            System.Windows.Forms.Label maxImageEmitCountLabel;
             System.Windows.Forms.Label imageEmitRateLabel;
-            System.Windows.Forms.Label label2;
+            System.Windows.Forms.Label imagePositionLabel;
             System.Windows.Forms.Panel panel2;
+            this.imageEmitLifetimeNumericUpDownWheel = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
+            this.imageEmitLifetimeLabel = new System.Windows.Forms.Label();
+            this.infiniteEmitModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.manageEmitBehaviorsButton = new System.Windows.Forms.Button();
+            this.chooseCustomEmitLocationButton = new System.Windows.Forms.Button();
             this.imageEmitLocationComboBox = new System.Windows.Forms.ComboBox();
             this.maxImageEmitCountNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
             this.imageEmitRateNumericUpDown = new Natsnudasoft.EgamiFlowScreensaver.NumericUpDownWheel();
@@ -44,17 +49,17 @@
             this.imageRadioButton = new System.Windows.Forms.RadioButton();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.desktopRadioButtn = new System.Windows.Forms.RadioButton();
             this.configurationToolTip = new System.Windows.Forms.ToolTip(this.components);
             panel1 = new System.Windows.Forms.Panel();
             imagesGroupBox = new System.Windows.Forms.GroupBox();
-            label3 = new System.Windows.Forms.Label();
-            label1 = new System.Windows.Forms.Label();
+            imageEmitLocationLabel = new System.Windows.Forms.Label();
+            maxImageEmitCountLabel = new System.Windows.Forms.Label();
             imageEmitRateLabel = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
+            imagePositionLabel = new System.Windows.Forms.Label();
             panel2 = new System.Windows.Forms.Panel();
             panel1.SuspendLayout();
             imagesGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageEmitLifetimeNumericUpDownWheel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxImageEmitCountNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageEmitRateNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePreviewPictureBox)).BeginInit();
@@ -72,9 +77,14 @@
             // imagesGroupBox
             // 
             resources.ApplyResources(imagesGroupBox, "imagesGroupBox");
-            imagesGroupBox.Controls.Add(label3);
+            imagesGroupBox.Controls.Add(this.imageEmitLifetimeNumericUpDownWheel);
+            imagesGroupBox.Controls.Add(this.imageEmitLifetimeLabel);
+            imagesGroupBox.Controls.Add(this.infiniteEmitModeCheckBox);
+            imagesGroupBox.Controls.Add(this.manageEmitBehaviorsButton);
+            imagesGroupBox.Controls.Add(this.chooseCustomEmitLocationButton);
+            imagesGroupBox.Controls.Add(imageEmitLocationLabel);
             imagesGroupBox.Controls.Add(this.imageEmitLocationComboBox);
-            imagesGroupBox.Controls.Add(label1);
+            imagesGroupBox.Controls.Add(maxImageEmitCountLabel);
             imagesGroupBox.Controls.Add(this.maxImageEmitCountNumericUpDown);
             imagesGroupBox.Controls.Add(imageEmitRateLabel);
             imagesGroupBox.Controls.Add(this.imageEmitRateNumericUpDown);
@@ -85,24 +95,67 @@
             imagesGroupBox.Name = "imagesGroupBox";
             imagesGroupBox.TabStop = false;
             // 
-            // label3
+            // imageEmitLifetimeNumericUpDownWheel
             // 
-            resources.ApplyResources(label3, "label3");
-            label3.Name = "label3";
-            this.configurationToolTip.SetToolTip(label3, resources.GetString("label3.ToolTip"));
+            this.imageEmitLifetimeNumericUpDownWheel.DecimalPlaces = 2;
+            this.imageEmitLifetimeNumericUpDownWheel.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            resources.ApplyResources(this.imageEmitLifetimeNumericUpDownWheel, "imageEmitLifetimeNumericUpDownWheel");
+            this.imageEmitLifetimeNumericUpDownWheel.Maximum = new decimal(new int[] {
+            604800000,
+            0,
+            0,
+            0});
+            this.imageEmitLifetimeNumericUpDownWheel.Name = "imageEmitLifetimeNumericUpDownWheel";
+            // 
+            // imageEmitLifetimeLabel
+            // 
+            resources.ApplyResources(this.imageEmitLifetimeLabel, "imageEmitLifetimeLabel");
+            this.imageEmitLifetimeLabel.Name = "imageEmitLifetimeLabel";
+            this.configurationToolTip.SetToolTip(this.imageEmitLifetimeLabel, resources.GetString("imageEmitLifetimeLabel.ToolTip"));
+            // 
+            // infiniteEmitModeCheckBox
+            // 
+            resources.ApplyResources(this.infiniteEmitModeCheckBox, "infiniteEmitModeCheckBox");
+            this.infiniteEmitModeCheckBox.Name = "infiniteEmitModeCheckBox";
+            this.configurationToolTip.SetToolTip(this.infiniteEmitModeCheckBox, resources.GetString("infiniteEmitModeCheckBox.ToolTip"));
+            this.infiniteEmitModeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // manageEmitBehaviorsButton
+            // 
+            resources.ApplyResources(this.manageEmitBehaviorsButton, "manageEmitBehaviorsButton");
+            this.manageEmitBehaviorsButton.Name = "manageEmitBehaviorsButton";
+            this.configurationToolTip.SetToolTip(this.manageEmitBehaviorsButton, resources.GetString("manageEmitBehaviorsButton.ToolTip"));
+            this.manageEmitBehaviorsButton.UseVisualStyleBackColor = true;
+            // 
+            // chooseCustomEmitLocationButton
+            // 
+            resources.ApplyResources(this.chooseCustomEmitLocationButton, "chooseCustomEmitLocationButton");
+            this.chooseCustomEmitLocationButton.Name = "chooseCustomEmitLocationButton";
+            this.configurationToolTip.SetToolTip(this.chooseCustomEmitLocationButton, resources.GetString("chooseCustomEmitLocationButton.ToolTip"));
+            this.chooseCustomEmitLocationButton.UseVisualStyleBackColor = true;
+            // 
+            // imageEmitLocationLabel
+            // 
+            resources.ApplyResources(imageEmitLocationLabel, "imageEmitLocationLabel");
+            imageEmitLocationLabel.Name = "imageEmitLocationLabel";
+            this.configurationToolTip.SetToolTip(imageEmitLocationLabel, resources.GetString("imageEmitLocationLabel.ToolTip"));
             // 
             // imageEmitLocationComboBox
             // 
+            resources.ApplyResources(this.imageEmitLocationComboBox, "imageEmitLocationComboBox");
             this.imageEmitLocationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.imageEmitLocationComboBox.FormattingEnabled = true;
-            resources.ApplyResources(this.imageEmitLocationComboBox, "imageEmitLocationComboBox");
             this.imageEmitLocationComboBox.Name = "imageEmitLocationComboBox";
             // 
-            // label1
+            // maxImageEmitCountLabel
             // 
-            resources.ApplyResources(label1, "label1");
-            label1.Name = "label1";
-            this.configurationToolTip.SetToolTip(label1, resources.GetString("label1.ToolTip"));
+            resources.ApplyResources(maxImageEmitCountLabel, "maxImageEmitCountLabel");
+            maxImageEmitCountLabel.Name = "maxImageEmitCountLabel";
+            this.configurationToolTip.SetToolTip(maxImageEmitCountLabel, resources.GetString("maxImageEmitCountLabel.ToolTip"));
             // 
             // maxImageEmitCountNumericUpDown
             // 
@@ -166,7 +219,7 @@
             // backgroundRadioGroupBox
             // 
             resources.ApplyResources(this.backgroundRadioGroupBox, "backgroundRadioGroupBox");
-            this.backgroundRadioGroupBox.Controls.Add(label2);
+            this.backgroundRadioGroupBox.Controls.Add(imagePositionLabel);
             this.backgroundRadioGroupBox.Controls.Add(this.backgroundImageScaleModeComboBox);
             this.backgroundRadioGroupBox.Controls.Add(this.chooseImageButton);
             this.backgroundRadioGroupBox.Controls.Add(this.solidColorRadioButton);
@@ -178,17 +231,17 @@
             this.backgroundRadioGroupBox.SelectedRadioValue = Natsnudasoft.EgamiFlowScreensaver.BackgroundMode.SolidColor;
             this.backgroundRadioGroupBox.TabStop = false;
             // 
-            // label2
+            // imagePositionLabel
             // 
-            resources.ApplyResources(label2, "label2");
-            label2.Name = "label2";
-            this.configurationToolTip.SetToolTip(label2, resources.GetString("label2.ToolTip"));
+            resources.ApplyResources(imagePositionLabel, "imagePositionLabel");
+            imagePositionLabel.Name = "imagePositionLabel";
+            this.configurationToolTip.SetToolTip(imagePositionLabel, resources.GetString("imagePositionLabel.ToolTip"));
             // 
             // backgroundImageScaleModeComboBox
             // 
+            resources.ApplyResources(this.backgroundImageScaleModeComboBox, "backgroundImageScaleModeComboBox");
             this.backgroundImageScaleModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.backgroundImageScaleModeComboBox.FormattingEnabled = true;
-            resources.ApplyResources(this.backgroundImageScaleModeComboBox, "backgroundImageScaleModeComboBox");
             this.backgroundImageScaleModeComboBox.Name = "backgroundImageScaleModeComboBox";
             // 
             // chooseImageButton
@@ -253,14 +306,6 @@
             this.configurationToolTip.SetToolTip(this.cancelButton, resources.GetString("cancelButton.ToolTip"));
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // desktopRadioButtn
-            // 
-            resources.ApplyResources(this.desktopRadioButtn, "desktopRadioButtn");
-            this.desktopRadioButtn.Checked = true;
-            this.desktopRadioButtn.Name = "desktopRadioButtn";
-            this.desktopRadioButtn.TabStop = true;
-            this.desktopRadioButtn.UseVisualStyleBackColor = true;
-            // 
             // ConfigurationForm
             // 
             this.AcceptButton = this.okButton;
@@ -279,6 +324,7 @@
             panel1.ResumeLayout(false);
             imagesGroupBox.ResumeLayout(false);
             imagesGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageEmitLifetimeNumericUpDownWheel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxImageEmitCountNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageEmitRateNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imagePreviewPictureBox)).EndInit();
@@ -302,11 +348,15 @@
         private System.Windows.Forms.Button addImageButton;
         private System.Windows.Forms.PictureBox imagePreviewPictureBox;
         private RadioGroupBox backgroundRadioGroupBox;
-        private System.Windows.Forms.RadioButton desktopRadioButtn;
         private NumericUpDownWheel imageEmitRateNumericUpDown;
         private System.Windows.Forms.ToolTip configurationToolTip;
         private NumericUpDownWheel maxImageEmitCountNumericUpDown;
         private System.Windows.Forms.ComboBox backgroundImageScaleModeComboBox;
         private System.Windows.Forms.ComboBox imageEmitLocationComboBox;
+        private System.Windows.Forms.Button chooseCustomEmitLocationButton;
+        private System.Windows.Forms.Button manageEmitBehaviorsButton;
+        private System.Windows.Forms.CheckBox infiniteEmitModeCheckBox;
+        private NumericUpDownWheel imageEmitLifetimeNumericUpDownWheel;
+        private System.Windows.Forms.Label imageEmitLifetimeLabel;
     }
 }

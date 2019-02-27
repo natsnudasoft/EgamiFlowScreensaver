@@ -28,7 +28,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
     public sealed class ScreensaverImageManager
     {
         private readonly ScreensaverArea screensaverArea;
-        private readonly List<ScreensaverImageItem> screensaverImageItems;
+        private readonly LinkedList<ScreensaverImageItem> screensaverImageItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverImageManager"/> class.
@@ -41,41 +41,35 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
 
             this.screensaverArea = screensaverArea;
-            this.screensaverImageItems = new List<ScreensaverImageItem>();
+            this.screensaverImageItems = new LinkedList<ScreensaverImageItem>();
+        }
+
+        /// <summary>
+        /// Gets the number of images currently managed by this instance.
+        /// </summary>
+        public int ImageCount
+        {
+            get => this.screensaverImageItems.Count;
         }
 
         /// <summary>
         /// Updates the state of this <see cref="ScreensaverImageManager"/>.
         /// </summary>
-        public void Update()
+        /// <param name="gameTime">A snapshot of the current game time.</param>
+        public void Update(GameTime gameTime)
         {
-            var screensaverBounds = this.screensaverArea.ScreensaverGameBounds;
-            foreach (var screensaverImageItem in this.screensaverImageItems)
+            var screensaverImageItemNode = this.screensaverImageItems.First;
+            while (screensaverImageItemNode != null)
             {
-                screensaverImageItem.Position += screensaverImageItem.Speed;
-                var positionX = screensaverImageItem.Position.X;
-                var positionY = screensaverImageItem.Position.Y;
-                var speedX = screensaverImageItem.Speed.X;
-                var speedY = screensaverImageItem.Speed.Y;
-                var width = screensaverImageItem.Texture.Width;
-                var height = screensaverImageItem.Texture.Height;
-                if ((speedX > 0 && positionX + width > screensaverBounds.Right) ||
-                    (speedX < 0 && positionX < screensaverBounds.Left))
+                var nextNode = screensaverImageItemNode.Next;
+                var screensaverImageItem = screensaverImageItemNode.Value;
+                screensaverImageItem.Update(gameTime);
+                if (screensaverImageItem.IsDestroyed)
                 {
-                    screensaverImageItem.Speed = new Vector2(-speedX, speedY);
-                    var newX =
-                        speedX > 0 ? screensaverBounds.Right - width : screensaverBounds.Left;
-                    screensaverImageItem.Position = new Vector2(newX, positionY);
+                    this.screensaverImageItems.Remove(screensaverImageItemNode);
                 }
 
-                if ((speedY > 0 && positionY + height > screensaverBounds.Bottom) ||
-                    (speedY < 0 && positionY < screensaverBounds.Top))
-                {
-                    screensaverImageItem.Speed = new Vector2(speedX, -speedY);
-                    var newY =
-                        speedY > 0 ? screensaverBounds.Bottom - height : screensaverBounds.Top;
-                    screensaverImageItem.Position = new Vector2(positionX, newY);
-                }
+                screensaverImageItemNode = nextNode;
             }
         }
 
@@ -92,10 +86,7 @@ namespace Natsnudasoft.EgamiFlowScreensaver
 
             foreach (var screensaverImageItem in this.screensaverImageItems)
             {
-                spriteBatch.Draw(
-                    screensaverImageItem.Texture,
-                    screensaverImageItem.Position,
-                    Color.White);
+                screensaverImageItem.Draw(spriteBatch);
             }
         }
 
@@ -110,7 +101,8 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             ParameterValidation.IsNotNull(screensaverImageItem, nameof(screensaverImageItem));
 
-            this.screensaverImageItems.Add(screensaverImageItem);
+            screensaverImageItem.Initialize();
+            this.screensaverImageItems.AddFirst(screensaverImageItem);
         }
     }
 }

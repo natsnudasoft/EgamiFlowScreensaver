@@ -20,7 +20,7 @@
     - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
   before_build:
     - nuget restore
-    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs
     - ps: tools\sign-mono-game.ps1
     - ps: tools\replace-version-numbers.ps1
   build:
@@ -48,7 +48,7 @@
       release: 'EgamiFlowScreensaver $(APPVEYOR_REPO_TAG_NAME)'
       description: ''
       auth_token:
-        secure: Btb4eq03u8e4+k4WUyv4mWf0kfmzuxSCRo6u1nfOCtxlr4hrdpB5af5tVpt5q+1q
+        secure: winth2ckr0q/1fONK0Nz7MixzIikq4sYbi/uKfJ97WYgL6rKwI/TT9PNHXcX2pFF
       artifact: EgamiFlowScreensaver_Release_Any_CPU
       draft: false
       prerelease: false
@@ -75,7 +75,7 @@
     - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
   before_build:
     - nuget restore
-    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs
     - ps: tools\sign-mono-game.ps1
     - ps: tools\replace-version-numbers.ps1
   build:

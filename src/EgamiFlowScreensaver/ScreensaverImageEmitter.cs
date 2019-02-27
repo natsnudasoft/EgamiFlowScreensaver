@@ -32,51 +32,73 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         private const int PositionDistribution = 5;
         private const int TwoPositionDistribution = PositionDistribution * 2;
 
-        private readonly ScreensaverArea screensaverArea;
         private readonly ScreensaverImageEmitterCounter counter;
         private readonly ScreensaverImageManager screensaverImageManager;
         private readonly IReadOnlyList<Texture2D> screensaverTextures;
-        private readonly int maxEmitCount;
-        private readonly ImageEmitLocation imageEmitLocation;
+        private readonly IImageEmitDetails imageEmitDetails;
         private readonly Random random;
-        private int currentEmitCount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverImageEmitter"/> class.
         /// </summary>
         /// <param name="counter">The counter to use to control when new images are emitted.</param>
-        /// <param name="screensaverArea">The description of the area of the screensaver.</param>
         /// <param name="screensaverImageManager">The <see cref="ScreensaverImageManager"/> of the
         /// current screensaver.</param>
         /// <param name="screensaverTextures">A collection of available screensaver textures to
         /// randomly choose from when emitting an image.</param>
-        /// <param name="maxEmitCount">The maximum number of images that can be emitted. When this
-        /// value is reached, this <see cref="ScreensaverImageEmitter"/> will stop.</param>
-        /// <param name="imageEmitLocation">The location that images will be emitted on the
-        /// screensaver.</param>
+        /// <param name="imageEmitDetails">The details describing where and how many images will be
+        /// emitted.</param>
         /// <exception cref="ArgumentNullException"><paramref name="counter"/>,
-        /// <paramref name="screensaverArea"/>, <paramref name="screensaverImageManager"/>, or
-        /// <paramref name="screensaverTextures"/> is <see langword="null"/>.</exception>
+        /// <paramref name="screensaverImageManager"/>, <paramref name="screensaverTextures"/>, or
+        /// <paramref name="imageEmitDetails"/> is <see langword="null"/>.</exception>
         public ScreensaverImageEmitter(
             ScreensaverImageEmitterCounter counter,
-            ScreensaverArea screensaverArea,
             ScreensaverImageManager screensaverImageManager,
             IReadOnlyList<Texture2D> screensaverTextures,
-            int maxEmitCount,
-            ImageEmitLocation imageEmitLocation)
+            IImageEmitDetails imageEmitDetails)
+            : this(
+                  counter,
+                  screensaverImageManager,
+                  screensaverTextures,
+                  imageEmitDetails,
+                  new Random())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScreensaverImageEmitter"/> class.
+        /// </summary>
+        /// <param name="counter">The counter to use to control when new images are emitted.</param>
+        /// <param name="screensaverImageManager">The <see cref="ScreensaverImageManager"/> of the
+        /// current screensaver.</param>
+        /// <param name="screensaverTextures">A collection of available screensaver textures to
+        /// randomly choose from when emitting an image.</param>
+        /// <param name="imageEmitDetails">The details describing where and how many images will be
+        /// emitted.</param>
+        /// <param name="random">A pseudo-random number generator that can be used to generate
+        /// randomness in the <see cref="ScreensaverImageEmitter"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="counter"/>,
+        /// <paramref name="screensaverImageManager"/>, <paramref name="screensaverTextures"/>,
+        /// <paramref name="imageEmitDetails"/>, or <paramref name="random"/> is
+        /// <see langword="null"/>.</exception>
+        public ScreensaverImageEmitter(
+            ScreensaverImageEmitterCounter counter,
+            ScreensaverImageManager screensaverImageManager,
+            IReadOnlyList<Texture2D> screensaverTextures,
+            IImageEmitDetails imageEmitDetails,
+            Random random)
         {
             ParameterValidation.IsNotNull(counter, nameof(counter));
-            ParameterValidation.IsNotNull(screensaverArea, nameof(screensaverArea));
             ParameterValidation.IsNotNull(screensaverImageManager, nameof(screensaverImageManager));
             ParameterValidation.IsNotNull(screensaverTextures, nameof(screensaverTextures));
+            ParameterValidation.IsNotNull(imageEmitDetails, nameof(imageEmitDetails));
+            ParameterValidation.IsNotNull(random, nameof(random));
 
             this.counter = counter;
-            this.screensaverArea = screensaverArea;
             this.screensaverImageManager = screensaverImageManager;
             this.screensaverTextures = screensaverTextures;
-            this.random = new Random();
-            this.maxEmitCount = maxEmitCount;
-            this.imageEmitLocation = imageEmitLocation;
+            this.imageEmitDetails = imageEmitDetails;
+            this.random = random;
         }
 
         /// <summary>
@@ -111,9 +133,10 @@ namespace Natsnudasoft.EgamiFlowScreensaver
         {
             if (this.IsRunning)
             {
-                if (this.currentEmitCount >= this.maxEmitCount)
+                var imageCount = this.screensaverImageManager.ImageCount;
+                if (imageCount >= this.imageEmitDetails.MaxImageEmitCount)
                 {
-                    this.Stop();
+                    this.StopIfNotInfiniteImageEmitMode();
                 }
                 else if (this.screensaverTextures.Count > 0)
                 {
@@ -122,17 +145,13 @@ namespace Natsnudasoft.EgamiFlowScreensaver
                     {
                         var textureIndex = this.random.Next(0, this.screensaverTextures.Count);
                         var texture = this.screensaverTextures[textureIndex];
-                        var (position, speed) = this.GetImageEmitDetails(texture);
-                        var screensaverImageItem = new ScreensaverImageItem
-                        {
-                            Position = position,
-                            Speed = speed,
-                            Texture = texture
-                        };
+                        var screensaverImageItem =
+                            this.imageEmitDetails.CreateScreensaverImageItem(texture);
                         this.screensaverImageManager.AddScreensaverImage(screensaverImageItem);
-                        if (++this.currentEmitCount >= this.maxEmitCount)
+                        imageCount = this.screensaverImageManager.ImageCount;
+                        if (imageCount >= this.imageEmitDetails.MaxImageEmitCount)
                         {
-                            this.Stop();
+                            this.StopIfNotInfiniteImageEmitMode();
                             break;
                         }
                     }
@@ -140,166 +159,11 @@ namespace Natsnudasoft.EgamiFlowScreensaver
             }
         }
 
-        private (Vector2 Position, Vector2 Speed) GetImageEmitDetails(Texture2D texture)
+        private void StopIfNotInfiniteImageEmitMode()
         {
-            (Vector2, Vector2) imageEmitDetails;
-            switch (this.imageEmitLocation)
+            if (!this.imageEmitDetails.IsInfiniteImageEmitMode)
             {
-                case ImageEmitLocation.RandomCorner:
-                    imageEmitDetails = this.GetRandomCornerEmitDetails(texture);
-                    break;
-                case ImageEmitLocation.Random:
-                    imageEmitDetails = this.GetRandomEmitDetails();
-                    break;
-                case ImageEmitLocation.Center:
-                    imageEmitDetails = this.GetCenterEmitDetails(texture);
-                    break;
-                case ImageEmitLocation.BottomRight:
-                    imageEmitDetails = this.GetBottomRightEmitDetails();
-                    break;
-                case ImageEmitLocation.TopRight:
-                    imageEmitDetails = this.GetTopRightEmitDetails(texture);
-                    break;
-                case ImageEmitLocation.TopLeft:
-                    imageEmitDetails = this.GetTopLeftEmitDetails(texture);
-                    break;
-                case ImageEmitLocation.BottomLeft:
-                default:
-                    imageEmitDetails = this.GetBottomLeftEmitDetails(texture);
-                    break;
-            }
-
-            return imageEmitDetails;
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetRandomCornerEmitDetails(Texture2D texture)
-        {
-            Func<(Vector2, Vector2)>[] emitDetailsFunctions =
-            {
-                this.GetBottomRightEmitDetails,
-                () => this.GetTopRightEmitDetails(texture),
-                () => this.GetTopLeftEmitDetails(texture),
-                () => this.GetBottomLeftEmitDetails(texture)
-            };
-            return emitDetailsFunctions[this.random.Next(0, emitDetailsFunctions.Length)]();
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetRandomEmitDetails()
-        {
-            var minX = this.screensaverArea.PrimaryGameBounds.Left;
-            var maxX = this.screensaverArea.PrimaryGameBounds.Right;
-            var minY = this.screensaverArea.PrimaryGameBounds.Top;
-            var maxY = this.screensaverArea.PrimaryGameBounds.Bottom;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                this.random.NextFloat(MinSpeed, MaxSpeed),
-                this.random.NextFloat(MinSpeed, MaxSpeed));
-            this.RandomlyNegateSpeed(ref speed);
-            return (position, speed);
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetCenterEmitDetails(Texture2D texture)
-        {
-            var originCenter = this.screensaverArea.PrimaryGameBounds.Center.ToVector2() -
-                (new Vector2(texture.Width, texture.Height) / 2f);
-            var minX = originCenter.X - PositionDistribution;
-            var maxX = originCenter.X + PositionDistribution;
-            var minY = originCenter.Y - PositionDistribution;
-            var maxY = originCenter.Y + PositionDistribution;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                this.random.NextFloat(MinSpeed, MaxSpeed),
-                this.random.NextFloat(MinSpeed, MaxSpeed));
-            this.RandomlyNegateSpeed(ref speed);
-            return (position, speed);
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetBottomRightEmitDetails()
-        {
-            var bottomRightPrimary = new Point(
-                this.screensaverArea.PrimaryGameBounds.Right,
-                this.screensaverArea.PrimaryGameBounds.Bottom);
-            var minX = bottomRightPrimary.X;
-            var maxX = bottomRightPrimary.X + TwoPositionDistribution;
-            var minY = bottomRightPrimary.Y;
-            var maxY = bottomRightPrimary.Y + TwoPositionDistribution;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                -this.random.NextFloat(MinSpeed, MaxSpeed),
-                -this.random.NextFloat(MinSpeed, MaxSpeed));
-            return (position, speed);
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetTopRightEmitDetails(Texture2D texture)
-        {
-            var topRightPrimary = new Point(
-                this.screensaverArea.PrimaryGameBounds.Right,
-                this.screensaverArea.PrimaryGameBounds.Top);
-            var minX = topRightPrimary.X;
-            var maxX = topRightPrimary.X + TwoPositionDistribution;
-            var minY = topRightPrimary.Y - texture.Height - TwoPositionDistribution;
-            var maxY = topRightPrimary.Y - texture.Height;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                -this.random.NextFloat(MinSpeed, MaxSpeed),
-                this.random.NextFloat(MinSpeed, MaxSpeed));
-            return (position, speed);
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetTopLeftEmitDetails(Texture2D texture)
-        {
-            var topLeftPrimary = new Point(
-                this.screensaverArea.PrimaryGameBounds.Left,
-                this.screensaverArea.PrimaryGameBounds.Top);
-            var minX = topLeftPrimary.X - texture.Width - TwoPositionDistribution;
-            var maxX = topLeftPrimary.X - texture.Width;
-            var minY = topLeftPrimary.Y - texture.Height - TwoPositionDistribution;
-            var maxY = topLeftPrimary.Y - texture.Height;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                this.random.NextFloat(MinSpeed, MaxSpeed),
-                this.random.NextFloat(MinSpeed, MaxSpeed));
-            return (position, speed);
-        }
-
-        private (Vector2 Position, Vector2 Speed) GetBottomLeftEmitDetails(Texture2D texture)
-        {
-            var bottomLeftPrimary = new Point(
-                this.screensaverArea.PrimaryGameBounds.Left,
-                this.screensaverArea.PrimaryGameBounds.Bottom);
-            var minX = bottomLeftPrimary.X - texture.Width - TwoPositionDistribution;
-            var maxX = bottomLeftPrimary.X - texture.Width;
-            var minY = bottomLeftPrimary.Y;
-            var maxY = bottomLeftPrimary.Y + TwoPositionDistribution;
-            var position = new Vector2(
-                this.random.NextFloat(minX, maxX),
-                this.random.NextFloat(minY, maxY));
-            var speed = new Vector2(
-                this.random.NextFloat(MinSpeed, MaxSpeed),
-                -this.random.NextFloat(MinSpeed, MaxSpeed));
-            return (position, speed);
-        }
-
-        private void RandomlyNegateSpeed(ref Vector2 speed)
-        {
-            if (this.random.Next(0, 2) == 0)
-            {
-                speed.X = -speed.X;
-            }
-
-            if (this.random.Next(0, 2) == 0)
-            {
-                speed.Y = -speed.Y;
+                this.Stop();
             }
         }
     }

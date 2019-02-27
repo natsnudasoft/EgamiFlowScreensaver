@@ -16,6 +16,7 @@
 
 namespace Natsnudasoft.EgamiFlowScreensaver.Config
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
@@ -27,12 +28,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
     [ProtoContract]
     public sealed class ScreensaverConfiguration
     {
+        private const long DefaultImageEmitLifetime = 20000 * TimeSpan.TicksPerMillisecond;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreensaverConfiguration"/> class.
         /// </summary>
         public ScreensaverConfiguration()
         {
             this.Images = new List<ConfigurationImageItem>();
+            this.Behaviors = new List<ConfigurationBehavior>();
         }
 
         /// <summary>
@@ -93,11 +97,55 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Config
         [DefaultValue(ImageEmitLocation.RandomCorner)]
         public ImageEmitLocation ImageEmitLocation { get; set; }
 
+        /// <summary>
+        /// Gets or sets the X coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        [ProtoMember(9, IsRequired = false)]
+        public int CustomImageEmitLocationX { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Y coordinate of the emit location if it is in
+        /// <see cref="ImageEmitLocation.Custom"/> mode.
+        /// </summary>
+        [ProtoMember(10, IsRequired = false)]
+        public int CustomImageEmitLocationY { get; set; }
+
+        /// <summary>
+        /// Gets the collection of the configuration values for behaviours that will be applied to
+        /// any emitted images.
+        /// </summary>
+        [ProtoMember(11, IsRequired = false)]
+        public IList<ConfigurationBehavior> Behaviors { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether or not images will be emitted infinitely.
+        /// </summary>
+        /// <value><see langword="true"/> if images should be emitted infinitely; otherwise
+        /// <see langword="false"/>.</value>
+        [ProtoMember(12, IsRequired = false)]
+        public bool IsInfiniteImageEmitMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time that emitted images should live for.
+        /// </summary>
+        /// <remarks>This setting is only used if <see cref="IsInfiniteImageEmitMode"/> is
+        /// <see langword="true"/>.</remarks>
+        public TimeSpan ImageEmitLifetime { get; set; } = new TimeSpan(DefaultImageEmitLifetime);
+
         [ProtoMember(3, DataFormat = DataFormat.FixedSize)]
         private int BackgroundColorSerialized
         {
             get { return this.BackgroundColor.ToArgb(); }
             set { this.BackgroundColor = Color.FromArgb(value); }
+        }
+
+        [ProtoMember(13, IsRequired = false)]
+        [DefaultValue(DefaultImageEmitLifetime)]
+        private long EmitLifetimeSerialized
+        {
+            get => this.ImageEmitLifetime.Ticks;
+            set => this.ImageEmitLifetime = new TimeSpan(value);
         }
     }
 }

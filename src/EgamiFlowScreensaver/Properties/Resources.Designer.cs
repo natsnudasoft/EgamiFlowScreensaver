@@ -61,6 +61,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A behaviour that causes emitted images to transition from one alpha value (transparency) to another over a specified time frame. Valid alpha values are between 0.0 and 1.0 inclusive, although the alpha start value can be less than 0.0 to delay when the transition becomes apparent on screen..
+        /// </summary>
+        internal static string AlphaChangeBehaviorDescription {
+            get {
+                return ResourceManager.GetString("AlphaChangeBehaviorDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No background image selected..
         /// </summary>
         internal static string ChooseABackgroundImageCaption {
@@ -75,6 +84,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         internal static string ChooseABackgroundImageText {
             get {
                 return ResourceManager.GetString("ChooseABackgroundImageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A behaviour that causes emitted images to transition from one colour to another over a specified time frame..
+        /// </summary>
+        internal static string ColorChangeBehaviorDescription {
+            get {
+                return ResourceManager.GetString("ColorChangeBehaviorDescription", resourceCulture);
             }
         }
         
@@ -196,6 +214,15 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom....
+        /// </summary>
+        internal static string ImageEmitLocationCustom {
+            get {
+                return ResourceManager.GetString("ImageEmitLocationCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Random.
         /// </summary>
         internal static string ImageEmitLocationRandom {
@@ -241,6 +268,42 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alpha Change Behaviour.
+        /// </summary>
+        internal static string ImageItemBehaviorTypeAlphaChange {
+            get {
+                return ResourceManager.GetString("ImageItemBehaviorTypeAlphaChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colour Change Behaviour.
+        /// </summary>
+        internal static string ImageItemBehaviorTypeColorChange {
+            get {
+                return ResourceManager.GetString("ImageItemBehaviorTypeColorChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotation Change Behaviour.
+        /// </summary>
+        internal static string ImageItemBehaviorTypeRotationChange {
+            get {
+                return ResourceManager.GetString("ImageItemBehaviorTypeRotationChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale Change Behaviour.
+        /// </summary>
+        internal static string ImageItemBehaviorTypeScaleChange {
+            get {
+                return ResourceManager.GetString("ImageItemBehaviorTypeScaleChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Centre.
         /// </summary>
         internal static string ImageScaleModeCenter {
@@ -282,6 +345,62 @@ namespace Natsnudasoft.EgamiFlowScreensaver.Properties {
         internal static string ImageScaleModeTile {
             get {
                 return ResourceManager.GetString("ImageScaleModeTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No configuration options available..
+        /// </summary>
+        internal static string NoConfigurationFormForBehaviorCaption {
+            get {
+                return ResourceManager.GetString("NoConfigurationFormForBehaviorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no configuration options available for the selected behaviour type..
+        /// </summary>
+        internal static string NoConfigurationFormForBehaviorText {
+            get {
+                return ResourceManager.GetString("NoConfigurationFormForBehaviorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A behaviour that causes emitted images to transition from one rotation value (in degrees) to another over a specified time frame; valid rotation values can be any negative or positive value.
+        ///Please note that changing image rotation can cause incorrect collision behaviour when images bounce off of the edges of the screen..
+        /// </summary>
+        internal static string RotationChangeBehaviorDescription {
+            get {
+                return ResourceManager.GetString("RotationChangeBehaviorDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A behaviour that causes emitted images to transition from one scale (relative size) to another over a specified time frame. Valid scale values are between 0.0 and 1.0 inclusive, although scale start values van be less than 0.0 to delay when the transition becomes apparent on screen.
+        ///Please note that changing image scale can cause incorrect collision behaviour when images bounce off of the edges of the screen..
+        /// </summary>
+        internal static string ScaleChangeBehaviorDescription {
+            get {
+                return ResourceManager.GetString("ScaleChangeBehaviorDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition time less than image lifetime..
+        /// </summary>
+        internal static string TransitionTimeLessThanLifetimeCaption {
+            get {
+                return ResourceManager.GetString("TransitionTimeLessThanLifetimeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The transition time of this behaviour is longer than the lifetime of any emitted images, this may cause strange behaviour, are you sure you want to continue with these values?.
+        /// </summary>
+        internal static string TransitionTimeLessThanLifetimeText {
+            get {
+                return ResourceManager.GetString("TransitionTimeLessThanLifetimeText", resourceCulture);
             }
         }
         
