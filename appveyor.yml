@@ -12,7 +12,6 @@
   configuration: Release
   platform: Any CPU
   install:
-    - type src\EgamiFlowScreensaver\packages.config
     - choco install gitversion.portable -y
     - nuget install secure-file -ExcludeVersion
     - nuget install Tools.InnoSetup -ExcludeVersion
@@ -20,8 +19,10 @@
     - ps: tools\install-mono-game.ps1
     - IF "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" secure-file\tools\secure-file -decrypt Natsnudasoft.snk.enc -secret %STRONG_NAME_SECRET%
   before_build:
-    - nuget restore -NoCache
-    - gitversion /l console /output buildserver /updateassemblyinfo AssemblyInfoCommon.cs /b %APPVEYOR_REPO_BRANCH%
+    - nuget restore
+    - type src\EgamiFlowScreensaver\packages.config
+    - ps: gitversion /l console /output buildserver /updateAssemblyInfo AssemblyInfoCommon.cs
+    - type src\EgamiFlowScreensaver\packages.config
     - ps: tools\sign-mono-game.ps1
     - ps: tools\replace-version-numbers.ps1
   build:
